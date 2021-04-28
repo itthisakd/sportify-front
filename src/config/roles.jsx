@@ -16,6 +16,7 @@ import VerifyEmailPage from "../pages/register/VerifyEmailPage"
 import VerifyMobilePage from "../pages/register/VerifyMobilePage"
 import WelcomePage from "../pages/register/WelcomePage"
 import TutorialPage from "../pages/tutorial/TutorialPage"
+import SettingsPage from "../pages/settings/SettingsPage"
 
 
 const pages = {

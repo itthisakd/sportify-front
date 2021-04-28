@@ -5,13 +5,13 @@ import NotFound from "../pages/notfound/NotFoundPage";
 // import { connect } from 'react-redux'
 
 export default function Routes(props) {
-  // let role = props.role || "GUEST";
+  // let role = props.role || "GUEST";å
 
   return (
     <BrowserRouter>
     <Switch>
         {roles["DEV"].map(({ path, page: PageComponent }, idx) => {
-        return (<Route key={idx} exact path={path}>
+        return (<Route key={idx} path={path}>
         <PageComponent />
       </Route>)
         })}
