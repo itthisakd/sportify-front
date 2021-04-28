@@ -2,7 +2,7 @@ import HomePage from "../pages/home/HomePage"
 import LandingPage from "../pages/login/LandingPage"
 import LoginPage from "../pages/login/LoginPage"
 import MatchesPage from "../pages/matches/MatchesPage"
-import EditInfoPage from "../pages/profile/EditInfoPage"
+import EditInfoPage from "../pages/editinfo/EditInfoPage"
 import PreviewPage from "../pages/profile/PreviewPage"
 import ProfilePage from "../pages/profile/ProfilePage"
 import EmailPage from "../pages/register/EmailPage"
@@ -17,6 +17,7 @@ import VerifyMobilePage from "../pages/register/VerifyMobilePage"
 import WelcomePage from "../pages/register/WelcomePage"
 import TutorialPage from "../pages/tutorial/TutorialPage"
 import SettingsPage from "../pages/settings/SettingsPage"
+import LikedByPage from "../pages/likedby/LikedByPage"
 
 
 const pages = {
@@ -38,7 +39,8 @@ const pages = {
   verifyMobile: { page: VerifyMobilePage, path: "/register-verifymobile" }, 
   welcome: { page: WelcomePage, path: "/welcome" }, 
   tutorial: { page: TutorialPage, path: "/tutorial" },
-  settings: { page: SettingsPage, path: "/settings"}
+  settings: { page: SettingsPage, path: "/settings" },
+  likedby: { page: LikedByPage, path: "/likedby"}
 };
 
 const roles = {
@@ -65,7 +67,8 @@ const roles = {
     pages.editInfo,
     pages.preview, 
     pages.profile, 
-    pages.settings
+    pages.settings,
+    pages.likedby
     
   ],
   DEV: [
@@ -88,7 +91,9 @@ const roles = {
     pages.editInfo,
     pages.preview, 
     pages.profile, 
-    pages.settings
+    pages.settings,
+    pages.likedby
+
 
   ],
 }
