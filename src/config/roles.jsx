@@ -1,83 +1,73 @@
-// const pages = {
+import HomePage from "../pages/home/HomePage"
+import LandingPage from "../pages/login/LandingPage"
+import LoginPage from "'../pages/login/LoginPage"
+import MatchesPage from "../pages/matches/MatchesPage"
+import EditInfoPage from "../pages/profile/EditInfoPage"
+import PreviewPage from "../pages/profile/PreviewPage"
+import ProfilePage from "../pages/profile/ProfilePage"
+import EmailPage from "../pages/register/EmailPage"
+import GenderPage from "../pages/register/GenderPage"
+import MobilePage from "../pages/register/MobilePage"
+import NamePage from "../pages/register/NamePage"
+import PasswordPage from "../pages/register/PasswordPage"
+import PhotosPage from "../pages/register/PhotosPage"
+import SportsPage from "../pages/register/SportsPage"
+import VerifyEmailPage from "../pages/register/VerifyEmailPage"
+import VerifyMobilePage from "../pages/register/VerifyMobilePage"
+import WelcomePage from "../pages/register/WelcomePage"
+import TutorialPage from "../pages/tutorial/TutorialPage"
 
-//   welcome: {
-//     path: "/",
-//     page: Welcome,
-//   },
-//   login: {
-//     path: "/login",
-//     page: Login
-//   },
-//   register: {
-//     path: "/register",
-//     page: Register
-//   },
-//   chooseMenus: {
-//     path: "/choose-menus",
-//     page: ChooseMenus
-//   },
-//   orderList: {
-//     path: "/orderlist",
-//     page: OrderList
-//   },
-//   otp: {
-//     path: "/otp",
-//     page: Otp
-//   },
-//   confirmOtp: {
-//     path: "/confirm-otp",
-//     page: ConfirmOTP
-//   },
-//   inputcode: {
-//     path: "/inputcode",
-//     page: InputCode
-//   },
-//   createListTable: {
-//     path: "/create-list-table",
-//     page: CreateListTable
-//   },
-//   tableList: {
-//     path: "/table-list",
-//     page: TableList
-//   },
-//   totalTableBill: {
-//     path: "/total-table-bill",
-//     page: TotalTableBill
-//   }
-// };
 
-// const roles = {
-//   GUEST: [
-//     pages.welcome,
-//     pages.login,
-//     pages.register,
-//     pages.otp,
-//     pages.confirmOtp,
+const pages = {
+  home: { page: HomePage, path: "/home" }, 
+  landing: { page: LandingPage, path: "/landing" }, 
+  login: { page: LoginPage, path: "/login" }, 
+  matches: { page: MatchesPage, path: "/matches" },
+  editInfo: { page: EditInfoPage, path: "/edit-info" },
+  preview: { page: PreviewPage, path: "/preview" }, 
+  profile: { page: ProfilePage, path: "/profile" }, 
+  email: { page: EmailPage, path: "/register-email" }, 
+  gender: { page: GenderPage, path: "/register-gender" }, 
+  mobile: { page: MobilePage, path: "/register-mobile" }, 
+  name: { page: NamePage, path: "/register-name" }, 
+  password: { page: PasswordPage, path: "/register-password" }, 
+  photos: { page: PhotosPage, path: "/register-photos" }, 
+  sports: { page: SportsPage, path: "/register-Sports" }, 
+  verifyEmail: { page: VerifyEmailPage, path: "/register-verifyemail" }, 
+  verifyMobile: { page: VerifyMobilePage, path: "/register-verifymobile" }, 
+  welcome: { page: WelcomePage, path: "/welcome" }, 
+  tutorial: { page: TutorialPage, path: "/tutorial" },
+  settings: { page: SettingsPage, path: "/settings"}
+};
 
-//   ],
-//   RESTAURANT: [
-//     pages.welcome,
-//     pages.createListTable,
-//     pages.tableList,
-//     pages.totalTableBill,
-//     pages.inputcode,
-//   ],
-//   CUSTOMER: [
-//     pages.welcome,
-//     pages.chooseMenus,
-//     pages.orderList,
-//     pages.inputcode,
-//     pages.createListTable,
-//   ],
-//   ADMIN: [
-//     pages.chooseMenus,
-//     pages.orderList,
-//     pages.inputcode,
-//     pages.welcome,
-//     pages.createListTable,
-//     pages.tableList,
-//     pages.totalTableBill
-//   ]
-// }
+const roles = {
+  GUEST: [
+    pages.login,
+    pages.landing,
+    pages.email, 
+    pages.gender,
+    pages.mobile,
+    pages.name, 
+    pages.password,
+    pages.photos,
+    pages.sports,
+    pages.verifyEmail,
+    pages.verifyMobile,
 
-// export default roles;
+  ],
+  USER: [
+    pages.welcome, 
+    pages.tutorial,
+    pages.matches, 
+    pages.home, 
+    pages.matches,
+    pages.editInfo,
+    pages.preview, 
+    pages.profile, 
+    pages.settings
+    
+  ],
+}
+  
+
+export default roles;

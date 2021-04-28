@@ -1,26 +1,27 @@
-// import React from 'react';
-// import RolesList from '../../config/roles';
-// import { Switch, Route } from "react-router-dom";
-// import NotFound from "../pages/NotFound/NotFound";
+import React from 'react';
+import roles from '../../config/roles';
+import { Switch, Route } from "react-router-dom";
+import NotFound from "../pages/notfound/NotFoundPage";
 // import { connect } from 'react-redux'
 
-// function PrivateRoutes(props) {
-//   let role = props.role || "GUEST";
+export default function Routes(props) {
+  let role = props.role || "GUEST";
 
-//   return (
-//     <Switch>
-//       {RolesList[role].map(({ path, page: PageComponent }, idx) => <Route key={idx} exact path={path}>
-//         <PageComponent />
-//       </Route>)}
-//       <Route path="*" component={NotFound} />
-//     </Switch>
-//   );
-// }
+  return (
+    <Switch>
+      {roles[role].map(({ path, page: PageComponent }, idx) => <Route key={idx} exact path={path}>
+        <PageComponent />
+      </Route>)}
+      <Route path="*" component={NotFound} />
+    </Switch>
+  );
+}
 
+//DEAL WITH AUTHEN HERE 
 // const mapStateToProps = state => {
 //   return {
 //     role: state.userReducer.role
 //   }
 // }
 
-// export default connect(mapStateToProps)(PrivateRoutes);
+// export default connect(mapStateToProps)(Routes);
