@@ -1,6 +1,6 @@
 import HomePage from "../pages/home/HomePage"
 import LandingPage from "../pages/login/LandingPage"
-import LoginPage from "'../pages/login/LoginPage"
+import LoginPage from "../pages/login/LoginPage"
 import MatchesPage from "../pages/matches/MatchesPage"
 import EditInfoPage from "../pages/profile/EditInfoPage"
 import PreviewPage from "../pages/profile/PreviewPage"
@@ -66,6 +66,29 @@ const roles = {
     pages.profile, 
     pages.settings
     
+  ],
+  DEV: [
+    pages.login,
+    pages.landing,
+    pages.email, 
+    pages.gender,
+    pages.mobile,
+    pages.name, 
+    pages.password,
+    pages.photos,
+    pages.sports,
+    pages.verifyEmail,
+    pages.verifyMobile,
+     pages.welcome, 
+    pages.tutorial,
+    pages.matches, 
+    pages.home, 
+    pages.matches,
+    pages.editInfo,
+    pages.preview, 
+    pages.profile, 
+    pages.settings
+
   ],
 }
   

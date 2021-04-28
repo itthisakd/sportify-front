@@ -1,19 +1,24 @@
 import React from 'react';
-import roles from '../../config/roles';
-import { Switch, Route } from "react-router-dom";
+import roles from '../config/roles';
+import { Switch, Route, BrowserRouter } from "react-router-dom";
 import NotFound from "../pages/notfound/NotFoundPage";
 // import { connect } from 'react-redux'
 
 export default function Routes(props) {
-  let role = props.role || "GUEST";
+  // let role = props.role || "GUEST";
 
   return (
+    <BrowserRouter>
     <Switch>
-      {roles[role].map(({ path, page: PageComponent }, idx) => <Route key={idx} exact path={path}>
+        {roles["DEV"].map(({ path, page: PageComponent }, idx) => {
+        return (<Route key={idx} exact path={path}>
         <PageComponent />
-      </Route>)}
+      </Route>)
+        })}
+        {/* <Redirect to="/login" /> */}
       <Route path="*" component={NotFound} />
-    </Switch>
+      </Switch>
+      </BrowserRouter>
   );
 }
 
