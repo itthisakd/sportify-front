@@ -3,6 +3,7 @@ import LandingPage from "../pages/login/LandingPage"
 import LoginPage from "../pages/login/LoginPage"
 import MatchesPage from "../pages/matches/MatchesPage"
 import EditInfoPage from "../pages/editinfo/EditInfoPage"
+import EditSportPassionPage from "../pages/editinfo/EditSportPassionPage"
 import PreviewPage from "../pages/profile/PreviewPage"
 import ProfilePage from "../pages/profile/ProfilePage"
 import EmailPage from "../pages/register/EmailPage"
@@ -26,6 +27,7 @@ const pages = {
   login: { page: LoginPage, path: "/login" }, 
   matches: { page: MatchesPage, path: "/matches" },
   editInfo: { page: EditInfoPage, path: "/edit-info" },
+  editPassion: {page: EditSportPassionPage, path: "/edit-passion"},
   preview: { page: PreviewPage, path: "/preview" }, 
   profile: { page: ProfilePage, path: "/profile" }, 
   email: { page: EmailPage, path: "/register-email" }, 
@@ -65,6 +67,7 @@ const roles = {
     pages.home, 
     pages.matches,
     pages.editInfo,
+    pages.editPassion,
     pages.preview, 
     pages.profile, 
     pages.settings,
@@ -89,6 +92,7 @@ const roles = {
     pages.home, 
     pages.matches,
     pages.editInfo,
+    pages.editPassion,
     pages.preview, 
     pages.profile, 
     pages.settings,
