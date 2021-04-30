@@ -1,12 +1,17 @@
 import React from "react";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Button from "@material-ui/core/Button";
-import Input from "@material-ui/core/Input";
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  Button,
+  Input,
+  Grid,
+  Paper,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import SectionHeader from "../shared/SectionHeader";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: "left",
     padding: "0.5rem",
@@ -17,10 +22,35 @@ const useStyles = makeStyles({
     width: "100%",
     padding: "12px",
   },
-});
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+}));
 
 export default function EditInfoPage() {
   const classes = useStyles();
+
+  function FormRow() {
+    return (
+      <React.Fragment>
+        <Grid item xs={4}>
+          <Paper className={classes.paper}>item</Paper>
+        </Grid>
+        <Grid item xs={4}>
+          <Paper className={classes.paper}>item</Paper>
+        </Grid>
+        <Grid item xs={4}>
+          <Paper className={classes.paper}>item</Paper>
+        </Grid>
+      </React.Fragment>
+    );
+  }
+
   return (
     <div
       style={{
@@ -29,32 +59,32 @@ export default function EditInfoPage() {
         paddingBottom: "50px",
       }}
     >
-      <div
-        style={{
-          borderStyle: "solid",
-          borderWidth: "0 0 1px 0",
-          borderBottomColor: "#e8e8e8",
-          height: "43px",
-          backgroundColor: "white",
-          display: "flex",
-        }}
-      >
-        <h1
+      <SectionHeader
+        title="Edit Info"
+        doneAction={() => history.push("/profile")}
+      />
+      <div className={classes.root}>
+        <Grid
+          container
+          spacing={1}
           style={{
-            fontSize: "18px",
-            margin: "auto",
-            backgroundColor: "white",
+            justifyContent: "center",
+            width: "100%",
+            padding: "2px",
+            margin: "0",
           }}
         >
-          Edit Info
-        </h1>
+          <Grid container item xs={12} spacing={3}>
+            <FormRow />
+          </Grid>
+          <Grid container item xs={12} spacing={3}>
+            <FormRow />
+          </Grid>
+          <Grid container item xs={12} spacing={3}>
+            <FormRow />
+          </Grid>
+        </Grid>
       </div>
-      <Button
-        style={{ top: 0, right: 0, height: "43px", position: "absolute" }}
-        color="secondary"
-      >
-        Done
-      </Button>
       <span>
         <Button
           style={{
@@ -122,6 +152,24 @@ export default function EditInfoPage() {
         ></Input>
       </div>
       <div>
+        <h5 className={classes.title}>INSTAGRAM</h5>
+        <Input
+          multiline={true}
+          disableUnderline={true}
+          placeholder="Add Instagram's Username"
+          className={classes.input}
+        ></Input>
+      </div>
+      <div>
+        <h5 className={classes.title}>SPOTIFY</h5>
+        <Input
+          multiline={true}
+          disableUnderline={true}
+          placeholder="Add Spotify's Username"
+          className={classes.input}
+        ></Input>
+      </div>
+      <div>
         <h5 className={classes.title}>GENDER</h5>
         <FormControl
           style={{
@@ -134,7 +182,6 @@ export default function EditInfoPage() {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             // value={gender}
-            // onChange={handleChange}
             style={{ padding: "12px" }}
           >
             <MenuItem value={"Male"}>Male</MenuItem>

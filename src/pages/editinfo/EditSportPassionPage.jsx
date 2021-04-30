@@ -1,46 +1,23 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Chip from "@material-ui/core/Chip";
+import { Button, Chip } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import SectionHeader from "../shared/SectionHeader"
 
+const useStyles = makeStyles({
+  tag: {
+    margin: "4px",
+    border: "solid 1px",
+  },
+});
 export default function EditSportPassionPage() {
+  const classes = useStyles();
   const handleClick = () => {
     console.info("You clicked the Chip.");
   };
 
   return (
     <div style={{ backgroundColor: "#f5f7fa", paddingBottom: "50px" }}>
-      <div
-        style={{
-          borderStyle: "solid",
-          borderWidth: "0 0 1px 0",
-          borderBottomColor: "#e8e8e8",
-          height: "43px",
-          backgroundColor: "white",
-          display: 'flex'
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "18px",
-            margin: "auto",
-            backgroundColor: "white",
-          }}
-        >
-          Edit Passions
-        </h1>
-      </div>
-      <Button
-        style={{
-          top: 0,
-          right: 0,
-          height: "43px",
-          position: "absolute",
-          textTransform: "none",
-        }}
-        color="secondary"
-      >
-        Done
-      </Button>
+      <SectionHeader title="Edit Sports" doneAction={() => history.push("/profile")} />
       <div>
         <div
           style={{
@@ -61,7 +38,7 @@ export default function EditSportPassionPage() {
             letterSpacing: "0",
             textAlign: "left",
             fontWeight: "800",
-            fontSize: '12px'
+            fontSize: "12px",
           }}
         >
           <span>PASSIONS</span>
@@ -74,81 +51,81 @@ export default function EditSportPassionPage() {
           }}
         >
           <Chip
+            className={classes.tag}
             variant="outlined"
             size="small"
             label="Clickable"
             onClick={handleClick}
-            style={{ margin: "4px", border: "solid 1px" }}
           />
           <Chip
+            className={classes.tag}
             variant="outlined"
             size="small"
-            label="Clickable"
+            label="Football"
             onClick={handleClick}
-            style={{ margin: "4px", border: "solid 1px" }}
           />
           <Chip
+            className={classes.tag}
             variant="outlined"
             size="small"
-            label="Clickable"
+            label="Surf Skate"
             onClick={handleClick}
-            style={{ margin: "4px", border: "solid 1px" }}
           />
           <Chip
+            className={classes.tag}
             variant="outlined"
             size="small"
-            label="Clickable"
+            label="Basketball"
             onClick={handleClick}
-            style={{ margin: "4px", border: "solid 1px" }}
           />
           <Chip
+            className={classes.tag}
             variant="outlined"
             size="small"
-            label="Clickable"
+            label="Bowling"
             onClick={handleClick}
-            style={{ margin: "4px", border: "solid 1px" }}
           />
           <Chip
+            className={classes.tag}
             variant="outlined"
             size="small"
-            label="Clickable"
+            label="Running"
             onClick={handleClick}
-            style={{ margin: "4px", border: "solid 1px" }}
           />
           <Chip
+            className={classes.tag}
             variant="outlined"
             size="small"
-            label="Clickable"
+            label="Hikinh"
             onClick={handleClick}
-            style={{ margin: "4px", border: "solid 1px" }}
           />
           <Chip
+            className={classes.tag}
             variant="outlined"
             size="small"
-            label="Clickable"
+            label="Badminton"
             onClick={handleClick}
-            style={{ margin: "4px", border: "solid 1px" }}
           />
           <Chip
+            className={classes.tag}
             variant="outlined"
             size="small"
-            label="Clickable"
+            label="Golf"
             onClick={handleClick}
-            style={{ margin: "4px", border: "solid 1px" }}
           />
           <Chip
+            className={classes.tag}
             variant="outlined"
             size="small"
-            label="Clickable"
+            label="Tennis"
             onClick={handleClick}
-            style={{ margin: "4px", border: "solid 1px" }}
           />
           <Chip
+            className={classes.tag}
             variant="outlined"
             size="small"
-            label="Clickable"
+            label="Swimming"
             onClick={handleClick}
-            style={{ margin: "4px", border: "solid 1px" }}
           />
         </div>
       </div>
