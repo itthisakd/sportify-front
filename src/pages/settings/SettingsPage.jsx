@@ -9,6 +9,7 @@ import {
   Divider,
   Slider,
   Switch,
+  Input,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tail: {
     color: "grey",
+    textAlign: "right"
   },
   bg: {
     backgroundColor: "ghostwhite",
@@ -73,7 +75,12 @@ export default function SettingsPage() {
         ACCOUNT SETTINGS
       </Typography>
       <Paper variant="outlined" className={classes.paper}>
-        <Container className={classes.row}>
+        <Container
+          className={classes.row}
+          onClick={() => {
+            //TODO bring to register phone number page
+          }}
+        >
           <Typography variant="body1" className={classes.head}>
             Phone Number
           </Typography>
@@ -86,7 +93,13 @@ export default function SettingsPage() {
           <Typography variant="body1" className={classes.head}>
             Email
           </Typography>
-          <Typography variant="body1" className={classes.tail}>
+          <Typography
+            variant="body1"
+            className={classes.tail}
+            onClick={() => {
+              //TODO bring to register email page
+            }}
+          >
             itthisakds@gmail.com
           </Typography>
         </Container>
@@ -98,7 +111,13 @@ export default function SettingsPage() {
       </Typography>
       <Paper variant="outlined" className={classes.paper}>
         <Container className={classes.row}>
-          <Typography variant="body1" className={classes.head}>
+          <Typography
+            variant="body1"
+            className={classes.head}
+            onClick={() => {
+              //TODO bring to sports page
+            }}
+          >
             Sports
           </Typography>
           <Typography variant="body1" className={classes.tail}>
@@ -108,7 +127,13 @@ export default function SettingsPage() {
         <Divider />
 
         <Container className={classes.row}>
-          <Typography variant="body1" className={classes.head}>
+          <Typography
+            variant="body1"
+            className={classes.head}
+            onClick={() => {
+              //TODO bring to choose location page
+            }}
+          >
             Location
           </Typography>
           <Typography variant="body1" className={classes.tail}>
@@ -131,14 +156,17 @@ export default function SettingsPage() {
             min={2}
             max={160}
             name="maxDistance"
-
-            // valueLabelDisplay="auto"
             // value={value}
             // onChange={handleChange}
           />
         </Container>
         <Divider />
-        <Container className={classes.row}>
+        <Container
+          className={classes.row}
+          onClick={() => {
+            //TODO bring to choose show me gender page
+          }}
+        >
           <Typography variant="body1" className={classes.head}>
             Show me
           </Typography>
@@ -216,7 +244,6 @@ export default function SettingsPage() {
         able to see your recently active status.
       </Typography>
       <br />
-      
     </div>
   );
 }
