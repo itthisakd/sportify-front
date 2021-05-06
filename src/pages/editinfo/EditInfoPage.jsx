@@ -3,13 +3,15 @@ import {
   Select,
   MenuItem,
   FormControl,
-  Button,
+  IconButton,
   Input,
   Grid,
   Paper,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import SectionHeader from "../shared/SectionHeader";
+import MadeButton from "../shared/Button";
+import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -22,13 +24,21 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     padding: "12px",
   },
-  root: {
-    flexGrow: 1,
+  flexWrap: {
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "5px",
   },
   paper: {
     padding: theme.spacing(1),
+    margin: "5px",
     textAlign: "center",
     color: theme.palette.text.secondary,
+    position: "relative",
+    width: "24vw",
+    height: "40vw",
   },
 }));
 
@@ -39,7 +49,22 @@ export default function EditInfoPage() {
     return (
       <React.Fragment>
         <Grid item xs={4}>
-          <Paper className={classes.paper}>item</Paper>
+          <Paper className={classes.paper}>
+            <div>item</div>
+            <IconButton
+              size="small"
+              color="secondary"
+              style={{
+                position: "absolute",
+                right: "-10px",
+                bottom: "-5px",
+                zIndex: "1",
+                backgroundColor: "green",
+              }}
+            >
+              <ClearRoundedIcon />
+            </IconButton>
+          </Paper>
         </Grid>
         <Grid item xs={4}>
           <Paper className={classes.paper}>item</Paper>
@@ -63,39 +88,32 @@ export default function EditInfoPage() {
         title="Edit Info"
         doneAction={() => history.push("/profile")}
       />
-      <div className={classes.root}>
-        <Grid
-          container
-          spacing={1}
-          style={{
-            justifyContent: "center",
-            width: "100%",
-            padding: "2px",
-            margin: "0",
-          }}
-        >
-          <Grid container item xs={12} spacing={3}>
-            <FormRow />
-          </Grid>
-          <Grid container item xs={12} spacing={3}>
-            <FormRow />
-          </Grid>
-          <Grid container item xs={12} spacing={3}>
-            <FormRow />
-          </Grid>
-        </Grid>
+      <div className={classes.flexWrap}>
+        <Paper className={classes.paper}><div>item</div>
+            <IconButton
+              size="small"
+              color="secondary"
+              style={{
+                position: "absolute",
+                right: "-10px",
+                bottom: "-5px",
+                zIndex: "1",
+                backgroundColor: "green",
+              }}
+            >
+              <ClearRoundedIcon />
+            </IconButton></Paper>
+        <Paper className={classes.paper}>item</Paper>
+        <Paper className={classes.paper}>item</Paper>
+        <Paper className={classes.paper}>item</Paper>
+        <Paper className={classes.paper}>item</Paper>
+        <Paper className={classes.paper}>item</Paper>
+        <Paper className={classes.paper}>item</Paper>
+        <Paper className={classes.paper}>item</Paper>
+        <Paper className={classes.paper}>item</Paper>
       </div>
       <span>
-        <Button
-          style={{
-            width: "80%",
-            borderRadius: "100px",
-            backgroundColor: "#ff9600",
-            fontSize: "16px",
-          }}
-        >
-          ADD MEDIA
-        </Button>
+        <MadeButton text="ADD MEDIA"></MadeButton>
       </span>
       <div>
         <h5 className={classes.title}>ABOUT ME</h5>
