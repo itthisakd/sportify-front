@@ -12,10 +12,7 @@ const useStyles = makeStyles({
   root: {
     width: "100%",
     // height: "50px",
-    margin: "0px",
-    minWidth: "100vw",
-    // maxHeight: "50px"
-
+    margin: "0px"
   },
 });
 
