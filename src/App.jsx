@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import './App.css'
 import Routes from "./routes/Routes"
 
 function App() {
   return (
-    <div className="App">
+    <div style ={{height: "100vh"}}>
       <Routes/>
     </div>
   )
