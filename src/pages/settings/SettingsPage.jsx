@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tail: {
     color: "grey",
-    textAlign: "right"
+    textAlign: "right",
   },
   bg: {
     backgroundColor: "ghostwhite",
@@ -239,7 +239,7 @@ export default function SettingsPage() {
         </Container>
       </Paper>
       <Typography variant="caption" className={classes.caption}>
-        Allow Sportify memebers to see if you were recently active within the
+        Allow Sportify members to see if you were recently active within the
         last 24 hours on Sportify. If you have turned this off, they will not be
         able to see your recently active status.
       </Typography>
