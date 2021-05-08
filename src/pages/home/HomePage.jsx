@@ -132,12 +132,12 @@ export default function HomePage() {
   ];
 
   return (
-    <div>
+    <div className={classes.flexBetween}>
       <Menu />
       <Container className={classes.flexBetween}>
         <SwipeContainer className={classes.swipeContainer} accounts={accounts} />
         
       </Container>
     </div>
-  )
+  );
 }
