@@ -8,6 +8,7 @@ import FavoriteRoundedIcon from "@material-ui/icons/FavoriteRounded";
 import StarRoundedIcon from "@material-ui/icons/StarRounded";
 import ReplayRoundedIcon from "@material-ui/icons/ReplayRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+import axios from "../../config/axios";
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -91,6 +92,7 @@ const useStyles = makeStyles(() => ({
 export default function SwipeContainer({ accounts }) {
   const classes = useStyles();
   const [current, setCurrent] = useState(0);
+  const curAcc = accounts[current];
 
   const nextSlide = () => {
     setCurrent(current === accounts.length - 1 ? 0 : current + 1);
@@ -103,6 +105,14 @@ export default function SwipeContainer({ accounts }) {
   if (!Array.isArray(accounts) || accounts.length <= 0) {
     return null;
   }
+
+  const createLike = async () => {
+    await axios.post("/match", { matchId: curAcc.id });
+  };
+
+  const createSuperlike = async () => {
+    await axios.post("/match", { matchId: curAcc.id,  });
+  };
 
   return (
     <div className={classes.container}>
