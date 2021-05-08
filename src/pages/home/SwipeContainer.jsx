@@ -121,11 +121,15 @@ export default function SwipeContainer({ accounts }) {
       <Paper elevation={3} className={classes.paper}>
         {accounts.map((account, index) => {
           return (
-            <>
+            <div key={index}>
               {index === current && (
-                <ImageSlider className={classes.paper} account={account} />
+                <ImageSlider
+                  className={classes.paper}
+                  account={account}
+                  key={index}
+                />
               )}
-            </>
+            </div>
           );
         })}
       </Paper>

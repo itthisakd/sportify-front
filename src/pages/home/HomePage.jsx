@@ -79,6 +79,13 @@ export default function HomePage() {
       job: "",
       company: "",
       school: "Clerk County College",
+      sports: [
+        { id: 1, sportName: "Basketball" },
+        { id: 3, sportName: "Badminton" },
+        { id: 6, sportName: "Tennis" },
+        { id: 7, sportName: "Golf" },
+        { id: 96, sportName: "Fencing" },
+      ],
       searchLocation: "",
       currentLocation: "",
       lastActive: "2020-09-0900:00:09",
