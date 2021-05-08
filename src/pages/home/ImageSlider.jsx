@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import ImageIndexBar from "./ImageIndexBar";
 import InfoContainer from "./InfoContainer";
+import InfoIcon from "@material-ui/icons/Info";
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -19,11 +20,20 @@ const useStyles = makeStyles(() => ({
   },
   rightTap: {
     width: "45vw",
-    height: "135vw",
+    height: "110vw",
     position: "absolute",
     top: "0px",
     right: "0px",
-    fontSize: "3rem",
+    zIndex: "10",
+    cursor: "pointer",
+    userSelect: "none",
+  },
+  profileTap: {
+    width: "90vw",
+    height: "25vw",
+    position: "absolute",
+    bottom: "0px",
+    left: "0px",
     color: "#000",
     zIndex: "10",
     cursor: "pointer",
@@ -31,12 +41,10 @@ const useStyles = makeStyles(() => ({
   },
   leftTap: {
     width: "45vw",
-    height: "135vw",
+    height: "110vw",
     position: "absolute",
     top: "0px",
     left: "0px",
-    fontSize: "3rem",
-    color: "#000",
     zIndex: "10",
     cursor: "pointer",
     userSelect: "none",
@@ -49,6 +57,7 @@ const useStyles = makeStyles(() => ({
     opacity: "1",
     transitionDuration: "1s",
     transform: "scale(1.08)",
+    //REVIEW transition to become smoother
   },
   imageIndexBar: {
     position: "relative",
@@ -84,13 +93,34 @@ export default function ImageSlider({ account }) {
       setCurrent(current === 0 ? slides.length - 1 : current - 1);
   };
 
+  const viewProfile = () => {
+    console.log("Clicked");
+    //TODO –––––––––––––––VIEW PROFILE
+  };
+
   if (!Array.isArray(slides) || slides.length <= 0) {
     return null;
   }
 
   return (
     <div className={classes.container}>
-      <InfoContainer current={current} account={account} />
+      <div className={classes.leftTap} onClick={prevSlide}></div>
+      <div className={classes.rightTap} onClick={nextSlide}></div>
+      <div className={classes.profileTap} onClick={viewProfile}></div>
+      <InfoIcon
+        style={{
+          color: "white",
+          position: "absolute",
+          bottom: "20px",
+          textShadow: "0px 0px 11px rgba(0, 0, 0, 0.5)",
+          right: "20px",
+        }}
+      />
+      <InfoContainer
+        current={current}
+        account={account}
+        
+      />
       <ImageIndexBar
         className={classes.imageIndexBar}
         current={current}
@@ -112,8 +142,6 @@ export default function ImageSlider({ account }) {
           </div>
         );
       })}
-      <div className={classes.leftTap} onClick={prevSlide}></div>
-      <div className={classes.rightTap} onClick={nextSlide}></div>
     </div>
   );
 }

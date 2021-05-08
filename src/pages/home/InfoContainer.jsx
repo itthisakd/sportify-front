@@ -8,10 +8,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "600",
   },
   info: {
-    isplay: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "left",
     textAlign: "left",
     color: "white",
     position: "absolute",
@@ -19,9 +15,14 @@ const useStyles = makeStyles((theme) => ({
     left: "0px",
     padding: "15px 20px",
     textShadow: "0px 0px 11px rgba(0, 0, 0, 0.5)",
+    width: "calc(90vw - 80px)"
   },
   aboutMe: {
     fontWeight: "400",
+    maxHeight: "80px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    lineHeight: "20px",
   },
   greenCircle: {
     backgroundColor: "lime",
@@ -65,7 +66,7 @@ export default function InfoContainer({ current, account }) {
         </div>
       )}
       {current === 0 && (
-        <Typography variant="body1">{account.aboutMe}</Typography>
+        <Typography variant="body1" className={classes.aboutMe}>{account.aboutMe}</Typography>
       )}
       {current === 1 && (
         <div className={classes.root}>
@@ -73,7 +74,7 @@ export default function InfoContainer({ current, account }) {
             return <Chip label={sportName} className={classes.chip} key={id} />;
           })}
         </div>
-        //TODO match colors of tags if sport matches that of the user 
+        //TODO match colors of tags if sport matches that of the user
       )}
     </div>
   );
