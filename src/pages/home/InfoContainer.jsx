@@ -75,16 +75,6 @@ export default function InfoContainer({ current, account }) {
         </div>
         //TODO match colors of tags if sport matches that of the user 
       )}
-      {/* {current === 1 && (
-        <Typography variant="h6" className={classes.aboutMe}>
-          {account.aboutMe}
-        </Typography>
-      )}
-      {current === 2 && (
-        <Typography variant="h6" className={classes.aboutMe}>
-          {account.aboutMe}
-        </Typography>
-      )} */}
     </div>
   );
 }
