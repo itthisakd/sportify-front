@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import Chip from "@material-ui/core/Chip";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   name: {
     fontWeight: "600",
   },
@@ -30,6 +31,17 @@ const useStyles = makeStyles(() => ({
     boxShadow: "0px 0px 11px rgba(0, 0, 0, 0.5)",
     margin: "10px 5px",
   },
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    "& > *": {
+      margin: theme.spacing(0.5),
+    },
+  },
+  chip: {
+    height: "25px",
+    padding: "0px",
+  },
 }));
 
 export default function InfoContainer({ current, account }) {
@@ -55,16 +67,14 @@ export default function InfoContainer({ current, account }) {
       {current === 0 && (
         <Typography variant="body1">{account.aboutMe}</Typography>
       )}
-      {/* {current === 1 && (
-        <Typography variant="h6" className={classes.aboutMe}>
-          {account.aboutMe}
-        </Typography>
+      {current === 1 && (
+        <div className={classes.root}>
+          {account.sports.map(({ sportName, id }) => {
+            return <Chip label={sportName} className={classes.chip} key={id} />;
+          })}
+        </div>
+        //TODO match colors of tags if sport matches that of the user 
       )}
-      {current === 2 && (
-        <Typography variant="h6" className={classes.aboutMe}>
-          {account.aboutMe}
-        </Typography>
-      )} */}
     </div>
   );
 }

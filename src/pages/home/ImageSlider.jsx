@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import ImageIndexBar from "./ImageIndexBar";
-import InfoContainer from "./InfoContainer"
+import InfoContainer from "./InfoContainer";
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -65,24 +65,23 @@ const useStyles = makeStyles(() => ({
   info: {
     position: "absolute",
     textAlign: "left",
-    
   },
 }));
 
-export default function ImageSlider({account}) {
+export default function ImageSlider({ account }) {
   const classes = useStyles();
   const [current, setCurrent] = useState(0);
 
   const slides = account.images;
 
   const nextSlide = () => {
-    if (current !== slides.length-1)
-    setCurrent(current === slides.length - 1 ? 0 : current + 1);
+    if (current !== slides.length - 1)
+      setCurrent(current === slides.length - 1 ? 0 : current + 1);
   };
 
   const prevSlide = () => {
     if (current !== 0)
-    setCurrent(current === 0 ? slides.length - 1 : current - 1);
+      setCurrent(current === 0 ? slides.length - 1 : current - 1);
   };
 
   if (!Array.isArray(slides) || slides.length <= 0) {
@@ -91,7 +90,7 @@ export default function ImageSlider({account}) {
 
   return (
     <div className={classes.container}>
-      <InfoContainer current={current} account={account}/>
+      <InfoContainer current={current} account={account} />
       <ImageIndexBar
         className={classes.imageIndexBar}
         current={current}
@@ -99,7 +98,7 @@ export default function ImageSlider({account}) {
       />
       {slides.map((slide, index) => {
         return (
-          <>
+          <div key={index}>
             {index === current && (
               <Paper
                 elevation={3}
@@ -110,7 +109,7 @@ export default function ImageSlider({account}) {
                 <img className={classes.paper} src={slide.image} key={index} />
               </Paper>
             )}
-          </>
+          </div>
         );
       })}
       <div className={classes.leftTap} onClick={prevSlide}></div>
