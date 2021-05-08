@@ -107,11 +107,13 @@ export default function SwipeContainer({ accounts }) {
   }
 
   const createLike = async () => {
-    await axios.post("/match", { matchId: curAcc.id });
+    //TODO
+    // await axios.post("/match", { matchId: curAcc.id });
   };
 
   const createSuperlike = async () => {
-    await axios.post("/match", { matchId: curAcc.id,  });
+    //TODO
+    // await axios.post("/match", { matchId: curAcc.id, type: 1 });
   };
 
   return (
@@ -132,7 +134,7 @@ export default function SwipeContainer({ accounts }) {
           color="primary"
           className={classes.button}
           onClick={() => {
-            // REWIND
+            //TODO––––––––––––––––––– limit rewind to once per day for lite users
             prevSlide();
           }}
         >
@@ -142,7 +144,7 @@ export default function SwipeContainer({ accounts }) {
           color="primary"
           className={classes.button}
           onClick={() => {
-            // like
+            createLike();
             nextSlide();
           }}
         >
@@ -153,7 +155,7 @@ export default function SwipeContainer({ accounts }) {
           color="primary"
           className={classes.button}
           onClick={() => {
-            // superlike
+            createSuperlike();
             nextSlide();
           }}
         >
@@ -164,7 +166,6 @@ export default function SwipeContainer({ accounts }) {
           color="primary"
           className={classes.button}
           onClick={() => {
-            // reject
             nextSlide();
           }}
         >

@@ -1,12 +1,11 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import Menu from "../shared/Menu";
-import Container from "@material-ui/core/Container"
+import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeContainer from "./SwipeContainer";
 
 const useStyles = makeStyles(() => ({
-  
   flexCol: {
     display: "flex",
     flexDirection: "column",
@@ -50,9 +49,20 @@ const useStyles = makeStyles(() => ({
 export default function HomePage() {
   const history = useHistory();
   const classes = useStyles();
+  //TODO
+  // const [accounts, setAccounts] = useState([]);
 
+  const getAccounts = async () => {
+    //TODO
+    // const res = await axios.get("/accounts");
+    // setAccounts(res)
+  };
 
-  //TODO –––––––– GET API to get accounts and their info
+  //TODO
+  // useEffect(() => {
+  //   getAccounts();
+  // }, []);
+
   const accounts = [
     {
       id: 1,
@@ -62,7 +72,8 @@ export default function HomePage() {
       gender: "female",
       email: "amy@gmail.com",
       dob: "2001-09-09",
-      aboutMe: "I am nice because I am veyr very nice and also extremely kind and nice.",
+      aboutMe:
+        "I am nice because I am veyr very nice and also extremely kind and nice.",
       instagram: "amylee",
       sporify: "samy",
       job: "",
@@ -90,9 +101,9 @@ export default function HomePage() {
       ],
       age: 18,
       // age: DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
-      
+
       //––––––––––––––––––––––––––GENERATE–––––––––––––––––––––––––
-      distance: "6km"
+      distance: "6km",
     },
     {
       id: 2,
@@ -135,8 +146,10 @@ export default function HomePage() {
     <div className={classes.flexBetween}>
       <Menu />
       <Container className={classes.flexBetween}>
-        <SwipeContainer className={classes.swipeContainer} accounts={accounts} />
-        
+        <SwipeContainer
+          className={classes.swipeContainer}
+          accounts={accounts}
+        />
       </Container>
     </div>
   );
