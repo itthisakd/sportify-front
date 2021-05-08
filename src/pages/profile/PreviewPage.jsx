@@ -12,7 +12,9 @@ const useStyles = makeStyles(() => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    width: "100vw",
+    margin: "0px",
+    padding: "0px",
+    height: "100%",
   },
   flexCenter: {
     display: "flex",
@@ -68,6 +70,13 @@ export default function PreviewPage() {
     lastActive: "2020-09-0900:00:09",
     showActive: 1,
     recentlyActive: 1,
+    sports: [
+      { id: 1, sportName: "Basketball" },
+      { id: 3, sportName: "Badminton" },
+      { id: 6, sportName: "Tennis" },
+      { id: 7, sportName: "Golf" },
+      { id: 96, sportName: "Fencing" },
+    ],
     images: [
       {
         image:
@@ -91,13 +100,13 @@ export default function PreviewPage() {
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <div className={classes.flexCol}>
       <SectionHeader
         title="Preview"
         doneAction={() => history.push("/profile")}
         className={classes.header}
       />
-      <Container className={classes.flexCenter}>
+      <Container className={classes.flexCol}>
         <ImageSlider className={classes.paper} account={account} key="slider" />
       </Container>
     </div>

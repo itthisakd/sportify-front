@@ -1,4 +1,7 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import SectionHeader from "../shared/SectionHeader";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -8,7 +11,13 @@ import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 
+const useStyles = makeStyles(() => ({
+}));
+
 export default function EditInfoPage() {
+  const history = useHistory();
+  const classes = useStyles();
+
   return (
     <div
       style={{
@@ -16,6 +25,10 @@ export default function EditInfoPage() {
         backgroundColor: "#f5f7fa",
       }}
     >
+      <SectionHeader
+        title="Edit Info"
+        doneAction={() => history.push("/profile")}
+      />
       <div
         style={{
           borderStyle: "solid",
@@ -28,23 +41,6 @@ export default function EditInfoPage() {
           backgroundColor: "white",
         }}
       >
-        <h1
-          style={{
-            fontSize: "1.6rem",
-            margin: 0,
-            backgroundColor: "white",
-          }}
-        >
-          Edit Info
-        </h1>
-      </div>
-      <Button
-        style={{ top: 0, right: 0, height: "43px", position: "absolute" }}
-        color="secondary"
-      >
-        Done
-      </Button>
-      <div>
         <h5
           style={{ textAlign: "left", padding: "0.5rem", margin: "1rem 0 0 0" }}
         >
@@ -73,7 +69,7 @@ export default function EditInfoPage() {
             style={{ backgroundColor: "white", width: "100%", padding: "12px" }}
           ></Input>
         </div>
-      </a >
+      </a>
       <div>
         <h5
           style={{ textAlign: "left", padding: "0.5rem", margin: "1rem 0 0 0" }}
