@@ -44,11 +44,11 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     right: "-5px",
     bottom: "-5px",
-    zIndex: "1",
+    zIndex: "10",
     backgroundColor: "#ff9600",
     color: "white",
-    width: "3.5vh",
-    height: "3.5vh",
+    width: "25px",
+    height: "25px",
   },
 }));
 
@@ -72,7 +72,7 @@ export default function EditInfoPage() {
           <IconButton
             size="small"
             className={classes.icon}
-            onClick={console.log("test")}
+            onClick={() => console.log("test")}
           >
             <ClearRoundedIcon style={{fontSize:"100%"}}/>
           </IconButton>
@@ -215,7 +215,6 @@ export default function EditInfoPage() {
           >
             <MenuItem value={"Male"}>Male</MenuItem>
             <MenuItem value={"Female"}>Female</MenuItem>
-            <MenuItem value={"Others"}>Others</MenuItem>
           </Select>
         </FormControl>
       </div>
