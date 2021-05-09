@@ -4,40 +4,48 @@ import { makeStyles } from "@material-ui/core/styles";
 import MadeButton from "../shared/Button";
 import HeadButton from "../shared/HeadRegisterButton";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   header: {
     fontWeight: 550,
     textAlign: "left",
     marginLeft: "10%",
-    width: "60%",
+    width: "55%",
+  },
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: '70%',
   },
 }));
 
-export default function VerifyEmailPage() {
+export default function BirthDatePage() {
   const classes = useStyles();
-
   return (
     <div>
       <HeadButton />
       <div style={{ marginTop: "1%" }}>
         <Typography variant="h4" className={classes.header}>
-          My code is
-        </Typography>
-      </div>
-      <div style={{display: 'flex', padding: '1%', width: '60%', marginLeft: "10%"}}>
-        <Typography style={{ color: "#939393", fontWeight: 400 }}>
-          9999999
-        </Typography>
-        &nbsp;&nbsp;&nbsp;
-        <Typography style={{ color: "#4a4a4a", fontWeight: 600 }}>
-          Resend
+          My Birthday is
         </Typography>
       </div>
       <div style={{ marginTop: "10%" }}>
-        <TextField style={{ width: "80%" }}></TextField>
+        <TextField
+          id="date"
+          label="Birthday"
+          type="date"
+          defaultValue=""
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
       </div>
       <div style={{ marginTop: "10%" }}>
-        <MadeButton text="CONTINUE"></MadeButton>
+        <MadeButton text="CONTINUE" textColor='white'></MadeButton>
       </div>
     </div>
   );

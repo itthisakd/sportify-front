@@ -40,41 +40,20 @@ const useStyles = makeStyles((theme) => ({
     width: "24vw",
     height: "40vw",
   },
+  icon: {
+    position: "absolute",
+    right: "-5px",
+    bottom: "-5px",
+    zIndex: "1",
+    backgroundColor: "#ff9600",
+    color: "white",
+    width: "3.5vh",
+    height: "3.5vh",
+  },
 }));
 
 export default function EditInfoPage() {
   const classes = useStyles();
-
-  function FormRow() {
-    return (
-      <React.Fragment>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>
-            <div>item</div>
-            <IconButton
-              size="small"
-              color="secondary"
-              style={{
-                position: "absolute",
-                right: "-10px",
-                bottom: "-5px",
-                zIndex: "1",
-                backgroundColor: "green",
-              }}
-            >
-              <ClearRoundedIcon />
-            </IconButton>
-          </Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>item</Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>item</Paper>
-        </Grid>
-      </React.Fragment>
-    );
-  }
 
   return (
     <div
@@ -89,28 +68,60 @@ export default function EditInfoPage() {
         doneAction={() => history.push("/profile")}
       />
       <div className={classes.flexWrap}>
-        <Paper className={classes.paper}><div>item</div>
-            <IconButton
-              size="small"
-              color="secondary"
-              style={{
-                position: "absolute",
-                right: "-10px",
-                bottom: "-5px",
-                zIndex: "1",
-                backgroundColor: "green",
-              }}
-            >
-              <ClearRoundedIcon />
-            </IconButton></Paper>
-        <Paper className={classes.paper}>item</Paper>
-        <Paper className={classes.paper}>item</Paper>
-        <Paper className={classes.paper}>item</Paper>
-        <Paper className={classes.paper}>item</Paper>
-        <Paper className={classes.paper}>item</Paper>
-        <Paper className={classes.paper}>item</Paper>
-        <Paper className={classes.paper}>item</Paper>
-        <Paper className={classes.paper}>item</Paper>
+        <Paper className={classes.paper}>
+          <IconButton
+            size="small"
+            className={classes.icon}
+            onClick={console.log("test")}
+          >
+            <ClearRoundedIcon style={{fontSize:"100%"}}/>
+          </IconButton>
+        </Paper>
+        <Paper className={classes.paper}>
+          <IconButton
+            size="small"
+            className={classes.icon}
+            onClick={console.log("test")}
+          >
+            <ClearRoundedIcon style={{fontSize:"100%"}}/>
+          </IconButton>
+        </Paper>
+        <Paper className={classes.paper}>
+          <IconButton
+            size="small"
+            className={classes.icon}
+            onClick={console.log("test")}
+          >
+            <ClearRoundedIcon style={{fontSize:"100%"}}/>
+          </IconButton>
+        </Paper>
+        <Paper className={classes.paper}>
+          <IconButton
+            size="small"
+            className={classes.icon}
+            onClick={console.log("test")}
+          >
+            <ClearRoundedIcon style={{fontSize:"100%"}}/>
+          </IconButton>
+        </Paper>
+        <Paper className={classes.paper}>
+          <IconButton
+            size="small"
+            className={classes.icon}
+            onClick={console.log("test")}
+          >
+            <ClearRoundedIcon style={{fontSize:"100%"}}/>
+          </IconButton>
+        </Paper>
+        <Paper className={classes.paper}>
+          <IconButton
+            size="small"
+            className={classes.icon}
+            onClick={console.log("test")}
+          >
+            <ClearRoundedIcon style={{fontSize:"100%"}}/>
+          </IconButton>
+        </Paper>
       </div>
       <span>
         <MadeButton text="ADD MEDIA"></MadeButton>

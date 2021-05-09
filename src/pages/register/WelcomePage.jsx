@@ -4,6 +4,7 @@ import MadeButton from "../shared/Button";
 import logo from "../../../logo.png";
 import { makeStyles } from "@material-ui/core/styles";
 import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -39,6 +40,8 @@ const useStyles = makeStyles(() => ({
 
 export default function WelcomePage() {
   const classes = useStyles();
+  const history = useHistory();
+
   return (
     <div>
       <div>
@@ -101,7 +104,7 @@ export default function WelcomePage() {
         </Typography>
       </div>
       <div style={{ marginTop: "20%" }}>
-        <MadeButton text="I AGREE" />
+        <MadeButton text="I AGREE" action={() => history.push('/register-name')}></MadeButton>
       </div>
     </div>
   );
