@@ -9,22 +9,35 @@ const useStyles = makeStyles(() => ({
     fontWeight: "600",
     fontSize: "17px",
     borderRadius: "100px",
-    position: "relative",
     color: "white",
     background: "linear-gradient(45deg, #E8407D 10%, #EE7F5E 90%)",
-    boxShadow: "0px 0px 11px rgba(0, 0, 0, 0.5)",
-  },
-  disabled: {
-    width: "90vw",
-    height: "135vw",
-    borderRadius: "15px",
-    position: "relative",
+    boxShadow: "0px 0px 11px rgba(0, 0, 0, 0.3)",
   },
   outlined: {
-    width: "90vw",
-    height: "135vw",
-    borderRadius: "15px",
-    position: "relative",
+    width: "70vw",
+    height: "40px",
+    fontWeight: "600",
+    fontSize: "17px",
+    borderRadius: "100px",
+    color: "#EA5D6B",
+    border: "1px #EA5D6B solid",
+  },
+  outlinedInactive: {
+    width: "70vw",
+    height: "40px",
+    fontWeight: "600",
+    fontSize: "17px",
+    borderRadius: "100px",
+    color: "darkgray",
+    border: "1px darkgray solid",
+  },
+  disabled: {
+    width: "70vw",
+    height: "40px",
+    fontWeight: "600",
+    fontSize: "17px",
+    boxShadow: "0px 0px 11px rgba(0, 0, 0, 0.3)",
+    borderRadius: "100px",
   },
 }));
 
@@ -41,14 +54,51 @@ export default function LongButton({ onClick, type, name }) {
           {name}
         </Button>
       )}
-      {type === "outlined" && (
-        <Button variant="contained" onClick={onClick}>
+      {type === "outlined-active" && (
+        <Button
+          variant="outlined"
+          onClick={onClick}
+          className={classes.outlined}
+        >
           {name}
         </Button>
       )}
-      {type === "disabled" && <Button variant="contained">{name}</Button>}
+      {type === "outlined-inactive" && (
+        <Button
+          variant="outlined"
+          onClick={onClick}
+          className={classes.outlinedInactive}
+        >
+          {name}
+        </Button>
+      )}
+      {type === "outlined-disabled" && (
+        <Button
+          variant="outlined"
+          onClick={onClick}
+          className={classes.outlinedInactive}
+          disabled
+        >
+          {name}
+        </Button>
+      )}
+      {type === "disabled" && (
+        <Button
+          variant="contained"
+          onClick={onClick}
+          className={classes.disabled}
+          disabled
+        >
+          {name}
+        </Button>
+      )}
     </div>
   );
 }
 
 // <LongButton name="START TUTORIAL" type="contained" onClick={next} />
+// <LongButton name="START TUTORIAL" type="outlined-active" onClick={next} />
+// <LongButton name="START TUTORIAL" type="outlined-inactive" onClick={next} />
+// <LongButton name="START TUTORIAL" type="outlined-disabled" onClick={next} />
+// <LongButton name="START TUTORIAL" type="disabled" onClick={next} />
+
