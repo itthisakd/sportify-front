@@ -45,6 +45,11 @@ const useStyles = makeStyles(() => ({
     color: "lightgrey",
     fontWeight: "500",
   },
+  button: {
+    width: "17vw",
+    height: "17vw",
+    margin: "5px 0px",
+  },
 }));
 
 export default function TutorialPage() {
@@ -119,13 +124,19 @@ export default function TutorialPage() {
         <Container className={classes.buttonContainer}>
           <Fab
             color="primary"
-            className={current === 5 ? null : classes.hidden}
+            className={current === 5 ? classes.button : classes.hidden}
           >
             <ReplayRoundedIcon />
           </Fab>
           <Fab
             color="primary"
-            onClick={current === 5 ? null : current === 3 ? next : null}
+            onClick={
+              current === 5
+                ? classes.button
+                : current === 3
+                ? next
+                : classes.button
+            }
             className={[5, 3].includes(current) ? null : classes.hidden}
           >
             <FavoriteRoundedIcon />
@@ -133,7 +144,7 @@ export default function TutorialPage() {
 
           <Fab
             color="primary"
-            className={current === 5 ? null : classes.hidden}
+            className={current === 5 ? classes.button : classes.hidden}
           >
             <StarRoundedIcon />
           </Fab>
@@ -141,7 +152,9 @@ export default function TutorialPage() {
           <Fab
             color="primary"
             onClick={current === 5 ? null : current === 2 ? next : null}
-            className={[5, 2].includes(current) ? null : classes.hidden}
+            className={
+              [5, 2].includes(current) ? classes.button : classes.hidden
+            }
           >
             <CloseRoundedIcon />
           </Fab>

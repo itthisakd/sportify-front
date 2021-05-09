@@ -50,3 +50,5 @@ export default function LongButton({ onClick, type, name }) {
     </div>
   );
 }
+
+// <LongButton name="START TUTORIAL" type="contained" onClick={next} />

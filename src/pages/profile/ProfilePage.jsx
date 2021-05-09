@@ -46,8 +46,8 @@ const useStyles = makeStyles(() => ({
   },
   button: {
     margin: "10px 15px",
-    width: "60px",
-    height: "60px",
+    width: "20vw",
+    height: "20vw",
   },
   imgCircle: {
     margin: "20px 0px 10px 0px",
@@ -134,9 +134,29 @@ export default function ProfilePage() {
           src="https://img.freepik.com/free-photo/young-asian-girl-portrait-isolated_53876-70968.jpg?size=626&ext=jpg"
           className={classes.imgCircle}
         />
-        <Typography variant="h4" className={classes.name}>
-          {account.firstName}, {account.age}
-        </Typography>
+        <Container style={{ padding: "20px" }} className={classes.center}>
+          <Typography
+            variant="h4"
+            style={{
+              fontWeight: "600",
+              display: "inline-block",
+              color: "#303030",
+            }}
+          >
+            {account.firstName}
+            <Typography
+              variant="h5"
+              style={{
+                fontWeight: "400",
+                display: "inline-block",
+                color: "#404040",
+              }}
+            >
+              &nbsp;
+              {account.age}
+            </Typography>
+          </Typography>
+        </Container>
       </Container>
 
       <Container className={classes.flexRow}>

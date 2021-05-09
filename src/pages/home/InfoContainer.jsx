@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     left: "0px",
     padding: "15px 20px",
     textShadow: "0px 0px 11px rgba(0, 0, 0, 0.5)",
-    width: "calc(90vw - 80px)"
+    width: "calc(90vw - 70px)",
   },
   aboutMe: {
     fontWeight: "400",
@@ -49,8 +49,24 @@ export default function InfoContainer({ current, account }) {
   const classes = useStyles();
   return (
     <div className={classes.info}>
-      <Typography variant="h4" className={classes.name}>
-        {account.firstName}, {account.age}
+      <Typography
+        variant="h4"
+        style={{
+          fontWeight: "600",
+          display: "inline-block",
+        }}
+      >
+        {account.firstName}
+        <Typography
+          variant="h5"
+          style={{
+            fontWeight: "400",
+            display: "inline-block",
+          }}
+        >
+          &nbsp;
+          {account.age}
+        </Typography>
       </Typography>
       {!!account.showActive && !!account.recentlyActive && (
         <div
@@ -66,7 +82,9 @@ export default function InfoContainer({ current, account }) {
         </div>
       )}
       {current === 0 && (
-        <Typography variant="body1" className={classes.aboutMe}>{account.aboutMe}</Typography>
+        <Typography variant="body1" className={classes.aboutMe}>
+          {account.aboutMe}
+        </Typography>
       )}
       {current === 1 && (
         <div className={classes.root}>
