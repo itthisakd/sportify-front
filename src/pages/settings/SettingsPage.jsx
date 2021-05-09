@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import SectionHeader from "../shared/SectionHeader";
@@ -11,7 +11,8 @@ import {
   Switch,
   Input,
 } from "@material-ui/core";
-import { useForm } from "react-hook-form";
+import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
+import axios from "../../config/axios";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 0 5px 10px",
     display: "block",
     textAlign: "left",
+    fontWeight: "400",
   },
   caption: {
     margin: "5px 5px 5px 10px",
@@ -51,10 +53,15 @@ const useStyles = makeStyles((theme) => ({
   },
   head: {
     fontWeight: "400",
+    margin: "0px 5px",
   },
   tail: {
     color: "grey",
     textAlign: "right",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "end",
+    alignItems: "center",
   },
   bg: {
     backgroundColor: "ghostwhite",
@@ -64,22 +71,11 @@ const useStyles = makeStyles((theme) => ({
 export default function SettingsPage() {
   const classes = useStyles();
   const history = useHistory();
-  const { register, handleSubmit } = useForm();
-
-  //TODO
-  // const res = await axios.get("/accounts");
-  // setAccounts(res)
-  // };
-
-  //TODO
-  // useEffect(() => {
-  //   getAccounts();
-  // }, []);
-
-  const account = {
+  const [account, setAccount] = useState({
     id: 1,
     firstName: "Amy",
     gender: "female",
+    phoneNumber: "0925419369",
     email: "amy@gmail.com",
     dob: "2001-09-09",
     aboutMe:
@@ -90,10 +86,14 @@ export default function SettingsPage() {
     company: "",
     school: "Clerk County College",
     searchLocation: "",
+    searchDistance: 45,
+    searchAge: "18-40",
+    searchGender: "a",
     currentLocation: "",
     lastActive: "2020-09-0900:00:09",
     showActive: 1,
-    recentlyActive: 1,
+    showInStack: 1,
+
     //––––––––––––––––––––––––––FROM SEPERATE TABLE––––––––––––––––––––––––
     planName: "lite",
     planId: "1",
@@ -121,50 +121,88 @@ export default function SettingsPage() {
     ],
 
     //––––––––––––––––––––––––––GENERATE–––––––––––––––––––––––––
+    recentlyActive: 1,
     distance: "6km",
     age: 18,
+    locationName: "Bangkok, Thailand",
     // age: DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
+  });
+  const [maxDist, setMaxDist] = useState(account.searchDistance);
+  const [ageRange, setAgeRange] = useState(account.searchAge.split("-"));
+  const [showActive, setShowActive] = useState(account.showActive);
+  const [showInStack, setShowInStack] = useState(account.showInStack);
+
+  //TODO
+  // const res = await axios.get("/accounts");
+  // setAccount(res)
+  // };
+
+  //TODO
+  // useEffect(() => {
+  //   getAccounts();
+  // }, []);
+
+  const onDone = async () => {
+    let obj = {};
+    if (maxDist !== account.searchDistance) {
+      obj = { ...obj, searchDistance: maxDist };
+    }
+    if (ageRange !== account.searchAge) {
+      obj = { ...obj, searchAge: ageRange.join("-") };
+    }
+    if (showActive !== account.showActive) {
+      obj = { ...obj, showActive };
+    }
+    if (showInStack !== account.showInStack) {
+      obj = { ...obj, showInStack };
+    }
+
+    await axios.patch("/account", obj);
+    await history.push("/profile");
   };
 
   return (
     <div className={classes.bg}>
-      <SectionHeader
-        title="Settings"
-        doneAction={() => history.push("/profile")}
-      />
+      <SectionHeader title="Settings" doneAction={onDone} />
       <br />
       <Typography variant="caption" className={classes.section}>
         ACCOUNT SETTINGS
       </Typography>
       <Paper variant="outlined" className={classes.paper}>
-        <Container
-          className={classes.row}
-          onClick={() => {
-            //TODO bring to register phone number page
-          }}
-        >
-          <Typography variant="body1" className={classes.head}>
-            Phone Number
-          </Typography>
-          <Typography variant="body1" className={classes.tail}>
-            0925419369
-          </Typography>
-        </Container>
-        <Divider />
-        <Container className={classes.row}>
-          <Typography variant="body1" className={classes.head}>
-            Email
-          </Typography>
-          <Typography
-            variant="body1"
-            className={classes.tail}
+        {account.phoneNumber && (
+          <Container
+            className={classes.row}
             onClick={() => {
-              //TODO bring to register email page
+              //TODO bring to register phone number page
             }}
           >
-            itthisakds@gmail.com
-          </Typography>
-        </Container>
+            <Typography variant="body1" className={classes.head}>
+              Phone Number
+            </Typography>
+            <Typography variant="body1" className={classes.tail}>
+              {account.phoneNumber}
+              <NavigateNextRoundedIcon style={{ color: "lightgray" }} />
+            </Typography>
+          </Container>
+        )}
+        <Divider />
+        {account.email && (
+          <Container className={classes.row}>
+            <Typography variant="body1" className={classes.head}>
+              Email
+            </Typography>
+            <Typography
+              variant="body1"
+              className={classes.tail}
+              onClick={() => {
+                //TODO bring to register email page
+              }}
+            >
+              {account.email}
+              <NavigateNextRoundedIcon style={{ color: "lightgray" }} />
+            </Typography>
+          </Container>
+        )}
       </Paper>
 
       <br />
@@ -183,7 +221,7 @@ export default function SettingsPage() {
             Sports
           </Typography>
           <Typography variant="body1" className={classes.tail}>
-            INSERT PAGE
+            <NavigateNextRoundedIcon style={{ color: "lightgray" }} />
           </Typography>
         </Container>
         <Divider />
@@ -199,7 +237,8 @@ export default function SettingsPage() {
             Location
           </Typography>
           <Typography variant="body1" className={classes.tail}>
-            Bangkok, Thailand
+            {account.locationName}
+            <NavigateNextRoundedIcon style={{ color: "lightgray" }} />
           </Typography>
         </Container>
         <Divider />
@@ -208,8 +247,12 @@ export default function SettingsPage() {
           <Typography variant="body1" className={classes.head}>
             Maximum Distance
           </Typography>
-          <Typography variant="body1" className={classes.tail}>
-            21 km
+          <Typography
+            variant="body1"
+            className={classes.tail}
+            style={{ margin: "0px 10px" }}
+          >
+            {maxDist} km
           </Typography>
         </Container>
         <Container className={classes.center}>
@@ -218,8 +261,10 @@ export default function SettingsPage() {
             min={2}
             max={160}
             name="maxDistance"
-            // value={value}
-            // onChange={handleChange}
+            value={maxDist}
+            onChange={(e, newValue) => {
+              setMaxDist(newValue);
+            }}
           />
         </Container>
         <Divider />
@@ -233,7 +278,13 @@ export default function SettingsPage() {
             Show me
           </Typography>
           <Typography variant="body1" className={classes.tail}>
-            Women
+            {account.searchGender === "f"
+              ? "Women"
+              : account.searchGender === "m"
+              ? "Men"
+              : "Everyone"}
+
+            <NavigateNextRoundedIcon style={{ color: "lightgray" }} />
           </Typography>
         </Container>
         <Divider />
@@ -241,19 +292,24 @@ export default function SettingsPage() {
           <Typography variant="body1" className={classes.head}>
             Age Range
           </Typography>
-          <Typography variant="body1" className={classes.tail}>
-            18-39
+          <Typography
+            variant="body1"
+            className={classes.tail}
+            style={{ margin: "0px 10px" }}
+          >
+            {ageRange.join(" – ")}
           </Typography>
         </Container>
         <Container className={classes.center}>
           <Slider
-            value={[18, 39]} //TODO ––––––––––––––– ADD STATE
+            value={ageRange}
             style={{ width: "90%" }}
             min={18}
             max={100}
             name="ageRange"
-            // value={value}
-            // onChange={handleChange}
+            onChange={(e, newValue) => {
+              setAgeRange(newValue);
+            }}
           />
         </Container>
       </Paper>
@@ -265,12 +321,14 @@ export default function SettingsPage() {
       <Paper variant="outlined" className={classes.paper}>
         <Container className={classes.row}>
           <Typography variant="body1" className={classes.head}>
-            Show me on Sportify
+            Show me in stack
           </Typography>
           <Switch
-            // checked={state.checkedB}
-            // onChange={handleChange}
-            name="showMe"
+            checked={showActive}
+            onChange={(e) => {
+              setShowActive(+e.target.checked);
+            }}
+            name="showActive"
             color="primary"
             style={{ margin: "0px" }}
           />
@@ -292,9 +350,11 @@ export default function SettingsPage() {
             Show Activity Status
           </Typography>
           <Switch
-            // checked={state.checkedB}
-            // onChange={handleChange}
-            name="showMe"
+            checked={showInStack}
+            onChange={(e) => {
+              setShowInStack(+e.target.checked);
+            }}
+            name="showInStack"
             color="primary"
             style={{ margin: "0px" }}
           />
