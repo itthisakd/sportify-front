@@ -19,7 +19,7 @@ export default function SectionHeader({ title, doneAction }) {
   const classes = useStyles();
 
   return (
-    <div>
+    <div style={{width: "100vw"}}>
       <Paper elevation={1}>
         <Grid container style={{ height: "43px" }}>
           <Grid item xs={4}></Grid>

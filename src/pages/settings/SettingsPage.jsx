@@ -11,6 +11,7 @@ import {
   Switch,
   Input,
 } from "@material-ui/core";
+import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -63,6 +64,67 @@ const useStyles = makeStyles((theme) => ({
 export default function SettingsPage() {
   const classes = useStyles();
   const history = useHistory();
+  const { register, handleSubmit } = useForm();
+
+  //TODO
+  // const res = await axios.get("/accounts");
+  // setAccounts(res)
+  // };
+
+  //TODO
+  // useEffect(() => {
+  //   getAccounts();
+  // }, []);
+
+  const account = {
+    id: 1,
+    firstName: "Amy",
+    gender: "female",
+    email: "amy@gmail.com",
+    dob: "2001-09-09",
+    aboutMe:
+      "I am nice because I am veyr very nice and also extremely kind and nice.",
+    instagram: "amylee",
+    sporify: "samy",
+    job: "",
+    company: "",
+    school: "Clerk County College",
+    searchLocation: "",
+    currentLocation: "",
+    lastActive: "2020-09-0900:00:09",
+    showActive: 1,
+    recentlyActive: 1,
+    //––––––––––––––––––––––––––FROM SEPERATE TABLE––––––––––––––––––––––––
+    planName: "lite",
+    planId: "1",
+    sports: [
+      { id: 1, sportName: "Basketball" },
+      { id: 3, sportName: "Badminton" },
+      { id: 6, sportName: "Tennis" },
+      { id: 7, sportName: "Golf" },
+      { id: 96, sportName: "Fencing" },
+    ],
+    images: [
+      {
+        image:
+          "https://i.picsum.photos/id/1002/600/900.jpg?hmac=4BSgpJzasHKS9vEgQ_Kn3WUjgvc1sUZv-E10bf1bCyA",
+      },
+      {
+        image:
+          "https://i.picsum.photos/id/277/600/900.jpg?hmac=0SZDnUgJesoCsIFVR9u9uG9hUC3dQOxx0_pgop-aIoY",
+      },
+      {
+        image:
+          "https://i.picsum.photos/id/705/600/900.jpg?hmac=19EE_8IKXcp7maJfLind1IgeEHKHlpbeSbN6o5uydJY",
+      },
+      //GIVE IMAGES IN UPLOADED ORDER
+    ],
+
+    //––––––––––––––––––––––––––GENERATE–––––––––––––––––––––––––
+    distance: "6km",
+    age: 18,
+    // age: DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
+  };
 
   return (
     <div className={classes.bg}>
