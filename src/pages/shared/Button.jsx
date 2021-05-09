@@ -15,6 +15,7 @@ export default function MadeButton({
   value,
   disable,
   variant,
+  stlye
 }) {
   const classes = useStyles();
 
