@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import SectionHeader from "../shared/SectionHeader";
 import MadeButton from "../shared/Button";
 import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
+import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -54,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditInfoPage() {
   const classes = useStyles();
+  const { register, handleSubmit, errors } = useForm();
 
   return (
     <div
@@ -74,7 +76,7 @@ export default function EditInfoPage() {
             className={classes.icon}
             onClick={() => console.log("test")}
           >
-            <ClearRoundedIcon style={{fontSize:"100%"}}/>
+            <ClearRoundedIcon style={{ fontSize: "100%" }} />
           </IconButton>
         </Paper>
         <Paper className={classes.paper}>
@@ -83,7 +85,7 @@ export default function EditInfoPage() {
             className={classes.icon}
             onClick={console.log("test")}
           >
-            <ClearRoundedIcon style={{fontSize:"100%"}}/>
+            <ClearRoundedIcon style={{ fontSize: "100%" }} />
           </IconButton>
         </Paper>
         <Paper className={classes.paper}>
@@ -92,7 +94,7 @@ export default function EditInfoPage() {
             className={classes.icon}
             onClick={console.log("test")}
           >
-            <ClearRoundedIcon style={{fontSize:"100%"}}/>
+            <ClearRoundedIcon style={{ fontSize: "100%" }} />
           </IconButton>
         </Paper>
         <Paper className={classes.paper}>
@@ -101,7 +103,7 @@ export default function EditInfoPage() {
             className={classes.icon}
             onClick={console.log("test")}
           >
-            <ClearRoundedIcon style={{fontSize:"100%"}}/>
+            <ClearRoundedIcon style={{ fontSize: "100%" }} />
           </IconButton>
         </Paper>
         <Paper className={classes.paper}>
@@ -110,7 +112,7 @@ export default function EditInfoPage() {
             className={classes.icon}
             onClick={console.log("test")}
           >
-            <ClearRoundedIcon style={{fontSize:"100%"}}/>
+            <ClearRoundedIcon style={{ fontSize: "100%" }} />
           </IconButton>
         </Paper>
         <Paper className={classes.paper}>
@@ -119,7 +121,7 @@ export default function EditInfoPage() {
             className={classes.icon}
             onClick={console.log("test")}
           >
-            <ClearRoundedIcon style={{fontSize:"100%"}}/>
+            <ClearRoundedIcon style={{ fontSize: "100%" }} />
           </IconButton>
         </Paper>
       </div>
