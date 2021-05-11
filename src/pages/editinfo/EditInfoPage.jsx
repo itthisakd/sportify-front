@@ -1,150 +1,222 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  IconButton,
+  Input,
+  Grid,
+  Paper,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import SectionHeader from "../shared/SectionHeader";
-import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import Button from "@material-ui/core/Button";
-import Input from "@material-ui/core/Input";
+import MadeButton from "../shared/Button";
+import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
+import { useForm } from "react-hook-form";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
+  title: {
+    textAlign: "left",
+    padding: "0.5rem",
+    margin: "1rem 0 0 0",
+  },
+  input: {
+    backgroundColor: "white",
+    width: "100%",
+    padding: "12px",
+  },
+  flexWrap: {
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "5px",
+  },
+  paper: {
+    padding: theme.spacing(1),
+    margin: "5px",
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    position: "relative",
+    width: "24vw",
+    height: "40vw",
+  },
+  icon: {
+    position: "absolute",
+    right: "-5px",
+    bottom: "-5px",
+    zIndex: "10",
+    backgroundColor: "#ff9600",
+    color: "white",
+    width: "25px",
+    height: "25px",
+  },
 }));
 
 export default function EditInfoPage() {
-  const history = useHistory();
   const classes = useStyles();
+  const { register, handleSubmit, errors } = useForm();
 
   return (
     <div
       style={{
         width: "100%",
         backgroundColor: "#f5f7fa",
+        paddingBottom: "50px",
       }}
     >
       <SectionHeader
         title="Edit Info"
         doneAction={() => history.push("/profile")}
       />
-      <div
-        style={{
-          borderStyle: "solid",
-          borderWidth: "0 0 1px 0",
-          borderBottomColor: "#e8e8e8",
-          alignItem: "center",
-          justifyConten: "center",
-          height: "43px",
-          width: "100%",
-          backgroundColor: "white",
-        }}
-      >
-        <h5
-          style={{ textAlign: "left", padding: "0.5rem", margin: "1rem 0 0 0" }}
-        >
-          ABOUT ME
-        </h5>
+      <div className={classes.flexWrap}>
+        <Paper className={classes.paper}>
+          <IconButton
+            size="small"
+            className={classes.icon}
+            onClick={() => console.log("test")}
+          >
+            <ClearRoundedIcon style={{ fontSize: "100%" }} />
+          </IconButton>
+        </Paper>
+        <Paper className={classes.paper}>
+          <IconButton
+            size="small"
+            className={classes.icon}
+            onClick={console.log("test")}
+          >
+            <ClearRoundedIcon style={{ fontSize: "100%" }} />
+          </IconButton>
+        </Paper>
+        <Paper className={classes.paper}>
+          <IconButton
+            size="small"
+            className={classes.icon}
+            onClick={console.log("test")}
+          >
+            <ClearRoundedIcon style={{ fontSize: "100%" }} />
+          </IconButton>
+        </Paper>
+        <Paper className={classes.paper}>
+          <IconButton
+            size="small"
+            className={classes.icon}
+            onClick={console.log("test")}
+          >
+            <ClearRoundedIcon style={{ fontSize: "100%" }} />
+          </IconButton>
+        </Paper>
+        <Paper className={classes.paper}>
+          <IconButton
+            size="small"
+            className={classes.icon}
+            onClick={console.log("test")}
+          >
+            <ClearRoundedIcon style={{ fontSize: "100%" }} />
+          </IconButton>
+        </Paper>
+        <Paper className={classes.paper}>
+          <IconButton
+            size="small"
+            className={classes.icon}
+            onClick={console.log("test")}
+          >
+            <ClearRoundedIcon style={{ fontSize: "100%" }} />
+          </IconButton>
+        </Paper>
+      </div>
+      <span>
+        <MadeButton text="ADD MEDIA"></MadeButton>
+      </span>
+      <div>
+        <h5 className={classes.title}>ABOUT ME</h5>
         <Input
           multiline={true}
           disableUnderline={true}
-          style={{ backgroundColor: "white", width: "100%", padding: "12px" }}
+          className={classes.input}
         ></Input>
       </div>
-      <a href="">
-        <div>
-          <h5
-            style={{
-              textAlign: "left",
-              padding: "0.5rem",
-              margin: "1rem 0 0 0",
-            }}
-          >
-            SPORT
-          </h5>
+      <div>
+        <h5 className={classes.title}>SPORT</h5>
+        <a href="/edit-passion">
           <Input
             multiline={true}
             disableUnderline={true}
-            style={{ backgroundColor: "white", width: "100%", padding: "12px" }}
+            className={classes.input}
           ></Input>
-        </div>
-      </a>
+        </a>
+      </div>
       <div>
-        <h5
-          style={{ textAlign: "left", padding: "0.5rem", margin: "1rem 0 0 0" }}
-        >
-          JOB TITLE
-        </h5>
+        <h5 className={classes.title}>JOB TITLE</h5>
         <Input
           multiline={true}
           disableUnderline={true}
           placeholder="Add Job Title"
-          style={{ backgroundColor: "white", width: "100%", padding: "12px" }}
+          className={classes.input}
         ></Input>
       </div>
       <div>
-        <h5
-          style={{ textAlign: "left", padding: "0.5rem", margin: "1rem 0 0 0" }}
-        >
-          COMPANY
-        </h5>
+        <h5 className={classes.title}>COMPANY</h5>
         <Input
           multiline={true}
           disableUnderline={true}
           placeholder="Add Company"
-          style={{ backgroundColor: "white", width: "100%", padding: "12px" }}
+          className={classes.input}
         ></Input>
       </div>
       <div>
-        <h5
-          style={{ textAlign: "left", padding: "0.5rem", margin: "1rem 0 0 0" }}
-        >
-          SCHOOL
-        </h5>
+        <h5 className={classes.title}>SCHOOL</h5>
         <Input
           multiline={true}
           disableUnderline={true}
           placeholder="Add School"
-          style={{ backgroundColor: "white", width: "100%", padding: "12px" }}
+          className={classes.input}
         ></Input>
       </div>
       <div>
-        <h5
-          style={{ textAlign: "left", padding: "0.5rem", margin: "1rem 0 0 0" }}
-        >
-          LIVING IN
-        </h5>
+        <h5 className={classes.title}>LIVING IN</h5>
         <Input
           multiline={true}
           disableUnderline={true}
           placeholder="Add Address"
-          style={{ backgroundColor: "white", width: "100%", padding: "12px" }}
+          className={classes.input}
         ></Input>
       </div>
       <div>
-        <h5
-          style={{ textAlign: "left", padding: "0.5rem", margin: "1rem 0 0 0" }}
-        >
-          GENDER
-        </h5>
+        <h5 className={classes.title}>INSTAGRAM</h5>
+        <Input
+          multiline={true}
+          disableUnderline={true}
+          placeholder="Add Instagram's Username"
+          className={classes.input}
+        ></Input>
+      </div>
+      <div>
+        <h5 className={classes.title}>SPOTIFY</h5>
+        <Input
+          multiline={true}
+          disableUnderline={true}
+          placeholder="Add Spotify's Username"
+          className={classes.input}
+        ></Input>
+      </div>
+      <div>
+        <h5 className={classes.title}>GENDER</h5>
         <FormControl
           style={{
-            width: "95%",
+            width: "100%",
             textAlign: "left",
             backgroundColor: "white",
-            padding: "0.5rem",
           }}
         >
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             // value={gender}
-            // onChange={handleChange}
+            style={{ padding: "12px" }}
           >
             <MenuItem value={"Male"}>Male</MenuItem>
             <MenuItem value={"Female"}>Female</MenuItem>
-            <MenuItem value={"Others"}>Others</MenuItem>
           </Select>
         </FormControl>
       </div>
