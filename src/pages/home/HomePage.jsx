@@ -28,6 +28,7 @@ const useStyles = makeStyles(() => ({
     justifyContent: "space-between",
     height: " 100%",
     width: "100vw",
+    margin: "10px 0 0 0"
   },
   row: {
     padding: "10px",
@@ -125,6 +126,8 @@ const useStyles = makeStyles(() => ({
     width: "100%",
     padding: "0px",
     margin: "10px 0px",
+    // background: "rgb(255,255,255)",
+    background: "linear-gradient(0deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 100%)"
   },
   button: {
     width: "17vw",
@@ -247,8 +250,12 @@ export default function HomePage() {
   const nextSlide = () => {
     if (current !== accounts.length - 1) {
       setCurrent(current === accounts.length - 1 ? 0 : current + 1);
+    setViewId(0)
+
     } else {
       //TODO GET MORE MATCHES
+    setViewId(0)
+
     }
   };
 
@@ -263,11 +270,14 @@ export default function HomePage() {
   const createLike = async () => {
     //TODO
     // await axios.post("/match", { matchId: curAcc.id });
+    setViewId(0)
+
   };
 
   const createSuperlike = async () => {
     //TODO
     // await axios.post("/match", { matchId: curAcc.id, type: 1 });
+    setViewId(0)
   };
 
   if (viewId === 0) {
@@ -343,8 +353,52 @@ export default function HomePage() {
     );
   } else {
     return (
-      <div>
+      <div style={{position: "relative"}}>
         <Profile account={accounts[viewId - 1]} setViewId={setViewId} />
+        <Container className={classes.buttonContainer} style={{position: "sticky", bottom: "0px", padding: "15px 0px"}}>
+              <Fab
+                color="primary"
+                className={classes.button}
+                style={{opacity: "0"}}
+                onClick={() => {
+                  //TODO––––––––––––––––––– limit rewind to once per day for lite users
+                  prevSlide();
+                }}
+              >
+                <ReplayRoundedIcon />
+              </Fab>
+              <Fab
+                color="primary"
+                className={classes.button}
+                onClick={() => {
+                  createLike();
+                  nextSlide();
+                }}
+              >
+                <FavoriteRoundedIcon />
+              </Fab>
+
+              <Fab
+                color="primary"
+                className={classes.button}
+                onClick={() => {
+                  createSuperlike();
+                  nextSlide();
+                }}
+              >
+                <StarRoundedIcon />
+              </Fab>
+
+              <Fab
+                color="primary"
+                className={classes.button}
+                onClick={() => {
+                  nextSlide();
+                }}
+              >
+                <CloseRoundedIcon />
+              </Fab>
+            </Container>
       </div>
     );
   }
