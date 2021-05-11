@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     fontSize: "17px",
     borderRadius: "100px",
     color: "#EA5D6B",
-    border: "1px #EA5D6B solid",
+    border: "2px #EA5D6B solid",
   },
   outlinedInactive: {
     width: "70vw",
@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => ({
     fontSize: "17px",
     borderRadius: "100px",
     color: "darkgray",
-    border: "1px darkgray solid",
+    border: "2px darkgray solid",
   },
   disabled: {
     width: "70vw",
@@ -38,6 +38,15 @@ const useStyles = makeStyles(() => ({
     fontSize: "17px",
     boxShadow: "0px 0px 11px rgba(0, 0, 0, 0.3)",
     borderRadius: "100px",
+  },
+  outlinedDisabled: {
+    width: "70vw",
+    height: "40px",
+    fontWeight: "600",
+    fontSize: "17px",
+    borderRadius: "100px",
+    color: "darkgray",
+    border: "2px darkgray solid",
   },
 }));
 
@@ -50,6 +59,15 @@ export default function LongButton({ onClick, type, name }) {
           variant="contained"
           onClick={onClick}
           className={classes.contained}
+        >
+          {name}
+        </Button>
+      )}
+      {type === "disabled" && (
+        <Button
+          variant="contained"
+          className={classes.disabled}
+          disabled
         >
           {name}
         </Button>
@@ -75,23 +93,13 @@ export default function LongButton({ onClick, type, name }) {
       {type === "outlined-disabled" && (
         <Button
           variant="outlined"
-          onClick={onClick}
-          className={classes.outlinedInactive}
+          className={classes.outlinedDisabled}
           disabled
         >
           {name}
         </Button>
       )}
-      {type === "disabled" && (
-        <Button
-          variant="contained"
-          onClick={onClick}
-          className={classes.disabled}
-          disabled
-        >
-          {name}
-        </Button>
-      )}
+      
     </div>
   );
 }

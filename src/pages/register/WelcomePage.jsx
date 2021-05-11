@@ -1,7 +1,7 @@
 import { Typography } from "@material-ui/core";
 import React from "react";
 import MadeButton from "../shared/Button";
-import logo from "../../../logo.png";
+import logo from "../../images/branding/new_logo.png"
 import { makeStyles } from "@material-ui/core/styles";
 import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
 import { useHistory } from "react-router";
