@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from "../../../logo.png";
+import logo from "../../images/branding/new_logo.png"
 import MadeButton from "../shared/Button";
 
 export default function LoginPage() {

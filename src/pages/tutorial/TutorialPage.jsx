@@ -132,12 +132,12 @@ export default function TutorialPage() {
             color="primary"
             onClick={
               current === 5
-                ? classes.button
+                ? null
                 : current === 3
                 ? next
-                : classes.button
+                : null
             }
-            className={[5, 3].includes(current) ? null : classes.hidden}
+            className={[5, 3].includes(current) ? classes.button : classes.hidden}
           >
             <FavoriteRoundedIcon />
           </Fab>
