@@ -21,8 +21,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     padding: "10px",
   },
-  badge: {
-  }
+  badge: {},
 }));
 
 export default function MatchesPage() {
@@ -72,6 +71,7 @@ export default function MatchesPage() {
         },
         //******GIVE IMAGES IN UPLOADED ORDER, order by timestamp
       ],
+      viewed: 0,
       //––––––––––––––––––––––––––GENERATED–––––––––––––––––––––––––
       recentlyActive: 1, //show recentelyActive TRUE if lastActive is within 24 users
       distance: "6km", //generated from currentLocation (OR searchLocation) using isNearby
@@ -123,6 +123,7 @@ export default function MatchesPage() {
         },
         //******GIVE IMAGES IN UPLOADED ORDER, order by timestamp
       ],
+      viewed: 1,
       //––––––––––––––––––––––––––GENERATED–––––––––––––––––––––––––
       recentlyActive: 1, //show recentelyActive TRUE if lastActive is within 24 users
       distance: "6km", //generated from currentLocation (OR searchLocation) using isNearby
@@ -156,8 +157,8 @@ export default function MatchesPage() {
           New Matches
         </Typography>
         <div className={classes.matchesContainer}>
-          
-            {matches.map((match) => {
+          {matches.map((match) => {
+            if (match.viewed === 0)
               return (
                 <Badge
                   className={classes.badge}
@@ -192,7 +193,36 @@ export default function MatchesPage() {
                   </div>
                 </Badge>
               );
-            })}
+            else
+              return (
+                <div
+                  style={{
+                    margin: "5px 10px",
+                  }}
+                >
+                  <img
+                    src={match.images[0].image}
+                    style={{
+                      width: "20vw",
+                      height: "20vw",
+                      overflow: "hidden",
+                      objectFit: "cover",
+                      objectPosition: "50% 50%",
+                      borderRadius: "50%",
+                    }}
+                  />
+                  <Typography
+                    variant="h6"
+                    component="p"
+                    style={{
+                      textAlign: "center",
+                    }}
+                  >
+                    {match.firstName}
+                  </Typography>
+                </div>
+              );
+          })}
         </div>
       </Container>
       <Divider />
