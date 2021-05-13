@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: "70%",
+    width: "80%",
   },
   alignItem: {
     marginTop: "10%",
@@ -50,16 +50,16 @@ export default function BirthDatePage() {
   console.log(data);
   return (
     <div>
+      <div style={{marginBottom: '50px'}}>
       <RegisHeader
         text="My Birthday is"
         iconType="back"
         onClick={() => history.push("/name")}
-      ></RegisHeader>
+      /></div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={classes.alignItem}>
           <TextField
             id="date"
-            label="Birthday"
             type="date"
             name="dob"
             format="dd/MM/YYYY"

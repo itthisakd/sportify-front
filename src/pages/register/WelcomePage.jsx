@@ -55,8 +55,7 @@ export default function WelcomePage() {
         <Typography
           style={{ color: "#4a4a4a", fontWeight: 600, textAlign: "center" }}
           variant="h5"
-        >
-          {" "}
+        > 
           Welcome to Sportify.
         </Typography>
       </div>
