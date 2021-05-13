@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SectionHeader({ title, doneAction }) {
+export default function SectionHeader({ title, doneAction, type }) {
   const classes = useStyles();
 
   return (
-    <div style={{width: "100vw"}}>
+    <div style={{ width: "100vw" }}>
       <Paper elevation={1}>
         <Grid container style={{ height: "43px" }}>
           <Grid item xs={4}></Grid>
@@ -45,6 +45,7 @@ export default function SectionHeader({ title, doneAction }) {
         color="secondary"
         className={classes.margin}
         onClick={doneAction}
+        type={type}
       >
         Done
       </Button>

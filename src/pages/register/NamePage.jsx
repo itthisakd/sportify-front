@@ -29,7 +29,7 @@ const onSubmit = (regis) => {
 
   return (
     <div>
-      <RegisHeader text="My First Name is" iconType="cross"></RegisHeader>
+      <RegisHeader text="My First Name is" iconType="cross" onClick={() => history.push("/login")}></RegisHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
       <div style={{ marginTop: "10%", textAlign: "center" }}>
         <TextField
