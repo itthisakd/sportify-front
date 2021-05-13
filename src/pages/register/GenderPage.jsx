@@ -15,7 +15,7 @@ export default function GenderPage() {
         text="I am a"
         iconType="back"
         onClick={() => history.push("/birthdate")}
-      ></RegisHeader>
+      />
       <div style={{ marginTop: "10%", textAlign: "center" }}>
         <LongButton
           name="MALE"

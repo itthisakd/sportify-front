@@ -53,7 +53,7 @@ const useStyles = makeStyles(() => ({
 export default function LongButton({ onClick, type, name, variant }) {
   const classes = useStyles();
   return (
-    <div>
+    <div style={{margin: "0vw 15vw 10vw"}}>
       {(variant === undefined || variant === "contained") && (
         <Button
           variant="contained"
@@ -65,11 +65,7 @@ export default function LongButton({ onClick, type, name, variant }) {
         </Button>
       )}
       {variant === "disabled" && (
-        <Button
-          variant="contained"
-          className={classes.disabled}
-          disabled
-        >
+        <Button variant="contained" className={classes.disabled} disabled>
           {name}
         </Button>
       )}
@@ -79,7 +75,6 @@ export default function LongButton({ onClick, type, name, variant }) {
           onClick={onClick}
           className={classes.outlined}
           type={type}
-
         >
           {name}
         </Button>
@@ -90,7 +85,6 @@ export default function LongButton({ onClick, type, name, variant }) {
           onClick={onClick}
           className={classes.outlinedInactive}
           type={type}
-
         >
           {name}
         </Button>
@@ -104,7 +98,6 @@ export default function LongButton({ onClick, type, name, variant }) {
           {name}
         </Button>
       )}
-      
     </div>
   );
 }
@@ -114,4 +107,3 @@ export default function LongButton({ onClick, type, name, variant }) {
 // <LongButton name="START TUTORIAL" variant="outlined-inactive" onClick={next} />
 // <LongButton name="START TUTORIAL" variant="outlined-disabled" onClick={next} />
 // <LongButton name="START TUTORIAL" variant="disabled" onClick={next} />
-

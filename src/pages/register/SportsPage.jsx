@@ -69,106 +69,6 @@ const sports = [
   { sportId: 8, sportName: "Dom" },
   { sportId: 9, sportName: "Palm" },
   { sportId: 10, sportName: "Bank" },
-  // { sportId: 1, sportName: "a" },
-  // { sportId: 2, sportName: "Hello World" },
-  // { sportId: 3, sportName: "Apex Legend" },
-  // { sportId: 4, sportName: "Dota 2" },
-  // { sportId: 5, sportName: "Water" },
-  // { sportId: 6, sportName: "Football" },
-  // { sportId: 7, sportName: "Game" },
-  // { sportId: 8, sportName: "Dom" },
-  // { sportId: 9, sportName: "Palm" },
-  // { sportId: 10, sportName: "Bank" },
-  // { sportId: 1, sportName: "a" },
-  // { sportId: 2, sportName: "Hello World" },
-  // { sportId: 3, sportName: "Apex Legend" },
-  // { sportId: 4, sportName: "Dota 2" },
-  // { sportId: 5, sportName: "Water" },
-  // { sportId: 6, sportName: "Football" },
-  // { sportId: 7, sportName: "Game" },
-  // { sportId: 8, sportName: "Dom" },
-  // { sportId: 9, sportName: "Palm" },
-  // { sportId: 10, sportName: "Bank" },
-  // { sportId: 1, sportName: "a" },
-  // { sportId: 2, sportName: "Hello World" },
-  // { sportId: 3, sportName: "Apex Legend" },
-  // { sportId: 4, sportName: "Dota 2" },
-  // { sportId: 5, sportName: "Water" },
-  // { sportId: 6, sportName: "Football" },
-  // { sportId: 7, sportName: "Game" },
-  // { sportId: 8, sportName: "Dom" },
-  // { sportId: 9, sportName: "Palm" },
-  // { sportId: 10, sportName: "Bank" },
-  // { sportId: 1, sportName: "a" },
-  // { sportId: 2, sportName: "Hello World" },
-  // { sportId: 3, sportName: "Apex Legend" },
-  // { sportId: 4, sportName: "Dota 2" },
-  // { sportId: 5, sportName: "Water" },
-  // { sportId: 6, sportName: "Football" },
-  // { sportId: 7, sportName: "Game" },
-  // { sportId: 8, sportName: "Dom" },
-  // { sportId: 9, sportName: "Palm" },
-  // { sportId: 10, sportName: "Bank" },
-  // { sportId: 1, sportName: "a" },
-  // { sportId: 2, sportName: "Hello World" },
-  // { sportId: 3, sportName: "Apex Legend" },
-  // { sportId: 4, sportName: "Dota 2" },
-  // { sportId: 5, sportName: "Water" },
-  // { sportId: 6, sportName: "Football" },
-  // { sportId: 7, sportName: "Game" },
-  // { sportId: 8, sportName: "Dom" },
-  // { sportId: 9, sportName: "Palm" },
-  // { sportId: 10, sportName: "Bank" },
-  // { sportId: 1, sportName: "a" },
-  // { sportId: 2, sportName: "Hello World" },
-  // { sportId: 3, sportName: "Apex Legend" },
-  // { sportId: 4, sportName: "Dota 2" },
-  // { sportId: 5, sportName: "Water" },
-  // { sportId: 6, sportName: "Football" },
-  // { sportId: 7, sportName: "Game" },
-  // { sportId: 8, sportName: "Dom" },
-  // { sportId: 9, sportName: "Palm" },
-  // { sportId: 10, sportName: "Bank" },
-  // { sportId: 1, sportName: "a" },
-  // { sportId: 2, sportName: "Hello World" },
-  // { sportId: 3, sportName: "Apex Legend" },
-  // { sportId: 4, sportName: "Dota 2" },
-  // { sportId: 5, sportName: "Water" },
-  // { sportId: 6, sportName: "Football" },
-  // { sportId: 7, sportName: "Game" },
-  // { sportId: 8, sportName: "Dom" },
-  // { sportId: 9, sportName: "Palm" },
-  // { sportId: 10, sportName: "Bank" },
-  // { sportId: 1, sportName: "a" },
-  // { sportId: 2, sportName: "Hello World" },
-  // { sportId: 3, sportName: "Apex Legend" },
-  // { sportId: 4, sportName: "Dota 2" },
-  // { sportId: 5, sportName: "Water" },
-  // { sportId: 6, sportName: "Football" },
-  // { sportId: 7, sportName: "Game" },
-  // { sportId: 8, sportName: "Dom" },
-  // { sportId: 9, sportName: "Palm" },
-  // { sportId: 10, sportName: "Bank" },
-  // { sportId: 1, sportName: "a" },
-  // { sportId: 2, sportName: "Hello World" },
-  // { sportId: 3, sportName: "Apex Legend" },
-  // { sportId: 4, sportName: "Dota 2" },
-  // { sportId: 5, sportName: "Water" },
-  // { sportId: 6, sportName: "Football" },
-  // { sportId: 7, sportName: "Game" },
-  // { sportId: 8, sportName: "Dom" },
-  // { sportId: 9, sportName: "Palm" },
-  // { sportId: 10, sportName: "Bank" },
-  // { sportId: 1, sportName: "a" },
-  // { sportId: 2, sportName: "Hello World" },
-  // { sportId: 3, sportName: "Apex Legend" },
-  // { sportId: 4, sportName: "Dota 2" },
-  // { sportId: 5, sportName: "Water" },
-  // { sportId: 6, sportName: "Football" },
-  // { sportId: 7, sportName: "Game" },
-  // { sportId: 8, sportName: "Dom" },
-  // { sportId: 9, sportName: "Palm" },
-  // { sportId: 10, sportName: "Bank" },
 ];
 
 export default function SportsPage() {
@@ -190,13 +90,20 @@ export default function SportsPage() {
     }
   };
 
-  const intersection = oldSelectedChips.filter(value => selectedChips.includes(value)) // 
-  const removeSports = oldSelectedChips.filter(value => intersection.includes(value) === false) // 
-  const addSports = selectedChips.filter(value => intersection.includes(value) === false) // 
+  const intersection = oldSelectedChips.filter((value) =>
+    selectedChips.includes(value)
+  ); //
+  const removeSports = oldSelectedChips.filter(
+    (value) => intersection.includes(value) === false
+  );
+  const addSports = selectedChips.filter(
+    (value) => intersection.includes(value) === false
+  );
   const handleRegis = () => {
-    setValues(addSports)
-    // history.push("/photos");
+    setValues({ addSports, removeSports });
+    history.push("/photos");
   };
+  console.log(data);
 
   const handleEditInfo = () => {
     setEditMode(false);
@@ -282,7 +189,7 @@ export default function SportsPage() {
         >
           <SectionHeader title="Edit Sports" doneAction={handleEditInfo} />
           <div className={classes.gradientTopEdit}>
-            <Typography variant="caption" style={{ zIndex: "1001" }}>
+            <Typography variant="body1" style={{ zIndex: "1001" }}>
               You can only select a maximum of 5 sports.
             </Typography>
           </div>

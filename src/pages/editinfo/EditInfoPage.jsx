@@ -10,25 +10,35 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useData } from "../../contexts/DataContext";
 import AddPhoto from "../shared/AddPhoto";
+import Typography from "@material-ui/core/Typography";
+import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
 
 const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: "left",
     padding: "0.5rem",
-    margin: "1rem 0 0 0",
+    margin: "10px 0px 0px 10px",
+    fontWeight: "500",
   },
   input: {
     backgroundColor: "white",
-    width: "100%",
-    padding: "12px",
+    padding: "12px 12px 12px 22px",
+    borderTop: "0.5px solid lightgray",
+    borderBottom: "0.5px solid lightgray",
+
+    width: "100vw",
   },
 }));
 const schema = yup.object().shape({
   aboutMe: yup.string(),
   job: yup.string(),
-  instagram: yup.string(),
+  instagram: yup
+    .string()
+    .matches(/^[a-z_.0-9]+$/, "Username must be in correct format"),
+  spotify: yup
+    .string()
+    .matches(/^[a-z_.0-9]+$/, "Username must be in correct format"),
   school: yup.string(),
-  gender: yup.string().required(),
 });
 
 export default function EditInfoPage() {
@@ -48,8 +58,8 @@ export default function EditInfoPage() {
   });
 
   // useEffect(async () => {
-  //   const res = await axios.get("/getAccountInfoByUserId");
-  //   setUserById(res.userInfo);
+  //   const res = await axios.get("/account/myaccount");
+  //   setUserById(res.data);
   // }, []);
 
   const handleEditSports = () => {
@@ -63,90 +73,106 @@ export default function EditInfoPage() {
   };
 
   return (
-    <div style={{ position: "relative", height: "100vh" }}>
-      <div
+    <div
+      style={{
+        position: "relative",
+        height: "100vh",
+        width: "100vw",
+        overflowX: "hidden",
+      }}
+    >
+      <form
+        onSubmit={handleSubmit(onSubmit)}
         style={{
-          backgroundColor: "#f5f7fa",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "start",
-          paddingBottom: "50px",
+          backgroundColor: "ghostwhite",
         }}
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div style={{ position: "sticky", zIndex: "1000", top: 0 }}>
-            <SectionHeader title="Edit Info" type="submit" />
-          </div>
-          <AddPhoto />
-          <div style={{ textAlign: "center" }}>
-            <LongButton name="ADD MEDIA"></LongButton>
-          </div>
-          <div>
-            <h5 className={classes.title}>ABOUT ME</h5>
-            <Input
-              {...register("aboutMe")}
-              multiline={true}
-              disableUnderline={true}
-              className={classes.input}
-            ></Input>
-          </div>
-          <div onClick={handleEditSports}>
-            <h5 className={classes.title}>SPORT</h5>
-            <div style={{ height: "43px", backgroundColor: "white" }}></div>
-          </div>
-          <div>
-            <h5 className={classes.title}>JOB TITLE</h5>
-            <Input
-              {...register("job")}
-              multiline={true}
-              disableUnderline={true}
-              placeholder="Add Job Title"
-              className={classes.input}
-            ></Input>
-          </div>
-          <div>
-            <h5 className={classes.title}>SCHOOL</h5>
-            <Input
-              {...register("school")}
-              multiline={true}
-              disableUnderline={true}
-              placeholder="Add School"
-              className={classes.input}
-            ></Input>
-          </div>
-          <div>
-            <h5 className={classes.title}>INSTAGRAM</h5>
-            <Input
-              {...register("instagram")}
-              multiline={true}
-              disableUnderline={true}
-              placeholder="Add Instagram's Username"
-              className={classes.input}
-            ></Input>
-          </div>
-          <div>
-            <h5 className={classes.title}>GENDER</h5>
-            <div
-              style={{
-                width: "100%",
-                textAlign: "left",
-                backgroundColor: "white",
-              }}
-            >
-              <Select
-                {...register("gender")}
-                placeholder="male"
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                style={{ padding: "12px", width: "97vw" }}
-              >
-                <MenuItem value={"m"}>Male</MenuItem>
-                <MenuItem value={"f"}>Female</MenuItem>
-              </Select>
+        <SectionHeader
+          title="Edit Info"
+          type="submit"
+          style={{
+            width: "100vw",
+            position: "sticky",
+            zIndex: "1000",
+            top: "0px",
+            left: "0px",
+          }}
+        />
+        <AddPhoto />
+        <div>
+          <h5 className={classes.title}>ABOUT ME</h5>
+          <Input
+            {...register("aboutMe")}
+            multiline={true}
+            disableUnderline={true}
+            className={classes.input}
+          ></Input>
+        </div>
+        <div onClick={handleEditSports}>
+          <h5 className={classes.title}>SPORT</h5>
+          <div
+            style={{
+              height: "43px",
+              backgroundColor: "white",
+              position: "relative",
+              width: "100vw",
+            }}
+          >
+            <div className={classes.input} style={{ width: "100vw" }}>
+              HELLO
             </div>
+            <NavigateNextRoundedIcon
+              style={{
+                color: "lightgray",
+                position: "absolute",
+                right: "-5px",
+                top: "3px",
+              }}
+              fontSize="large"
+            />
           </div>
-        </form>
-      </div>
+        </div>
+        <div>
+          <h5 className={classes.title}>JOB TITLE</h5>
+          <Input
+            {...register("job")}
+            multiline={true}
+            disableUnderline={true}
+            placeholder="Add Job Title"
+            className={classes.input}
+          ></Input>
+        </div>
+        <div>
+          <h5 className={classes.title}>SCHOOL</h5>
+          <Input
+            {...register("school")}
+            multiline={true}
+            disableUnderline={true}
+            placeholder="Add School"
+            className={classes.input}
+          ></Input>
+        </div>
+        <div>
+          <h5 className={classes.title}>INSTAGRAM</h5>
+          <Input
+            {...register("instagram")}
+            multiline={true}
+            disableUnderline={true}
+            placeholder="Add Instagram Username"
+            className={classes.input}
+          ></Input>
+        </div>
+        <div>
+          <h5 className={classes.title}>SPOTIFY</h5>
+          <Input
+            {...register("spotify")}
+            multiline={true}
+            disableUnderline={true}
+            placeholder="Add Spotify Username"
+            className={classes.input}
+          ></Input>
+        </div>
+      </form>
     </div>
   );
 }
