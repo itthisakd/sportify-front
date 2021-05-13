@@ -54,22 +54,6 @@ const output_account = {
     },
     //******GIVE IMAGES IN UPLOADED ORDER, order by timestamp
   ],
-  //––––––––––––––––––––––––––JOINED FROM MATCHES –––––––––––––––––––––––
-  matches: [
-    //find matches where TO ID is that of the user and LIKE RETURNED is FALSE
-    {
-      fromId: 1,
-      toId: 2,
-      superlike: 0,
-      like_returned: 0,
-    },
-    {
-      fromId: 5,
-      toId: 2,
-      superlike: 0,
-      like_returned: 0,
-    },
-  ],
   //––––––––––––––––––––––––––GENERATED–––––––––––––––––––––––––
   recentlyActive: 1, //show recentelyActive TRUE if lastActive is within 24 hours
   distance: "6km", //generated from currentLocation (OR searchLocation) using isNearby

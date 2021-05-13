@@ -26,8 +26,9 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    height: " 100%",
+    height: "100%",
     width: "100vw",
+    margin: "10px 0 0 0"
   },
   row: {
     padding: "10px",
@@ -125,6 +126,8 @@ const useStyles = makeStyles(() => ({
     width: "100%",
     padding: "0px",
     margin: "10px 0px",
+    // background: "rgb(255,255,255)",
+    background: "linear-gradient(0deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 100%)"
   },
   button: {
     width: "17vw",
@@ -137,22 +140,7 @@ export default function HomePage() {
   const classes = useStyles();
   const [current, setCurrent] = useState(0);
   const [viewId, setViewId] = useState(0);
-
-  //TODO
-  // const [accounts, setAccounts] = useState([]);
-
-  const getAccounts = async () => {
-    //TODO
-    // const res = await axios.get("/accounts");
-    // setAccounts(res)
-  };
-
-  //TODO
-  // useEffect(() => {
-  //   getAccounts();
-  // }, []);
-
-  const accounts = [
+  const [accounts, setAccounts] = useState([
     {
       id: 1,
       planName: "lite",
@@ -242,13 +230,29 @@ export default function HomePage() {
       age: 18,
       // age: DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
     },
-  ];
+  ]);
+
+  const getAccounts = async () => {
+    //TODO
+    // const res = await axios.get("/stack");
+    // setAccounts(res)
+  };
+
+  //TODO
+  // useEffect(() => {
+  //   getAccounts();
+  // }, []);
+
 
   const nextSlide = () => {
     if (current !== accounts.length - 1) {
       setCurrent(current === accounts.length - 1 ? 0 : current + 1);
+    setViewId(0)
+
     } else {
       //TODO GET MORE MATCHES
+    setViewId(0)
+
     }
   };
 
@@ -263,41 +267,98 @@ export default function HomePage() {
   const createLike = async () => {
     //TODO
     // await axios.post("/match", { matchId: curAcc.id });
+    setViewId(0)
+
   };
 
   const createSuperlike = async () => {
     //TODO
     // await axios.post("/match", { matchId: curAcc.id, type: 1 });
+    setViewId(0)
   };
 
   if (viewId === 0) {
     return (
-      <div className={classes.flexBetween}>
+      <div style={{ position: "relative" }}>
         <Menu />
-        <Container className={classes.flexBetween}>
-          <div className={classes.container}>
-            <Paper elevation={3} className={classes.paper}>
-              {accounts.map((account, index) => {
-                return (
-                  <div key={index}>
-                    {index === current && (
-                      <ImageSlider
-                        className={classes.paper}
-                        account={account}
-                        key={index}
-                        viewProfile={() => {
-                          setViewId(index+1);
-                        }}
-                      />
-                    )}
-                  </div>
-                );
-              })}
-            </Paper>
-            <Container className={classes.buttonContainer}>
+        <div className={classes.flexBetween}>
+          <Container className={classes.flexBetween}>
+            <div className={classes.container}>
+              <Paper elevation={3} className={classes.paper}>
+                {accounts.map((account, index) => {
+                  return (
+                    <div key={index}>
+                      {index === current && (
+                        <ImageSlider
+                          className={classes.paper}
+                          account={account}
+                          key={index}
+                          viewProfile={() => {
+                            setViewId(index + 1);
+                          }}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </Paper>
+              <Container className={classes.buttonContainer}>
+                <Fab
+                  color="primary"
+                  className={classes.button}
+                  onClick={() => {
+                    //TODO––––––––––––––––––– limit rewind to once per day for lite users
+                    prevSlide();
+                  }}
+                >
+                  <ReplayRoundedIcon />
+                </Fab>
+                <Fab
+                  color="primary"
+                  className={classes.button}
+                  onClick={() => {
+                    createLike();
+                    nextSlide();
+                  }}
+                >
+                  <FavoriteRoundedIcon />
+                </Fab>
+
+                <Fab
+                  color="primary"
+                  className={classes.button}
+                  onClick={() => {
+                    createSuperlike();
+                    nextSlide();
+                  }}
+                >
+                  <StarRoundedIcon />
+                </Fab>
+
+                <Fab
+                  color="primary"
+                  className={classes.button}
+                  onClick={() => {
+                    nextSlide();
+                  }}
+                >
+                  <CloseRoundedIcon />
+                </Fab>
+              </Container>
+            </div>
+          </Container>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div style={{position: "relative"}}>
+        <Profile account={accounts[viewId - 1]} setViewId={setViewId} />
+        <Container className={classes.buttonContainer} style={{position: "sticky", bottom: "0px", padding: "15px 0px"}}>
               <Fab
                 color="primary"
                 className={classes.button}
+                style={{opacity: "0"}}
                 onClick={() => {
                   //TODO––––––––––––––––––– limit rewind to once per day for lite users
                   prevSlide();
@@ -337,14 +398,6 @@ export default function HomePage() {
                 <CloseRoundedIcon />
               </Fab>
             </Container>
-          </div>
-        </Container>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <Profile account={accounts[viewId - 1]} setViewId={setViewId} />
       </div>
     );
   }

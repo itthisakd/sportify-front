@@ -11,10 +11,8 @@ import {MenuContext }from "../../contexts/MenuContextProvider"
 const useStyles = makeStyles({
   root: {
     width: "100%",
-    // height: "50px",
     margin: "0px",
     minWidth: "100vw",
-    // maxHeight: "50px"
 
   },
 });
@@ -29,14 +27,41 @@ export default function LabelBottomNavigation() {
   };
 
   return (
-    <Paper elevation={1}>
-      <BottomNavigation value={currentMenu} onChange={handleChange} className={classes.root}>
-      <BottomNavigationAction value="home" onClick={ () => {history.push("/home")}} icon={<SearchRoundedIcon />} />
-      <BottomNavigationAction value="likedby" onClick={ () => {history.push("/likedby")}} icon={<FavoriteRoundedIcon />} />
-      <BottomNavigationAction value="matches" onClick={ () => {history.push("/matches")}} icon={<QuestionAnswerRoundedIcon />} />
-      <BottomNavigationAction value="profile" onClick={ () => {history.push("/profile")}} icon={<AccountCircleRoundedIcon />} />
-    </BottomNavigation>
-       </Paper>
-    
+    <Paper elevation={1} style={{ position: "sticky", top: "0px", zIndex: "10" }}>
+      <BottomNavigation
+        value={currentMenu}
+        onChange={handleChange}
+        className={classes.root}
+      >
+        <BottomNavigationAction
+          value="home"
+          onClick={() => {
+            history.push("/home");
+          }}
+          icon={<SearchRoundedIcon />}
+        />
+        <BottomNavigationAction
+          value="likedby"
+          onClick={() => {
+            history.push("/likedby");
+          }}
+          icon={<FavoriteRoundedIcon />}
+        />
+        <BottomNavigationAction
+          value="matches"
+          onClick={() => {
+            history.push("/matches");
+          }}
+          icon={<QuestionAnswerRoundedIcon />}
+        />
+        <BottomNavigationAction
+          value="profile"
+          onClick={() => {
+            history.push("/profile");
+          }}
+          icon={<AccountCircleRoundedIcon />}
+        />
+      </BottomNavigation>
+    </Paper>
   );
 }

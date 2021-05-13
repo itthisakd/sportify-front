@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     right: "20px",
     top: "calc(110vw - 30px)",
+    zIndex: "10"
   },
   name: {
     fontWeight: "600",
@@ -172,7 +173,7 @@ export default function Profile({ account, setViewId }) {
           <Container className={classes.flexRow} style={{ padding: "20px" }}>
             <img
               src="/src/images/logos/spotify_logo.png"
-              style={{ width: "30px" }}
+              style={{ width: "30px", height: "30px" }}
             />
             <Typography
               variant="body1"
@@ -192,7 +193,7 @@ export default function Profile({ account, setViewId }) {
           <Container className={classes.flexRow} style={{ padding: "20px" }}>
             <img
               src="/src/images/logos/instagram_logo.png"
-              style={{ width: "30px" }}
+              style={{ width: "30px", height: "30px" }}
             />
             <Typography
               variant="body1"
