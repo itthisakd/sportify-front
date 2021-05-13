@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles(() => ({
   paper: {
     borderRadius: "10px",
-    boxShadow: "-2px 5px 15px 7px rgba(0,0,0,0.2)",
+    boxShadow: "4px 5px 17px -5px rgba(0,0,0,0.30)",
     display: "inline-block",
     margin: "1vw",
     width: "46vw",
