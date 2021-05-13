@@ -1,52 +1,91 @@
 import React from "react";
-import { Typography, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import MadeButton from "../shared/Button";
-import HeadButton from "../shared/HeadRegisterButton";
+import LongButton from "../shared/LongButton";
+import RegisHeader from "../shared/RegisHeader";
+import { useData } from "../../contexts/DataContext";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+import { DateTime } from 'luxon'
 
 const useStyles = makeStyles((theme) => ({
-  header: {
-    fontWeight: 550,
-    textAlign: "left",
-    marginLeft: "10%",
-    width: "55%",
-  },
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: '70%',
+    width: "70%",
+  },
+  alignItem: {
+    marginTop: "10%",
+    textAlign: "center",
   },
 }));
 
+const schema = yup.object().shape({ 
+  dob: yup.date().required("Birthdate is required").max(DateTime.now().minus({years: 18}).toString(), "You must be more than 18 years old"),
+});
+
 export default function BirthDatePage() {
+  const { setValues, data } = useData();
   const classes = useStyles();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm({
+    defaultValue: { dob: data.dob },
+    mode: "onBlur",
+    resolver: yupResolver(schema),
+  });
+  const watchDob = watch("dob");
+
+  const history = useHistory();
+
+  const onSubmit = (regis) => {
+    setValues({dob: regis.dob.toISOString()});
+    history.push("/gender")
+  };
+  console.log(data);
   return (
     <div>
-      <HeadButton />
-      <div style={{ marginTop: "1%" }}>
-        <Typography variant="h4" className={classes.header}>
-          My Birthday is
-        </Typography>
-      </div>
-      <div style={{ marginTop: "10%" }}>
-        <TextField
-          id="date"
-          label="Birthday"
-          type="date"
-          defaultValue=""
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      </div>
-      <div style={{ marginTop: "10%" }}>
-        <MadeButton text="CONTINUE" textColor='white'></MadeButton>
-      </div>
+      <RegisHeader
+        text="My Birthday is"
+        iconType="back"
+        onClick={() => history.push("/name")}
+      ></RegisHeader>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={classes.alignItem}>
+          <TextField
+            id="date"
+            label="Birthday"
+            type="date"
+            name="dob"
+            format="dd/MM/YYYY"
+            {...register("dob")}
+            error={!!errors?.dob}
+            helperText={errors?.dob?.message}
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputProps: {
+                max: DateTime.now().minus({years: 18}).toISODate()
+              }
+            }}
+            defaultValue={DateTime.now().minus({years: 18}).toISODate()}
+          />
+        </div>
+        <div className={classes.alignItem}>
+          <LongButton
+            name="CONTINUE"
+            type="submit"
+            variant={watchDob ? "contained" : "disabled"}
+          ></LongButton>
+        </div>
+      </form>
     </div>
   );
 }

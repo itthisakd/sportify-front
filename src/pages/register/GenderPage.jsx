@@ -1,60 +1,45 @@
-import React, { useState } from "react";
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import MadeButton from "../shared/Button";
-import HeadButton from "../shared/HeadRegisterButton";
-
-const useStyles = makeStyles(() => ({
-  header: {
-    fontWeight: 550,
-    textAlign: "left",
-    marginLeft: "10%",
-    width: "40%",
-  },
-  icon: {
-    textAlign: "start",
-  },
-}));
+import React from "react";
+import LongButton from "../shared/LongButton";
+import RegisHeader from "../shared/RegisHeader";
+import { useData } from "../../contexts/DataContext";
+import { useHistory } from "react-router-dom";
 
 export default function GenderPage() {
-  const classes = useStyles();
-  const [gender, setGender] = useState("");
-  const [selected, setSelected] = useState({
-    selected1: "false",
-    selected2: "false",
-    selected3: "false",
-  });
-  const handleGender = (e, newGender) => {
-    e.preventDefault();
-    setGender(newGender);
-    setSelected(!selected);
-    console.log(gender);
-  };
+  const { setValues, data } = useData();
+  const history = useHistory();
+
+  console.log(data);
   return (
-    <div>
-      <HeadButton />
-      <div style={{ marginTop: "1%" }}>
-        <Typography variant="h4" className={classes.header}>
-          I am a
-        </Typography>
+    <div style={{height: '100vh'}}>
+      <RegisHeader
+        text="I am a"
+        iconType="back"
+        onClick={() => history.push("/birthdate")}
+      ></RegisHeader>
+      <div style={{ marginTop: "10%", textAlign: "center" }}>
+        <LongButton
+          name="MALE"
+          variant={
+            data.gender === "m" ? "outlined-active" : "outlined-inactive"
+          }
+          onClick={() => setValues({ gender: "m" })}
+        ></LongButton>
       </div>
-      <div style={{ marginTop: "10%" }}>
-        <MadeButton
-          text="WOMAN"
-          value="woman"
-          variant="outlined"
-          action={() => console.log("woman")}
-        ></MadeButton>
+      <div style={{ marginTop: "5%", textAlign: "center" }}>
+        <LongButton
+          name="FEMALE"
+          variant={
+            data.gender === "f" ? "outlined-active" : "outlined-inactive"
+          }
+          onClick={() => setValues({ gender: "f" })}
+        ></LongButton>
       </div>
-      <div style={{ marginTop: "5%" }}>
-        <MadeButton
-          text="MAN"
-          value="man"
-          action={() => console.log("man")}
-        ></MadeButton>
-      </div>
-      <div style={{ marginTop: "70%" }}>
-        <MadeButton text="CONTINUE" />
+      <div style={{ marginTop: "70%", textAlign: "center" }}>
+        <LongButton
+          name="CONTINUE"
+          variant={data.gender ? "contained" : "disabled"}
+          onClick={() => history.push("/sports")}
+        ></LongButton>
       </div>
     </div>
   );

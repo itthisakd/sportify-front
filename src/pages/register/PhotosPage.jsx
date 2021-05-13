@@ -1,15 +1,14 @@
 import React from "react";
-import HeadButton from "../shared/HeadRegisterButton";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Paper, IconButton } from "@material-ui/core";
-import MadeButton from "../shared/Button";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
+import LongButton from "../shared/LongButton";
 
 const useStyles = makeStyles((theme) => ({
   header: {
     fontWeight: 550,
     textAlign: "center",
-    width: "100%",
+    width: "100vw",
   },
   icon: {
     position: "absolute",
@@ -44,7 +43,6 @@ export default function PhotosPage() {
 
   return (
     <div>
-      <HeadButton />
       <div style={{ marginTop: "1%" }}>
         <Typography variant="h4" className={classes.header}>
           Add photos
@@ -87,7 +85,7 @@ export default function PhotosPage() {
         </Paper>
       </div>
       <div style={{ marginTop: "25%", textAlign: "center" }}>
-        <MadeButton text="CONTINUE" />
+        <LongButton name="CONTINUE" />
       </div>
     </div>
   );

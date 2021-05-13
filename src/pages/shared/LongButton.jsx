@@ -50,20 +50,21 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function LongButton({ onClick, type, name }) {
+export default function LongButton({ onClick, type, name, variant }) {
   const classes = useStyles();
   return (
     <div>
-      {(type === undefined || type === "contained") && (
+      {(variant === undefined || variant === "contained") && (
         <Button
           variant="contained"
           onClick={onClick}
           className={classes.contained}
+          type={type}
         >
           {name}
         </Button>
       )}
-      {type === "disabled" && (
+      {variant === "disabled" && (
         <Button
           variant="contained"
           className={classes.disabled}
@@ -72,25 +73,29 @@ export default function LongButton({ onClick, type, name }) {
           {name}
         </Button>
       )}
-      {type === "outlined-active" && (
+      {variant === "outlined-active" && (
         <Button
           variant="outlined"
           onClick={onClick}
           className={classes.outlined}
+          type={type}
+
         >
           {name}
         </Button>
       )}
-      {type === "outlined-inactive" && (
+      {variant === "outlined-inactive" && (
         <Button
           variant="outlined"
           onClick={onClick}
           className={classes.outlinedInactive}
+          type={type}
+
         >
           {name}
         </Button>
       )}
-      {type === "outlined-disabled" && (
+      {variant === "outlined-disabled" && (
         <Button
           variant="outlined"
           className={classes.outlinedDisabled}
@@ -104,9 +109,9 @@ export default function LongButton({ onClick, type, name }) {
   );
 }
 
-// <LongButton name="START TUTORIAL" type="contained" onClick={next} />
-// <LongButton name="START TUTORIAL" type="outlined-active" onClick={next} />
-// <LongButton name="START TUTORIAL" type="outlined-inactive" onClick={next} />
-// <LongButton name="START TUTORIAL" type="outlined-disabled" onClick={next} />
-// <LongButton name="START TUTORIAL" type="disabled" onClick={next} />
+// <LongButton name="START TUTORIAL" variant="contained" onClick={next} />
+// <LongButton name="START TUTORIAL" variant="outlined-active" onClick={next} />
+// <LongButton name="START TUTORIAL" variant="outlined-inactive" onClick={next} />
+// <LongButton name="START TUTORIAL" variant="outlined-disabled" onClick={next} />
+// <LongButton name="START TUTORIAL" variant="disabled" onClick={next} />
 
