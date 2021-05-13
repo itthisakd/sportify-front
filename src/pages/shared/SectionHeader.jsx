@@ -8,20 +8,20 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     height: "43px",
     position: "absolute",
-    margin: "0px",
+    margin: "5px",
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
   },
 }));
 
-export default function SectionHeader({ title, doneAction, type }) {
+export default function SectionHeader({ title, doneAction, type, style }) {
   const classes = useStyles();
 
   return (
-    <div style={{ width: "100vw" }}>
+    <div style={style}>
       <Paper elevation={1}>
-        <Grid container style={{ height: "43px" }}>
+        <Grid container style={{ height: "55px" }}>
           <Grid item xs={4}></Grid>
           <Grid
             item

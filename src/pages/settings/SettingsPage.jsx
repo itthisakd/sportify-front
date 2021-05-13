@@ -133,8 +133,8 @@ export default function SettingsPage() {
   const [showInStack, setShowInStack] = useState(account.showInStack);
 
   //TODO
-  // const res = await axios.get("/accounts");
-  // setAccount(res)
+  // const res = await axios.get("/account/myaccount");
+  // setAccount(res.data)
   // };
 
   //TODO
@@ -156,7 +156,6 @@ export default function SettingsPage() {
     if (showInStack !== account.showInStack) {
       obj = { ...obj, showInStack };
     }
-
     await axios.patch("/account", obj);
     await history.push("/profile");
   };

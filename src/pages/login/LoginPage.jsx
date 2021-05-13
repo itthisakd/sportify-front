@@ -15,7 +15,7 @@ export default function LoginPage() {
         ></img>
       </div>
       <div style={{ marginTop: "8rem", textAlign: 'center'}}>
-        <LongButton name="CREATE ACCOUNT" variant="outlined-active" onClick={() => history.push("/welcome")}></LongButton>
+        <LongButton name="CREATE ACCOUNT" variant="outlined-active" onClick={() => history.push("/name")}></LongButton>
       </div>
       <div style={{ marginTop: "5%", textAlign: 'center'}}>
         <LongButton name="SIGN IN"></LongButton>

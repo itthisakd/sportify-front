@@ -21,7 +21,7 @@ export default function RegisHeader({ text, iconType, onClick }) {
   const classes = useStyles();
 
   return (
-    <div style={{height: "105px"}}>
+    <div style={{ height: "105px", margin: "0px 0px 80px  0px" }}>
       <div className={classes.icon}>
         <IconButton onClick={onClick}>
           {iconType === "cross" && <ClearRoundedIcon fontSize="large" />}

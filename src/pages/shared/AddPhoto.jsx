@@ -105,16 +105,16 @@ export default function AddPhoto() {
 
   return (
     <div className={classes.flexWrap}>
-      {imagesArr.map((image) => {
+      {imagesArr.map((image, idx) => {
         return image.image ? (
-          <div style={{ position: "relative" }} onClick={handleOpen}>
-            <img src={image.image} className={classes.paper} />
+          <div style={{ position: "relative" }} onClick={handleOpen} key={idx}>
+            <img src={image.image} className={classes.paper} key={idx} />
             <div className={classes.icon}>
               <ClearRoundedIcon fontSize="small" />
             </div>
           </div>
         ) : (
-          <form style={{ position: "relative" }} onSubmit={addPhoto}>
+          <form style={{ position: "relative" }} onSubmit={addPhoto} key={idx}>
             <input
               accept="image/*"
               className={classes.input}
@@ -125,7 +125,7 @@ export default function AddPhoto() {
             />
             <div className={classes.empty} />
             <div className={classes.icon}>
-              <AddRoundedIcon fontSize="medium" />
+              <AddRoundedIcon fontSize="default" />
             </div>
           </form>
         );

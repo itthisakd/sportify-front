@@ -4,7 +4,7 @@ import LongButton from "../shared/LongButton";
 import logo from "../../images/branding/new_logo.png";
 import { makeStyles } from "@material-ui/core/styles";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -55,7 +55,7 @@ export default function WelcomePage() {
         <Typography
           style={{ color: "#4a4a4a", fontWeight: 600, textAlign: "center" }}
           variant="h5"
-        > 
+        >
           Welcome to Sportify.
         </Typography>
       </div>
@@ -110,7 +110,7 @@ export default function WelcomePage() {
       <div style={{ marginTop: "20%", textAlign: "center" }}>
         <LongButton
           name="I AGREE"
-          onClick={() => history.push("/name")}
+          onClick={() => history.push("/tutorial")}
         ></LongButton>
       </div>
     </div>

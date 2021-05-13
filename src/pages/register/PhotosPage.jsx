@@ -1,8 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import LongButton from "../shared/LongButton";
-import AddPhoto from "../shared/AddPhoto"
+import AddPhoto from "../shared/AddPhoto";
+import RegisHeader from "../shared/RegisHeader";
+import { useHistory } from "react-router-dom";
+import { useData } from "../../contexts/DataContext";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -13,18 +16,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PhotosPage() {
+  const { setValues, data } = useData();
   const classes = useStyles();
+  const history = useHistory();
+
+  const createAccount = () => {
+    console.log(data);
+  };
 
   return (
-    <div>
-      <div style={{ marginTop: "1%" }}>
-        <Typography variant="h4" className={classes.header}>
-          Add photos
-        </Typography>
-      </div>
-      <AddPhoto/>
-      <div style={{ marginTop: "25%", textAlign: "center" }}>
-        <LongButton name="CONTINUE" />
+    <div style={{ position: "relative", height: "100vh" }}>
+      <RegisHeader
+        text="I am a"
+        onClick={() => history.push("/birthdate")}
+        style={{ height: "105px" }}
+      />
+      <AddPhoto />
+      <div style={{ position: "absolute", bottom: "0px", margin: "auto" }}>
+        <LongButton
+          name="CONTINUE"
+          onClick={() => {
+            createAccount();
+            history.push("/welcome");
+          }}
+        />
       </div>
     </div>
   );
