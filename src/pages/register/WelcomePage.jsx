@@ -1,9 +1,9 @@
 import { Typography } from "@material-ui/core";
 import React from "react";
-import MadeButton from "../shared/Button";
-import logo from "../../images/branding/new_logo.png"
+import LongButton from "../shared/LongButton";
+import logo from "../../images/branding/new_logo.png";
 import { makeStyles } from "@material-ui/core/styles";
-import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
+import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import { useHistory } from "react-router";
 
 const useStyles = makeStyles(() => ({
@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
   },
   checkIcon: {
-    color: "#ff9600",
+    color: "#E8407D",
     height: "18px",
   },
 }));
@@ -44,7 +44,7 @@ export default function WelcomePage() {
 
   return (
     <div>
-      <div>
+      <div style={{ textAlign: "center" }}>
         <img
           alt="logo"
           src={logo}
@@ -52,13 +52,18 @@ export default function WelcomePage() {
         ></img>
       </div>
       <div>
-        <Typography style={{ color: "#4a4a4a", fontWeight: 600 }} variant="h5">
+        <Typography
+          style={{ color: "#4a4a4a", fontWeight: 600, textAlign: "center" }}
+          variant="h5"
+        >
           {" "}
           Welcome to Sportify.
         </Typography>
       </div>
       <div>
-        <Typography style={{ color: "#939393", fontWeight: 400 }}>
+        <Typography
+          style={{ color: "#939393", fontWeight: 400, textAlign: "center" }}
+        >
           Please follow these house rule
         </Typography>
       </div>
@@ -103,8 +108,11 @@ export default function WelcomePage() {
           Always report bad behavior
         </Typography>
       </div>
-      <div style={{ marginTop: "20%" }}>
-        <MadeButton text="I AGREE" action={() => history.push('/register-name')}></MadeButton>
+      <div style={{ marginTop: "20%", textAlign: "center" }}>
+        <LongButton
+          name="I AGREE"
+          onClick={() => history.push("/name")}
+        ></LongButton>
       </div>
     </div>
   );

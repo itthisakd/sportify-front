@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from "../../images/branding/new_logo.png"
-import MadeButton from "../shared/Button";
+import LongButton from "../shared/LongButton";
 
 export default function LoginPage() {
   return (
@@ -13,10 +13,10 @@ export default function LoginPage() {
         ></img>
       </div>
       <div style={{ marginTop: "8rem"}}>
-        <MadeButton text="CREATE ACCOUNT" style={{ backgroundColor:'white' }}></MadeButton>
+        <LongButton name="CREATE ACCOUNT" type="outlined-active"></LongButton>
       </div>
       <div style={{ marginTop: "5%" }}>
-        <MadeButton text="SIGN IN"></MadeButton>
+        <LongButton name="SIGN IN"></LongButton>
       </div>
     </div>
   )
