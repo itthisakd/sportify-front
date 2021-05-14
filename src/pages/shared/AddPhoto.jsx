@@ -149,7 +149,11 @@ export default function AddPhoto() {
             />
           </div>
         ) : (
-          <form style={{ position: "relative" }} key={idx}>
+          <form
+            style={{ position: "relative" }}
+            key={idx}
+            enctype="multipart/form-data"
+          >
             <input
               accept="image/*"
               className={classes.input}
