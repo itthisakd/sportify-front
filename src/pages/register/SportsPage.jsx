@@ -90,20 +90,13 @@ export default function SportsPage() {
     }
   };
 
-  const intersection = oldSelectedChips.filter((value) =>
-    selectedChips.includes(value)
-  ); //
-  const removeSports = oldSelectedChips.filter(
-    (value) => intersection.includes(value) === false
-  );
-  const addSports = selectedChips.filter(
-    (value) => intersection.includes(value) === false
-  );
+  const intersection = oldSelectedChips.filter(value => selectedChips.includes(value)) 
+  const removeSports = oldSelectedChips.filter(value => intersection.includes(value) === false) 
+  const addSports = selectedChips.filter(value => intersection.includes(value) === false) 
   const handleRegis = () => {
-    setValues({ addSports, removeSports });
+    setValues({addSports, removeSports})
     history.push("/photos");
   };
-  console.log(data);
 
   const handleEditInfo = () => {
     setEditMode(false);
