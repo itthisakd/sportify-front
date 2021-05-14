@@ -18,13 +18,12 @@ export default function LoginPage() {
   const history = useHistory();
 
   const onSuccess = async (res) => {
-    const result = await axios.post("/auth/", {
+    const result = await axios.post("/auth/login", {
       tokenId: res.tokenId,
     });
     localStorageService.setToken(res.tokenId);
-
-
     refreshTokenSetup(res);
+    console.log(result)
     history.push("/home");
   };
 

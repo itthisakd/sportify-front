@@ -7,6 +7,7 @@ import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import { useHistory } from "react-router-dom";
 import axios from "../../config/axios";
 import { useData } from "../../contexts/DataContext";
+import getCurrentLocation from "../../utilities/getCurrentLocation"
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -46,7 +47,7 @@ export default function WelcomePage() {
   const { setValues, data } = useData();
 
   const registerUser = async () => {
-    await axios.post("/authen/register", data);
+    await axios.post("/authen/register", {...data, currentLocation: getCurrentLocation(), searchLocation: getCurrentLocation()});
   };
 
   return (
