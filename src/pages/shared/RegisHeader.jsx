@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function RegisHeader({ text, iconType, onClick }) {
+export default function RegisHeader({ text, iconType, onClick, children }) {
   const classes = useStyles();
 
   return (
@@ -29,11 +29,12 @@ export default function RegisHeader({ text, iconType, onClick }) {
           {iconType === "none" && <ArrowBackIosRoundedIcon fontSize="large" style={{opacity: "0"}}/>}
         </IconButton>
       </div>
-      <div style={{ marginTop: "1%" }}>
+      <div style={{ marginTop: "1%", marginBottom: "10px" }}>
         <Typography variant="h4" className={classes.header}>
           {text}
         </Typography>
       </div>
+      {children}
     </div>
   );
 }

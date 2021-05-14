@@ -61,12 +61,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddPhoto() {
+export default function AddPhoto({ addedPhoto, setAddedPhoto }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [trigger, setTrigger] = React.useState(false);
   const { editMode, setEditMode } = useContext(EditModeContext);
-  const [photo, setPhoto] = useState({});
   const [images, setImages] = useState([]);
 
   const arr = [{}, {}, {}, {}, {}, {}];
@@ -84,6 +83,7 @@ export default function AddPhoto() {
   const getPhotos = async () => {
     const res = await axios.get("/media/");
     setImages(res.data.images);
+    setAddedPhoto(res.data.images.length);
   };
 
   if (editMode === false) {
@@ -92,15 +92,13 @@ export default function AddPhoto() {
     }, [trigger]);
   }
 
-  //FIXME
 
   const removePhoto = async (imageId) => {
     await axios.delete("/media/" + imageId);
     setTrigger(!trigger);
   };
 
-  //FIXME
-  const addPhoto = async (id) => {
+  const addPhoto = async (photo) => {
     const formData = new FormData();
     formData.append("image", photo);
     await axios.post("/media/", formData, {
@@ -108,25 +106,10 @@ export default function AddPhoto() {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log("PHOTO UPLOADED");
     setTrigger(!trigger);
   };
 
-  const handleAddPhoto = async (e) => {
-    console.log(e.target.files[0]);
-    await setPhoto(e.target.files[0]);
 
-    await addPhoto();
-    setPhoto({});
-  };
-
-  // if (photo !== false) {
-  //   useEffect(() => {
-  //     console.log("ADD");
-  //     // addPhoto();
-  //     setPhoto("");
-  //   }, []);
-  // }
 
   return (
     <div className={classes.flexWrap}>
@@ -155,10 +138,13 @@ export default function AddPhoto() {
             enctype="multipart/form-data"
           >
             <input
+              name="file"
               accept="image/*"
               className={classes.input}
               type="file"
-              onChange={handleAddPhoto}
+                onChange={(e) => {
+                addPhoto(e.target.files[0])
+              }}
             />
             <div className={classes.empty} />
             <div className={classes.icon}>

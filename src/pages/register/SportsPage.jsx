@@ -18,6 +18,7 @@ const useStyle = makeStyles(() => ({
   },
   inactive: {
     margin: "5px",
+    
   },
   active: {
     margin: "5px",
@@ -111,110 +112,64 @@ export default function SportsPage() {
   //   }, [])
   // }
 
-  if (editMode === false)
-    return (
-      <div
-        style={{ position: "relative", height: "100vh", overflow: "hidden" }}
+return (
+  <div style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "start",
+      }}
+    >
+      <RegisHeader
+        iconType="back"
+        onClick={() => history.push("/gender")}
+        text="Sports"
       >
-        <div
-          style={{
-            height: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "start",
-          }}
+        <Typography
+          variant="body1"
+          style={{ zIndex: "1001", margin: "0px 0px 0px 40px" }}
         >
-          <RegisHeader
-            iconType="back"
-            onClick={() => history.push("/gender")}
-            text="Sports"
+          You must add at least 1 photo.
+        </Typography>
+      </RegisHeader>
+      <div
+        style={{
+          textAlign: "left",
+          padding: "60px 10vw 100px 10vw",
+          overflow: "scroll",
+        }}
+      >
+        {sports.map((item) => (
+          <Chip
+            className={
+              selectedChips.includes(item.sportId)
+                ? classes.active
+                : classes.inactive
+            }
+            variant={
+              selectedChips.includes(item.sportId) ? "default" : "outlined"
+            }
+            size="small"
+            key={item.sportId}
+            label={item.sportName}
+            color={
+              selectedChips.includes(item.sportId) ? "secondary" : "default"
+            }
+            onClick={() => handleSelect(item.sportId)}
           />
-          <div className={classes.gradientTop}>
-            <Typography variant="caption" style={{ zIndex: "1001" }}>
-              You can only select a maximum of 5 sports.
-            </Typography>
-          </div>
-          <div
-            style={{
-              textAlign: "left",
-              padding: "60px 10vw 100px 10vw",
-              overflow: "scroll",
-            }}
-          >
-            {sports.map((item) => (
-              <Chip
-                className={
-                  selectedChips.includes(item.sportId)
-                    ? classes.active
-                    : classes.inactive
-                }
-                variant={
-                  selectedChips.includes(item.sportId) ? "default" : "outlined"
-                }
-                size="small"
-                key={item.sportId}
-                label={item.sportName}
-                color={
-                  selectedChips.includes(item.sportId) ? "secondary" : "default"
-                }
-                onClick={() => handleSelect(item.sportId)}
-              />
-            ))}
-          </div>
-        </div>
-        <div className={classes.button}>
-          <LongButton name="CONTINUE" onClick={handleRegis} />
-        </div>
+        ))}
       </div>
-    );
-  else
-    return (
-      <div
-        style={{ position: "relative", height: "100vh", overflow: "hidden" }}
-      >
-        <div
-          style={{
-            height: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "start",
-          }}
-        >
-          <SectionHeader title="Edit Sports" doneAction={handleEditInfo} />
-          <div className={classes.gradientTopEdit}>
-            <Typography variant="body1" style={{ zIndex: "1001" }}>
-              You can only select a maximum of 5 sports.
-            </Typography>
-          </div>
-          <div
-            style={{
-              textAlign: "left",
-              padding: "60px 10vw 0px 10vw",
-              overflow: "scroll",
-            }}
-          >
-            {sports.map((item) => (
-              <Chip
-                className={
-                  selectedChips.includes(item.sportId)
-                    ? classes.active
-                    : classes.inactive
-                }
-                variant={
-                  selectedChips.includes(item.sportId) ? "default" : "outlined"
-                }
-                size="small"
-                key={item.sportId}
-                label={item.sportName}
-                color={
-                  selectedChips.includes(item.sportId) ? "secondary" : "default"
-                }
-                onClick={() => handleSelect(item.sportId)}
-              />
-            ))}
-            <div className={classes.bottom}></div>
-          </div>
-        </div>
-      </div>
-    );
+    </div>
+    <div className={classes.button}>
+      <LongButton
+        name="CONTINUE"
+        onClick={handleRegis}
+        variant={selectedChips.length > 0 ? "contained" : "disabled"}
+      />
+    </div>
+  </div>
+);
+
 }
