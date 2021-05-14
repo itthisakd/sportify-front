@@ -50,10 +50,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function LongButton({ onClick, type, name, variant }) {
+export default function LongButton({ onClick, type, name, variant, style }) {
   const classes = useStyles();
   return (
-    <div style={{margin: "0vw 15vw 10vw"}}>
+    <div style={{margin: "0vw 15vw 10vw", ...style}}>
       {(variant === undefined || variant === "contained") && (
         <Button
           variant="contained"

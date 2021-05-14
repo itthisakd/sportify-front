@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
 import axios from "../../config/axios";
+import Logout from "../login/Logout";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -350,7 +351,7 @@ export default function SettingsPage() {
       </Typography>
       <br />
       <br />
-      <br />
+      <Logout />
       <br />
     </div>
   );

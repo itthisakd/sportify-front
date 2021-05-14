@@ -16,6 +16,7 @@ import SettingsPage from "../pages/settings/SettingsPage";
 import LikedByPage from "../pages/likedby/LikedByPage";
 import BirthDatePage from "../pages/register/BirthDatePage";
 
+
 const pages = {
   home: { page: HomePage, path: "/home" },
   landing: { page: LandingPage, path: "/landing" },
