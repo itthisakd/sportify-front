@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
 import axios from "../../config/axios";
+import Logout from "../login/Logout";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -214,22 +215,6 @@ export default function SettingsPage() {
             variant="body1"
             className={classes.head}
             onClick={() => {
-              //TODO bring to sports page
-            }}
-          >
-            Sports
-          </Typography>
-          <Typography variant="body1" className={classes.tail}>
-            <NavigateNextRoundedIcon style={{ color: "lightgray" }} />
-          </Typography>
-        </Container>
-        <Divider />
-
-        <Container className={classes.row}>
-          <Typography
-            variant="body1"
-            className={classes.head}
-            onClick={() => {
               //TODO bring to choose location page
             }}
           >
@@ -364,6 +349,9 @@ export default function SettingsPage() {
         last 24 hours on Sportify. If you have turned this off, they will not be
         able to see your recently active status.
       </Typography>
+      <br />
+      <br />
+      <Logout />
       <br />
     </div>
   );

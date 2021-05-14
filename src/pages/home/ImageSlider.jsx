@@ -10,6 +10,9 @@ const useStyles = makeStyles(() => ({
     width: "90vw",
     height: "135vw",
     borderRadius: "15px",
+    overflow: "hidden",
+    objectFit: "cover",
+    objectPosition: "50% 50%",
   },
   float: {
     display: "flex",

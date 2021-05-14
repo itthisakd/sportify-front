@@ -26,6 +26,7 @@ export default function RegisHeader({ text, iconType, onClick }) {
         <IconButton onClick={onClick}>
           {iconType === "cross" && <ClearRoundedIcon fontSize="large" />}
           {iconType === "back" && <ArrowBackIosRoundedIcon fontSize="large" />}
+          {iconType === "none" && <ArrowBackIosRoundedIcon fontSize="large" style={{opacity: "0"}}/>}
         </IconButton>
       </div>
       <div style={{ marginTop: "1%" }}>

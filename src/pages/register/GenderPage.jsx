@@ -10,7 +10,7 @@ export default function GenderPage() {
 
   console.log(data);
   return (
-    <div style={{height: '100vh'}}>
+    <div style={{ height: "100vh" }}>
       <RegisHeader
         text="I am a"
         iconType="back"
@@ -18,28 +18,24 @@ export default function GenderPage() {
       />
       <div style={{ marginTop: "10%", textAlign: "center" }}>
         <LongButton
-          name="MALE"
+          name="MAN"
           variant={
             data.gender === "m" ? "outlined-active" : "outlined-inactive"
           }
           onClick={() => setValues({ gender: "m" })}
-        ></LongButton>
-      </div>
-      <div style={{ marginTop: "5%", textAlign: "center" }}>
-        <LongButton
-          name="FEMALE"
-          variant={
-            data.gender === "f" ? "outlined-active" : "outlined-inactive"
-          }
-          onClick={() => setValues({ gender: "f" })}
-        ></LongButton>
-      </div>
-      <div style={{ marginTop: "70%", textAlign: "center" }}>
-        <LongButton
+        />
+      <LongButton
+        style={{ marginTop: "5vh" }}
+        name="WOMAN"
+        variant={data.gender === "f" ? "outlined-active" : "outlined-inactive"}
+        onClick={() => setValues({ gender: "f" })}
+      />
+      <LongButton
+          style={{ marginTop: "30vh" }}
           name="CONTINUE"
           variant={data.gender ? "contained" : "disabled"}
           onClick={() => history.push("/sports")}
-        ></LongButton>
+        />
       </div>
     </div>
   );
