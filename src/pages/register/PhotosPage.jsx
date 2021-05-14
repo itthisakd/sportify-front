@@ -27,9 +27,10 @@ export default function PhotosPage() {
   return (
     <div style={{ position: "relative", height: "100vh" }}>
       <RegisHeader
-        text="I am a"
+        text="Add Photos"
         onClick={() => history.push("/birthdate")}
         style={{ height: "105px" }}
+        iconType="none"
       />
       <AddPhoto />
       <div style={{ position: "absolute", bottom: "0px", margin: "auto" }}>
