@@ -25,8 +25,15 @@ const useStyles = makeStyles((theme) => ({
     padding: "12px 12px 12px 22px",
     borderTop: "0.5px solid lightgray",
     borderBottom: "0.5px solid lightgray",
-
     width: "100vw",
+  },
+  inputWordBreak: {
+    backgroundColor: "white",
+    padding: "12px 12px 12px 22px",
+    borderTop: "0.5px solid lightgray",
+    borderBottom: "0.5px solid lightgray",
+    width: "100vw",
+    wordBreak: 'break-all'
   },
 }));
 const schema = yup.object().shape({
@@ -44,7 +51,7 @@ const schema = yup.object().shape({
 export default function EditInfoPage() {
   const classes = useStyles();
   const history = useHistory();
-  const [userById, setUserById] = useState({});
+  const [account, setAccount] = useState({});
   const { editMode, setEditMode } = useContext(EditModeContext);
   const { setValues, data } = useData();
   const {
@@ -59,7 +66,7 @@ export default function EditInfoPage() {
 
   // useEffect(async () => {
   //   const res = await axios.get("/account/myaccount");
-  //   setUserById(res.data);
+  //   setAccount(res.data);
   // }, []);
 
   const handleEditSports = () => {
@@ -103,9 +110,10 @@ export default function EditInfoPage() {
           <h5 className={classes.title}>ABOUT ME</h5>
           <Input
             {...register("aboutMe")}
+            defaultValue={account.aboutMe}
             multiline={true}
             disableUnderline={true}
-            className={classes.input}
+            className={classes.inputWordBreak}
           ></Input>
         </div>
         <div onClick={handleEditSports}>
@@ -119,7 +127,7 @@ export default function EditInfoPage() {
             }}
           >
             <div className={classes.input} style={{ width: "100vw" }}>
-              HELLO
+              {account.sports.map(item => item.sportName`, `)}
             </div>
             <NavigateNextRoundedIcon
               style={{
@@ -136,6 +144,7 @@ export default function EditInfoPage() {
           <h5 className={classes.title}>JOB TITLE</h5>
           <Input
             {...register("job")}
+            defaultValue={account.job}
             multiline={true}
             disableUnderline={true}
             placeholder="Add Job Title"
@@ -146,6 +155,7 @@ export default function EditInfoPage() {
           <h5 className={classes.title}>SCHOOL</h5>
           <Input
             {...register("school")}
+            defaultValue={account.school}
             multiline={true}
             disableUnderline={true}
             placeholder="Add School"
@@ -156,6 +166,7 @@ export default function EditInfoPage() {
           <h5 className={classes.title}>INSTAGRAM</h5>
           <Input
             {...register("instagram")}
+            defaultValue={account.instagram}
             multiline={true}
             disableUnderline={true}
             placeholder="Add Instagram Username"
@@ -166,6 +177,7 @@ export default function EditInfoPage() {
           <h5 className={classes.title}>SPOTIFY</h5>
           <Input
             {...register("spotify")}
+            defaultValue={account.spotify}
             multiline={true}
             disableUnderline={true}
             placeholder="Add Spotify Username"
@@ -173,6 +185,7 @@ export default function EditInfoPage() {
           ></Input>
         </div>
       </form>
+      <div style={{height: '40px',backgroundColor: "ghostwhite", }}></div>
     </div>
   );
 }
