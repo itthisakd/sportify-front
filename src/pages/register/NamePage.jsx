@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { TextField } from "@material-ui/core";
 import LongButton from "../shared/LongButton";
 import RegisHeader from "../shared/RegisHeader";
@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useData } from "../../contexts/DataContext";
 import { useHistory } from "react-router-dom";
+import { EditModeContext } from "../../contexts/EditModeContextProvider";
 
 const schema = yup.object().shape({
   firstName: yup
@@ -17,6 +18,7 @@ const schema = yup.object().shape({
 
 export default function NamePage() {
   const { setValues, data } = useData();
+  const { editMode, setEditMode } = useContext(EditModeContext);
   const {
     register,
     handleSubmit,
@@ -32,14 +34,16 @@ export default function NamePage() {
 
   const onSubmit = (regis) => {
     setValues(regis);
+    setEditMode(false);
     history.push("/birthdate");
   };
 
+
   return (
-    <div style={{position: 'relative', height: '100vh'}}>
+    <div style={{ position: "relative", height: "100vh" }}>
       <RegisHeader
         text="My First Name is"
-        iconType="cross"
+        iconType="none"
         onClick={() => history.push("/login")}
       />
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -59,7 +63,7 @@ export default function NamePage() {
             textAlign: "center",
             position: "sticky",
             bottom: "0",
-            width: "100vw"
+            width: "100vw",
           }}
         >
           <LongButton

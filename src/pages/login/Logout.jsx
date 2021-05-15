@@ -2,19 +2,21 @@ import React from "react";
 import { useGoogleLogout } from "react-google-login";
 import LongButton from "../shared/LongButton";
 import { useHistory } from "react-router-dom";
+import localStorageService from "../../services/localStorageService";
 
 const clientId =
-  "(707788443358-u05p46nssla3l8tmn58tpo9r5sommgks.apps.googleusercontent.com)";
+  "580354342835-jmnv6h24isps601e9c4f0rentp9hboad.apps.googleusercontent.com";
 
 function LogoutHooks() {
   const history = useHistory();
   const onLogoutSuccess = (res) => {
-    console.log("Logged out Success");
+    console.log("Logout Success");
     history.push("/login");
+    localStorageService.clearToken();
   };
 
   const onFailure = () => {
-    console.log("Handle failure cases");
+    console.log("Logout failed");
   };
 
   const { signOut } = useGoogleLogout({
@@ -24,14 +26,7 @@ function LogoutHooks() {
   });
 
   return (
-    <LongButton
-      variant="outlined-active"
-      onClick={() => {
-        signOut();
-        history.push("/login");
-      }}
-      name="SIGN OUT"
-    />
+    <LongButton variant="outlined-active" onClick={signOut} name="SIGN OUT" />
   );
 }
 

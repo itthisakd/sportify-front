@@ -21,15 +21,20 @@ export default function LoginPage() {
     const result = await axios.post("/auth/login", {
       tokenId: res.tokenId,
     });
+
+    console.log(result.data);
     localStorageService.setToken(res.tokenId);
     refreshTokenSetup(res);
-    console.log(result)
-    history.push("/home");
+
+    if (result.data.registered) {
+      history.push("/home");
+    } else {
+      history.push("/name");
+    }
   };
 
   const onFailure = (res) => {
     console.log("Login failed: res:", res);
-    alert("Log in failed. Please try again.");
   };
 
   const { signIn } = useGoogleLogin({
@@ -57,10 +62,7 @@ export default function LoginPage() {
         style={{ margin: "50px 0px" }}
         name="LOGIN WITH GOOGLE"
         variant="outlined-active"
-        onClick={() => {
-          signIn();
-          // history.push("/name");
-        }}
+        onClick={signIn}
       />
     </div>
   );

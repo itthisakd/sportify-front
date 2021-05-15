@@ -86,11 +86,9 @@ export default function AddPhoto({ addedPhoto, setAddedPhoto }) {
     setAddedPhoto(res.data.images.length);
   };
 
-  if (editMode === false) {
     useEffect(() => {
       getPhotos();
     }, [trigger]);
-  }
 
 
   const removePhoto = async (imageId) => {
@@ -135,7 +133,6 @@ export default function AddPhoto({ addedPhoto, setAddedPhoto }) {
           <form
             style={{ position: "relative" }}
             key={idx}
-            enctype="multipart/form-data"
           >
             <input
               name="file"
