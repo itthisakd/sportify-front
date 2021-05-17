@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { EditModeContext } from "../../contexts/EditModeContextProvider";
-import { Select, MenuItem, Input } from "@material-ui/core";
+import { Input } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import SectionHeader from "../shared/SectionHeader";
-import LongButton from "../shared/LongButton";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -58,11 +57,7 @@ export default function EditInfoPage() {
   const { setValues, data } = useData();
   const [addedPhoto, setAddedPhoto] = useState(0);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm({
+  const { handleSubmit, reset, control } = useForm({
     defaultValues: {
       aboutMe: "",
       job: "",
@@ -100,6 +95,7 @@ export default function EditInfoPage() {
     const body = Object.fromEntries(
       Object.entries(edit).filter((item) => item[1])
     );
+    console.log("SUBMITTED")
     console.log(body);
     await axios.patch("/account/myaccount", body);
     setEditMode(false);
@@ -132,10 +128,6 @@ export default function EditInfoPage() {
             left: "0px",
           }}
           type="submit"
-          doneAction={() => {
-            console.log("HELLO");
-            handleSubmit(onSubmit);
-          }}
         />
         <AddPhoto addedPhoto={addedPhoto} setAddedPhoto={setAddedPhoto} />
 
@@ -143,15 +135,21 @@ export default function EditInfoPage() {
           <Typography variant="body2" className={classes.title}>
             ABOUT ME
           </Typography>
-          <Input
-            {...register("aboutMe")}
-            // defaultValue={account.aboutMe}
-            multiline={true}
-            disableUnderline={true}
-            className={classes.inputWordBreak}
-            placeholder="About me"
+          <Controller
+            defaultValue={account.aboutMe}
+            name="aboutMe"
+            control={control}
+            render={({ field }) => (
+              <Input
+                className={classes.inputWordBreak}
+                disableUnderline={true}
+                multiline={true}
+                placeholder="About Me"
+                {...field}
+              />
+            )}
           />
-        </div>
+          </div>
         <div onClick={handleEditSports}>
           <Typography variant="body2" className={classes.title}>
             SPORT
@@ -188,48 +186,72 @@ export default function EditInfoPage() {
           <Typography variant="body2" className={classes.title}>
             JOB TITLE
           </Typography>
-          <Input
-            {...register("job")}
-            // defaultValue={account.job}
-            disableUnderline={true}
-            placeholder="Add Job Title"
-            className={classes.input}
+          <Controller
+            defaultValue={account.job}
+            name="job"
+            control={control}
+            render={({ field }) => (
+              <Input
+                className={classes.input}
+                disableUnderline={true}
+                placeholder="Add Job Title"
+                {...field}
+              />
+            )}
           />
         </div>
         <div>
           <Typography variant="body2" className={classes.title}>
             SCHOOL
           </Typography>
-          <Input
-            {...register("school")}
-            // defaultValue={account.school}
-            disableUnderline={true}
-            placeholder="Add School"
-            className={classes.input}
+          <Controller
+            defaultValue={account.school}
+            name="school"
+            control={control}
+            render={({ field }) => (
+              <Input
+                className={classes.input}
+                disableUnderline={true}
+                placeholder="Add School"
+                {...field}
+              />
+            )}
           />
         </div>
         <div>
           <Typography variant="body2" className={classes.title}>
             INSTAGRAM
           </Typography>
-          <Input
-            {...register("instagram")}
-            // defaultValue={account.instagram}
-            disableUnderline={true}
-            placeholder="Add Instagram Username"
-            className={classes.input}
+          <Controller
+            defaultValue={account.instagram}
+            name="instagram"
+            control={control}
+            render={({ field }) => (
+              <Input
+                className={classes.input}
+                disableUnderline={true}
+                placeholder="Add Instagram Username"
+                {...field}
+              />
+            )}
           />
         </div>
         <div>
           <Typography variant="body2" className={classes.title}>
             SPOTIFY
           </Typography>
-          <Input
-            {...register("spotify")}
-            // defaultValue={account.spotify}
-            disableUnderline={true}
-            placeholder="Add Spotify Username"
-            className={classes.input}
+          <Controller
+            defaultValue={account.spotify}
+            name="spotify"
+            control={control}
+            render={({ field }) => (
+              <Input
+                className={classes.input}
+                disableUnderline={true}
+                placeholder="Add Spotify Username"
+                {...field}
+              />
+            )}
           />
         </div>
       </form>

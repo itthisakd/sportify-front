@@ -15,7 +15,7 @@ import TutorialPage from "../pages/tutorial/TutorialPage";
 import SettingsPage from "../pages/settings/SettingsPage";
 import LikedByPage from "../pages/likedby/LikedByPage";
 import BirthDatePage from "../pages/register/BirthDatePage";
-
+import ChatPage from "../pages/matches/ChatContainer"
 
 const pages = {
   home: { page: HomePage, path: "/home" },
@@ -35,6 +35,7 @@ const pages = {
   tutorial: { page: TutorialPage, path: "/tutorial" },
   settings: { page: SettingsPage, path: "/settings" },
   likedby: { page: LikedByPage, path: "/likedby" },
+  chat: {page: ChatPage, path: "/chat"}
 };
 
 const roles = {
@@ -60,6 +61,7 @@ const roles = {
     pages.settings,
     pages.likedby,
     pages.sports,
+    pages.chat
   ],
   DEV: [
     pages.login,
@@ -80,6 +82,7 @@ const roles = {
     pages.profile,
     pages.settings,
     pages.likedby,
+    pages.chat
   ],
 };
 

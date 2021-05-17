@@ -53,9 +53,7 @@ export default function SectionHeader({ title, doneAction, type, style }) {
         size="medium"
         color="secondary"
         className={classes.margin}
-        onClick={() => {
-          doneAction()
-        }}
+        onClick={doneAction}
         type={type}
         style={{
           zIndex: "100000",
