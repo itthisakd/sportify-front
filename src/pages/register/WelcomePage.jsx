@@ -48,7 +48,8 @@ export default function WelcomePage() {
   const [next, setNext] = React.useState(false)
 
   setTimeout(async () => {
-      setNext(true)
+    setNext(true)
+    setValues({})
     }, 5000);
   
 

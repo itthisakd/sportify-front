@@ -6,14 +6,14 @@ import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import QuestionAnswerRoundedIcon from '@material-ui/icons/QuestionAnswerRounded';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import { useHistory } from "react-router-dom"
-import {MenuContext }from "../../contexts/MenuContextProvider"
+import { MenuContext } from "../../contexts/MenuContextProvider"
+import { refreshTokenSetup } from "../../utilities/refreshToken";
 
 const useStyles = makeStyles({
   root: {
     width: "100%",
     margin: "0px",
     minWidth: "100vw",
-
   },
 });
 

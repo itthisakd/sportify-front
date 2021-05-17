@@ -35,9 +35,8 @@ export default function PhotosPage() {
   console.log("currentLocation :>> ", currentLocation);
 
   const submitLocation = async () => {
-    console.log("HELLO");
     setTimeout(async () => {
-      axios.post("/account/currentlocation", {
+      axios.patch("/account/currentlocation", {
         currentLocation,
         addSearchLo: true,
       });

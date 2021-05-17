@@ -80,26 +80,28 @@ export default function SportsPage() {
     (value) => intersection.includes(value) === false
   );
 
-  const registerUser = async () => {
-    await axios.post("/auth/register", {
-      ...data,
-      addSports,
-    });
-  };
+  console.log(editMode);
 
   //ANCHOR get sports to display
-  useEffect(async () => {
-    const res = await axios.get("/sport/");
-    setSports(res.data.sports);
-    console.log(res.data.sports);
+  useEffect(() => {
+    const getSports = async () => {
+      const res = await axios.get("/sport/");
+      setSports(res.data.sports);
+    };
+    getSports();
   }, []);
 
   //ANCHOR get chips selected by user
-  if (editMode === true) {
-    useEffect(async () => {
-      const res = await axios.get("/sport/user");
-      setSelectedChips(res.data.sports);
-      setOldSelectedChips(res.data.sports);
+
+  if (editMode === false) {
+    useEffect(() => {
+      const getUserSports = async () => {
+        const res = await axios.get("/sport/user");
+        console.log("sports", res.data.sports);
+        setSelectedChips(res.data.sports);
+        setOldSelectedChips(res.data.sports);
+      };
+      getUserSports();
     }, []);
   }
 
@@ -116,9 +118,19 @@ export default function SportsPage() {
 
   console.log("data", data);
 
-  const handleSubmit = () => {
-    setValues({ addSports, removeSports });
-    history.push("/photos");
+  const handleSubmit = async () => {
+    if (editMode == false) {
+      setValues({ addSports, removeSports });
+      await axios.post("/auth/register", {
+        ...data,
+        addSports,
+      });
+      history.push("/photos");
+    } else {
+      await axios.post("/sport/", { addSports, removeSports });
+      setEditMode(false);
+      history.push("/edit-info");
+    }
   };
 
   const handleEditInfo = () => {
@@ -137,15 +149,15 @@ export default function SportsPage() {
         }}
       >
         <RegisHeader
-          iconType="back"
-          onClick={() => history.push("/gender")}
+          iconType={editMode ? "none" : "back"}
+          onClick={editMode ? null : () => history.push("/gender")}
           text="Sports"
         >
           <Typography
             variant="body1"
             style={{ zIndex: "1001", margin: "0px 0px 0px 40px" }}
           >
-            You must select at least 1 sport.
+            You can select a maximum of 5 sports.
           </Typography>
         </RegisHeader>
         <div
@@ -178,12 +190,8 @@ export default function SportsPage() {
       </div>
       <div className={classes.button}>
         <LongButton
-          name="CONTINUE"
-          onClick={() => {
-            registerUser();
-
-            handleSubmit();
-          }}
+          name={editMode ? "DONE" : "CONTINUE"}
+          onClick={handleSubmit}
           variant={selectedChips.length > 0 ? "contained" : "disabled"}
         />
       </div>

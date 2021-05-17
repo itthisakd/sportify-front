@@ -4,7 +4,6 @@ import logo from "../../images/branding/new_logo.png";
 import { useGoogleLogin } from "react-google-login";
 import LongButton from "../shared/LongButton";
 import axios from "../../config/axios";
-import { AuthContext } from "../../contexts/AuthContextProvider";
 import localStorageService from "../../services/localStorageService";
 
 // refresh token
@@ -14,7 +13,6 @@ const clientId =
   "580354342835-jmnv6h24isps601e9c4f0rentp9hboad.apps.googleusercontent.com";
 
 export default function LoginPage() {
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const history = useHistory();
 
   const onSuccess = async (res) => {
