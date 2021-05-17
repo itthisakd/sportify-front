@@ -95,7 +95,7 @@ export default function LikedByPage() {
   const [accounts, setAccounts] = useState([
     {
       id: 1,
-      firstName: "Amy",
+      firstName: "Amyhihihihi",
       gender: "female",
       phoneNumber: "0925419369",
       email: "amy@gmail.com",
@@ -145,8 +145,8 @@ export default function LikedByPage() {
       locationName: "Bangkok, Thailand", //Generated using API ****CONFIRM WITH AUM AGAIN LATER ****
     },
     {
-      id: 1,
-      firstName: "Amy",
+      id: 2,
+      firstName: "katie",
       gender: "female",
       phoneNumber: "0925419369",
       email: "amy@gmail.com",
@@ -197,8 +197,8 @@ export default function LikedByPage() {
       locationName: "Bangkok, Thailand", //Generated using API ****CONFIRM WITH AUM AGAIN LATER ****
     },
     {
-      id: 1,
-      firstName: "Amy",
+      id: 3,
+      firstName: "sern",
       gender: "female",
       phoneNumber: "0925419369",
       email: "amy@gmail.com",

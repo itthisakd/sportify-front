@@ -93,7 +93,7 @@ export default function SportsPage() {
 
   //ANCHOR get chips selected by user
 
-  if (editMode === false) {
+  if (editMode) {
     useEffect(() => {
       const getUserSports = async () => {
         const res = await axios.get("/sport/user");
@@ -128,7 +128,7 @@ export default function SportsPage() {
       history.push("/photos");
     } else {
       await axios.post("/sport/", { addSports, removeSports });
-      setEditMode(false);
+      setEditMode(true);
       history.push("/edit-info");
     }
   };
@@ -150,7 +150,7 @@ export default function SportsPage() {
       >
         <RegisHeader
           iconType={editMode ? "none" : "back"}
-          onClick={editMode ? null : () => history.push("/gender")}
+          onClick={editMode ? () => null : () => history.push("/gender")}
           text="Sports"
         >
           <Typography

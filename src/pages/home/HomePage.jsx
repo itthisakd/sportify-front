@@ -156,7 +156,7 @@ export default function HomePage() {
 
   useEffect(() => {
     setCurId(accounts[current].id);
-    console.log(accounts[current].id);
+    console.log(accounts?.[current]?.id);
   }, [current]);
 
   const nextSlide = () => {
