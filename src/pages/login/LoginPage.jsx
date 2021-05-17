@@ -20,6 +20,9 @@ export default function LoginPage() {
       tokenId: res.tokenId,
     });
 
+    console.log(res);
+    //TODO Use access token to refreshToken
+
     console.log(result.data);
     localStorageService.setToken(res.tokenId);
     refreshTokenSetup(res);

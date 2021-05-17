@@ -143,7 +143,8 @@ export default function HomePage() {
   const [current, setCurrent] = useState(0);
   const [viewId, setViewId] = useState(0);
   const [accounts, setAccounts] = useState([]);
-  const [curId, setCurId] = useState(0);
+  const [justLiked, setJustLiked] = useState(false);
+  const [loadMore, setLoadMore] = useState(false);
 
   useEffect(() => {
     const getAccounts = async () => {
@@ -151,7 +152,7 @@ export default function HomePage() {
       setAccounts(res.data.stack);
     };
     getAccounts();
-  }, []);
+  }, [loadMore]);
 
   useEffect(() => {
     setCurId(accounts[current].id);
@@ -163,7 +164,7 @@ export default function HomePage() {
       setCurrent(current === accounts.length - 1 ? 0 : current + 1);
       setViewId(0);
     } else {
-      //TODO GET MORE MATCHES
+      setLoadMore(!loadMore);
       setViewId(0);
     }
   };
@@ -175,21 +176,39 @@ export default function HomePage() {
   }
 
   const createLike = async () => {
-    await axios.post("/match/", { toId: curId, superlike: 0 });
-    await axios.patch("/account/updateoffset", { accId: curAcc.id });
+    if (accounts[current].likedMe) {
+      await axios.patch("/match/returnLike", {
+        matchId: accounts[current].likedMe,
+        toId: curId,
+      });
+    } else {
+      await axios.post("/match/", { toId: curId, superlike: 0 });
+    }
+    await axios.patch("/account/updateoffset", { accId: curId });
     setViewId(0);
+    setJustLiked(true);
+    nextSlide();
   };
 
   const createSuperlike = async () => {
-    await axios.post("/match/", { toId: curId, superlike: 1 });
-    await axios.patch("/account/updateoffset", { accId: curAcc.id });
-
+    if (accounts[current].likedMe) {
+      await axios.patch("/match/returnLike", {
+        matchId: accounts[current].likedMe,
+        toId: curId,
+      });
+    } else {
+      await axios.post("/match/", { toId: curId, superlike: 1 });
+    }
     setViewId(0);
+    setJustLiked(true);
+    nextSlide();
   };
 
-  const rej = async () => {
-    await axios.patch("/account/updateoffset", { accId: curAcc.id });
+  const reject = async () => {
+    await axios.patch("/account/updateoffset", { accId: curId });
     setViewId(0);
+    setJustLiked(false);
+    nextSlide();
   };
 
   if (viewId === 0) {
@@ -219,23 +238,28 @@ export default function HomePage() {
                   })}
                 </Paper>
                 <Container className={classes.buttonContainer}>
+                  {justLiked ? (
+                    <Fab
+                      color="primary"
+                      className={classes.button}
+                      onClick={prevSlide}
+                      disabled
+                    >
+                      <ReplayRoundedIcon />
+                    </Fab>
+                  ) : (
+                    <Fab
+                      color="primary"
+                      className={classes.button}
+                      onClick={prevSlide}
+                    >
+                      <ReplayRoundedIcon />
+                    </Fab>
+                  )}
                   <Fab
                     color="primary"
                     className={classes.button}
-                    onClick={() => {
-                      prevSlide();
-                      //FIXME disable rewind if previously matches
-                    }}
-                  >
-                    <ReplayRoundedIcon />
-                  </Fab>
-                  <Fab
-                    color="primary"
-                    className={classes.button}
-                    onClick={() => {
-                      createLike();
-                      nextSlide();
-                    }}
+                    onClick={createLike}
                   >
                     <FavoriteRoundedIcon />
                   </Fab>
@@ -243,10 +267,7 @@ export default function HomePage() {
                   <Fab
                     color="primary"
                     className={classes.button}
-                    onClick={() => {
-                      createSuperlike();
-                      nextSlide();
-                    }}
+                    onClick={createSuperlike}
                   >
                     <StarRoundedIcon />
                   </Fab>
@@ -254,10 +275,7 @@ export default function HomePage() {
                   <Fab
                     color="primary"
                     className={classes.button}
-                    onClick={() => {
-                      rej();
-                      nextSlide();
-                    }}
+                    onClick={reject}
                   >
                     <CloseRoundedIcon />
                   </Fab>
@@ -282,42 +300,22 @@ export default function HomePage() {
             color="primary"
             className={classes.button}
             style={{ opacity: "0" }}
-            onClick={() => {
-              //TODO––––––––––––––––––– limit rewind to once per day for lite users
-              prevSlide();
-            }}
           >
             <ReplayRoundedIcon />
           </Fab>
-          <Fab
-            color="primary"
-            className={classes.button}
-            onClick={() => {
-              createLike();
-              nextSlide();
-            }}
-          >
+          <Fab color="primary" className={classes.button} onClick={createLike}>
             <FavoriteRoundedIcon />
           </Fab>
 
           <Fab
             color="primary"
             className={classes.button}
-            onClick={() => {
-              createSuperlike();
-              nextSlide();
-            }}
+            onClick={createSuperlike}
           >
             <StarRoundedIcon />
           </Fab>
 
-          <Fab
-            color="primary"
-            className={classes.button}
-            onClick={() => {
-              nextSlide();
-            }}
-          >
+          <Fab color="primary" className={classes.button} onClick={reject}>
             <CloseRoundedIcon />
           </Fab>
         </Container>
