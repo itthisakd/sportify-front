@@ -59,6 +59,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    alignItems: "center",
     width: "90vw",
     height: "135vw",
     borderRadius: "15px",
@@ -154,11 +155,6 @@ export default function HomePage() {
     getAccounts();
   }, [loadMore]);
 
-  useEffect(() => {
-    setCurId(accounts[current].id);
-    console.log(accounts?.[current]?.id);
-  }, [current]);
-
   const nextSlide = () => {
     if (current !== accounts.length - 1) {
       setCurrent(current === accounts.length - 1 ? 0 : current + 1);
@@ -179,12 +175,11 @@ export default function HomePage() {
     if (accounts[current].likedMe) {
       await axios.patch("/match/returnLike", {
         matchId: accounts[current].likedMe,
-        toId: curId,
+        toId: accounts[current].id,
       });
     } else {
-      await axios.post("/match/", { toId: curId, superlike: 0 });
+      await axios.post("/match/", { toId: accounts[current].id, superlike: 0 });
     }
-    await axios.patch("/account/updateoffset", { accId: curId });
     setViewId(0);
     setJustLiked(true);
     nextSlide();
@@ -194,10 +189,10 @@ export default function HomePage() {
     if (accounts[current].likedMe) {
       await axios.patch("/match/returnLike", {
         matchId: accounts[current].likedMe,
-        toId: curId,
+        toId: accounts[current].id,
       });
     } else {
-      await axios.post("/match/", { toId: curId, superlike: 1 });
+      await axios.post("/match/", { toId: accounts[current].id, superlike: 1 });
     }
     setViewId(0);
     setJustLiked(true);
@@ -205,7 +200,7 @@ export default function HomePage() {
   };
 
   const reject = async () => {
-    await axios.patch("/account/updateoffset", { accId: curId });
+    await axios.patch("/account/updateoffset", { accId: accounts[current].id });
     setViewId(0);
     setJustLiked(false);
     nextSlide();
@@ -217,10 +212,10 @@ export default function HomePage() {
         <Menu />
         <div className={classes.flexBetween}>
           <Container className={classes.center}>
-            {accounts.length > 0 ? (
-              <div className={classes.container}>
-                <Paper elevation={3} className={classes.paper}>
-                  {accounts?.map((account, index) => {
+            <div className={classes.container}>
+              <Paper elevation={3} className={classes.paper}>
+                {accounts.length > 0 ? (
+                  accounts?.map((account, index) => {
                     return (
                       <div key={index}>
                         {index === current && (
@@ -235,55 +230,55 @@ export default function HomePage() {
                         )}
                       </div>
                     );
-                  })}
-                </Paper>
-                <Container className={classes.buttonContainer}>
-                  {justLiked ? (
-                    <Fab
-                      color="primary"
-                      className={classes.button}
-                      onClick={prevSlide}
-                      disabled
-                    >
-                      <ReplayRoundedIcon />
-                    </Fab>
-                  ) : (
-                    <Fab
-                      color="primary"
-                      className={classes.button}
-                      onClick={prevSlide}
-                    >
-                      <ReplayRoundedIcon />
-                    </Fab>
-                  )}
+                  })
+                ) : (
+                  <CircularProgress style={{ width: "15vw", height: "15vw" }} />
+                )}
+              </Paper>
+              <Container className={classes.buttonContainer}>
+                {justLiked ? (
                   <Fab
                     color="primary"
                     className={classes.button}
-                    onClick={createLike}
+                    onClick={prevSlide}
+                    disabled
                   >
-                    <FavoriteRoundedIcon />
+                    <ReplayRoundedIcon />
                   </Fab>
+                ) : (
+                  <Fab
+                    color="primary"
+                    className={classes.button}
+                    onClick={prevSlide}
+                  >
+                    <ReplayRoundedIcon />
+                  </Fab>
+                )}
+                <Fab
+                  color="primary"
+                  className={classes.button}
+                  onClick={createLike}
+                >
+                  <FavoriteRoundedIcon />
+                </Fab>
 
-                  <Fab
-                    color="primary"
-                    className={classes.button}
-                    onClick={createSuperlike}
-                  >
-                    <StarRoundedIcon />
-                  </Fab>
+                <Fab
+                  color="primary"
+                  className={classes.button}
+                  onClick={createSuperlike}
+                >
+                  <StarRoundedIcon />
+                </Fab>
 
-                  <Fab
-                    color="primary"
-                    className={classes.button}
-                    onClick={reject}
-                  >
-                    <CloseRoundedIcon />
-                  </Fab>
-                </Container>
-              </div>
-            ) : (
-              <CircularProgress />
-            )}
+                <Fab
+                  color="primary"
+                  className={classes.button}
+                  onClick={reject}
+                >
+                  <CloseRoundedIcon />
+                </Fab>
+              </Container>
+            </div>
           </Container>
         </div>
       </div>

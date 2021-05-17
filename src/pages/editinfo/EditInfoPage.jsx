@@ -38,14 +38,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const schema = yup.object().shape({
+  firstName: yup.string().matches(/^[A-za-z ]+$/, "Name must be alphabetical"),
   aboutMe: yup.string(),
-  job: yup.string(),
+  job: yup.string().matches(/^[A-za-z ]+$/, "Job must be alphabetical"),
   instagram: yup
     .string()
-    .matches(/^[a-z_.0-9]+$/, "Username must be in correct format"),
+    .matches(/^[a-zA-z_.0-9]+$/, "Username must be in correct format"),
   spotify: yup
     .string()
-    .matches(/^[a-z_.0-9]+$/, "Username must be in correct format"),
+    .matches(/^[a-zA-z_.0-9]+$/, "Username must be in correct format"),
   school: yup.string(),
 });
 
@@ -59,6 +60,7 @@ export default function EditInfoPage() {
 
   const { handleSubmit, reset, control } = useForm({
     defaultValues: {
+      // firstName: "",
       aboutMe: "",
       job: "",
       instagram: "",
@@ -76,6 +78,7 @@ export default function EditInfoPage() {
       setAddedPhoto(res.data.images.length);
       console.log(res.data);
       reset({
+        // firstName: res.data.firstName,
         aboutMe: res.data.aboutMe,
         job: res.data.job,
         school: res.data.school,
@@ -95,7 +98,7 @@ export default function EditInfoPage() {
     const body = Object.fromEntries(
       Object.entries(edit).filter((item) => item[1])
     );
-    console.log("SUBMITTED")
+    console.log("SUBMITTED");
     console.log(body);
     await axios.patch("/account/myaccount", body);
     setEditMode(false);
@@ -130,7 +133,24 @@ export default function EditInfoPage() {
           type="submit"
         />
         <AddPhoto addedPhoto={addedPhoto} setAddedPhoto={setAddedPhoto} />
-
+        {/* <div>
+          <Typography variant="body2" className={classes.title}>
+            NAME
+          </Typography>
+          <Controller
+            defaultValue={account.firstName}
+            name="firstName"
+            control={control}
+            render={({ field }) => (
+              <Input
+                className={classes.input}
+                disableUnderline={true}
+                placeholder="Add name"
+                {...field}
+              />
+            )}
+          />
+        </div> */}
         <div>
           <Typography variant="body2" className={classes.title}>
             ABOUT ME
@@ -149,7 +169,7 @@ export default function EditInfoPage() {
               />
             )}
           />
-          </div>
+        </div>
         <div onClick={handleEditSports}>
           <Typography variant="body2" className={classes.title}>
             SPORT
