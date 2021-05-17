@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Menu from "../shared/Menu";
 import { Fab, Container, Paper, Typography } from "@material-ui/core";
@@ -7,6 +7,9 @@ import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
 import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
 import { DateTime } from "luxon";
+import axios from "../../config/axios";
+import { EditModeContext } from "../../contexts/EditModeContextProvider";
+import logo from "../../../icon.png";
 
 const useStyles = makeStyles(() => ({
   flexRow: {
@@ -64,76 +67,28 @@ const useStyles = makeStyles(() => ({
 export default function ProfilePage() {
   const history = useHistory();
   const classes = useStyles();
+  const [account, setAccount] = React.useState({images: [{image: logo}]});
+  const { editMode, setEditMode } = useContext(EditModeContext);
 
-  const getAccounts = async () => {
-    //TODO
-    // const res = await axios.get("/accounts");
-    // setAccounts(res)
-  };
+  useEffect(() => {
+    const getAccount = async () => {
+      const res = await axios.get("/account/myaccount");
+      setAccount(res.data);
+    };
+    getAccount();
+  }, []);
 
-  //TODO
-  // useEffect(() => {
-  //   getAccounts();
-  // }, []);
-
-  const account = {
-    id: 1,
-    planName: "lite",
-    planId: "1",
-    firstName: "Amy",
-    gender: "female",
-    email: "amy@gmail.com",
-    dob: "2001-09-09",
-    aboutMe:
-      "I am nice because I am veyr very nice and also extremely kind and nice.",
-    instagram: "amylee",
-    sporify: "samy",
-    job: "",
-    company: "",
-    school: "Clerk County College",
-    searchLocation: "",
-    currentLocation: "",
-    lastActive: "2020-09-0900:00:09",
-    showActive: 1,
-    recentlyActive: 1,
-    sports: [
-      { id: 1, sportName: "Basketball" },
-      { id: 3, sportName: "Badminton" },
-      { id: 6, sportName: "Tennis" },
-      { id: 7, sportName: "Golf" },
-      { id: 96, sportName: "Fencing" },
-    ],
-    images: [
-      {
-        image:
-          "https://i.picsum.photos/id/1002/600/900.jpg?hmac=4BSgpJzasHKS9vEgQ_Kn3WUjgvc1sUZv-E10bf1bCyA",
-      },
-      {
-        image:
-          "https://i.picsum.photos/id/277/600/900.jpg?hmac=0SZDnUgJesoCsIFVR9u9uG9hUC3dQOxx0_pgop-aIoY",
-      },
-      {
-        image:
-          "https://i.picsum.photos/id/705/600/900.jpg?hmac=19EE_8IKXcp7maJfLind1IgeEHKHlpbeSbN6o5uydJY",
-      },
-      //GIVE IMAGES IN UPLOADED ORDER
-    ],
-    age: 18,
-    // age: DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
-
-    //––––––––––––––––––––––––––GENERATE–––––––––––––––––––––––––
-    distance: "6km",
-  };
+  // console.log(account.images)
 
   return (
     <div>
       <Menu />
 
       <Container className={classes.center}>
-        <img
-          src="https://img.freepik.com/free-photo/young-asian-girl-portrait-isolated_53876-70968.jpg?size=626&ext=jpg"
-          className={classes.imgCircle}
-        />
+          <img
+            src={account?.images[0]?.image}
+            className={classes.imgCircle}
+          />
         <Container style={{ padding: "20px" }} className={classes.center}>
           <Typography
             variant="h4"
@@ -164,6 +119,7 @@ export default function ProfilePage() {
           color="primary"
           className={classes.button}
           onClick={() => {
+            setEditMode(true);
             history.push("/settings");
           }}
         >
@@ -183,67 +139,15 @@ export default function ProfilePage() {
           color="primary"
           className={classes.button}
           onClick={() => {
+            setEditMode(true);
             history.push("/edit-info");
           }}
         >
           <EditRoundedIcon />
         </Fab>
-
-        {/* <Container className={classes.flexCol}>
-            <Fab
-              color="primary"
-              className={classes.button}
-              onClick={() => {
-                history.push("/settings");
-              }}
-            >
-              <SettingsRoundedIcon />
-            </Fab>
-            <Typography variant="caption" component="body1">
-              Settings
-            </Typography>
-          </Container>
-
-          <Container className={classes.flexCol}>
-            <Fab
-              color="primary"
-              className={classes.button}
-              onClick={() => {
-                history.push("/preview");
-              }}
-            >
-              <VisibilityRoundedIcon />
-            </Fab>
-            <Typography variant="caption" component="body1">
-              Preview
-            </Typography>
-          </Container>
-
-          <Container className={classes.flexCol}>
-            <Fab
-              color="primary"
-              className={classes.button}
-              onClick={() => {
-                history.push("/edit-info");
-              }}
-            >
-              <EditRoundedIcon />
-            </Fab>
-            <Typography variant="caption" component="body1">
-              Edit Info
-            </Typography>
-          </Container> */}
       </Container>
 
       <Container>ADS HERE</Container>
     </div>
   );
 }
-
-// const account = {
-//   sports: [
-//     {
-//       sportId: 1
-//       sportName: }"Basketball"
-//   ]
-// }

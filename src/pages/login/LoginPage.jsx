@@ -4,7 +4,6 @@ import logo from "../../images/branding/new_logo.png";
 import { useGoogleLogin } from "react-google-login";
 import LongButton from "../shared/LongButton";
 import axios from "../../config/axios";
-import { AuthContext } from "../../contexts/AuthContextProvider";
 import localStorageService from "../../services/localStorageService";
 
 // refresh token
@@ -14,22 +13,26 @@ const clientId =
   "580354342835-jmnv6h24isps601e9c4f0rentp9hboad.apps.googleusercontent.com";
 
 export default function LoginPage() {
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const history = useHistory();
 
   const onSuccess = async (res) => {
     const result = await axios.post("/auth/login", {
       tokenId: res.tokenId,
     });
+
+    console.log(result.data);
     localStorageService.setToken(res.tokenId);
     refreshTokenSetup(res);
-    console.log(result)
-    history.push("/home");
+
+    if (result.data.registered) {
+      history.push("/home");
+    } else {
+      history.push("/name");
+    }
   };
 
   const onFailure = (res) => {
     console.log("Login failed: res:", res);
-    alert("Log in failed. Please try again.");
   };
 
   const { signIn } = useGoogleLogin({
@@ -57,10 +60,7 @@ export default function LoginPage() {
         style={{ margin: "50px 0px" }}
         name="LOGIN WITH GOOGLE"
         variant="outlined-active"
-        onClick={() => {
-          signIn();
-          // history.push("/name");
-        }}
+        onClick={signIn}
       />
     </div>
   );

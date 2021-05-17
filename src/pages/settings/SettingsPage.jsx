@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import SectionHeader from "../shared/SectionHeader";
@@ -14,6 +14,8 @@ import {
 import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
 import axios from "../../config/axios";
 import Logout from "../login/Logout";
+import { EditModeContext } from "../../contexts/EditModeContextProvider";
+import FormControl from "@material-ui/core/FormControl";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -72,76 +74,24 @@ const useStyles = makeStyles((theme) => ({
 export default function SettingsPage() {
   const classes = useStyles();
   const history = useHistory();
-  const [account, setAccount] = useState({
-    id: 1,
-    firstName: "Amy",
-    gender: "female",
-    phoneNumber: "0925419369",
-    email: "amy@gmail.com",
-    dob: "2001-09-09",
-    aboutMe:
-      "I am nice because I am veyr very nice and also extremely kind and nice.",
-    instagram: "amylee",
-    sporify: "samy",
-    job: "",
-    company: "",
-    school: "Clerk County College",
-    searchLocation: "",
-    searchDistance: 45,
-    searchAge: "18-40",
-    searchGender: "a",
-    currentLocation: "",
-    lastActive: "2020-09-0900:00:09",
-    showActive: 1,
-    showInStack: 1,
+  const [account, setAccount] = useState({});
+  const [maxDist, setMaxDist] = useState(0);
+  const [ageRange, setAgeRange] = useState([]);
+  const [showActive, setShowActive] = useState(true);
+  const [showInStack, setShowInStack] = useState(true);
+  const { editMode, setEditMode } = useContext(EditModeContext);
 
-    //––––––––––––––––––––––––––FROM SEPERATE TABLE––––––––––––––––––––––––
-    planName: "lite",
-    planId: "1",
-    sports: [
-      { id: 1, sportName: "Basketball" },
-      { id: 3, sportName: "Badminton" },
-      { id: 6, sportName: "Tennis" },
-      { id: 7, sportName: "Golf" },
-      { id: 96, sportName: "Fencing" },
-    ],
-    images: [
-      {
-        image:
-          "https://i.picsum.photos/id/1002/600/900.jpg?hmac=4BSgpJzasHKS9vEgQ_Kn3WUjgvc1sUZv-E10bf1bCyA",
-      },
-      {
-        image:
-          "https://i.picsum.photos/id/277/600/900.jpg?hmac=0SZDnUgJesoCsIFVR9u9uG9hUC3dQOxx0_pgop-aIoY",
-      },
-      {
-        image:
-          "https://i.picsum.photos/id/705/600/900.jpg?hmac=19EE_8IKXcp7maJfLind1IgeEHKHlpbeSbN6o5uydJY",
-      },
-      //GIVE IMAGES IN UPLOADED ORDER
-    ],
-
-    //––––––––––––––––––––––––––GENERATE–––––––––––––––––––––––––
-    recentlyActive: 1,
-    distance: "6km",
-    age: 18,
-    locationName: "Bangkok, Thailand",
-    // age: DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
-  });
-  const [maxDist, setMaxDist] = useState(account.searchDistance);
-  const [ageRange, setAgeRange] = useState(account.searchAge.split("-"));
-  const [showActive, setShowActive] = useState(account.showActive);
-  const [showInStack, setShowInStack] = useState(account.showInStack);
-
-  //TODO
-  // const res = await axios.get("/account/myaccount");
-  // setAccount(res.data)
-  // };
-
-  //TODO
-  // useEffect(() => {
-  //   getAccounts();
-  // }, []);
+  useEffect(() => {
+    const getAccount = async () => {
+      const res = await axios.get("/account/myaccount");
+      setAccount(res.data);
+      setMaxDist(res.data.searchDistance);
+      setAgeRange(res.data.searchAge.split("-"));
+      setShowActive(res.data.showActive);
+      setShowInStack(res.data.showInStack);
+    };
+    getAccount();
+  }, []);
 
   const onDone = async () => {
     let obj = {};
@@ -149,7 +99,7 @@ export default function SettingsPage() {
       obj = { ...obj, searchDistance: maxDist };
     }
     if (ageRange !== account.searchAge) {
-      obj = { ...obj, searchAge: ageRange.join("-") };
+      obj = { ...obj, searchAge: ageRange?.join("-") };
     }
     if (showActive !== account.showActive) {
       obj = { ...obj, showActive };
@@ -157,52 +107,38 @@ export default function SettingsPage() {
     if (showInStack !== account.showInStack) {
       obj = { ...obj, showInStack };
     }
-    await axios.patch("/account", obj);
-    await history.push("/profile");
+    await axios.patch("/account/myaccount", obj);
+    history.push("/profile");
   };
 
   return (
     <div className={classes.bg}>
-      <SectionHeader title="Settings" doneAction={onDone} />
+      <SectionHeader
+        title="Settings"
+        doneAction={() => {
+          setEditMode(false);
+          onDone();
+        }}
+      />
       <br />
       <Typography variant="caption" className={classes.section}>
         ACCOUNT SETTINGS
       </Typography>
       <Paper variant="outlined" className={classes.paper}>
-        {account.phoneNumber && (
-          <Container
-            className={classes.row}
+        <Container className={classes.row}>
+          <Typography variant="body1" className={classes.head}>
+            Email
+          </Typography>
+          <Typography
+            variant="body1"
+            className={classes.tail}
             onClick={() => {
-              //TODO bring to register phone number page
+              //TODO bring to register email page
             }}
           >
-            <Typography variant="body1" className={classes.head}>
-              Phone Number
-            </Typography>
-            <Typography variant="body1" className={classes.tail}>
-              {account.phoneNumber}
-              <NavigateNextRoundedIcon style={{ color: "lightgray" }} />
-            </Typography>
-          </Container>
-        )}
-        <Divider />
-        {account.email && (
-          <Container className={classes.row}>
-            <Typography variant="body1" className={classes.head}>
-              Email
-            </Typography>
-            <Typography
-              variant="body1"
-              className={classes.tail}
-              onClick={() => {
-                //TODO bring to register email page
-              }}
-            >
-              {account.email}
-              <NavigateNextRoundedIcon style={{ color: "lightgray" }} />
-            </Typography>
-          </Container>
-        )}
+            {account.email}
+          </Typography>
+        </Container>
       </Paper>
 
       <br />
@@ -245,7 +181,7 @@ export default function SettingsPage() {
             min={2}
             max={160}
             name="maxDistance"
-            value={maxDist}
+            value={maxDist ?? 80}
             onChange={(e, newValue) => {
               setMaxDist(newValue);
             }}
@@ -281,12 +217,12 @@ export default function SettingsPage() {
             className={classes.tail}
             style={{ margin: "0px 10px" }}
           >
-            {ageRange.join(" – ")}
+            {ageRange?.join(" – ")}
           </Typography>
         </Container>
         <Container className={classes.center}>
           <Slider
-            value={ageRange}
+            value={ageRange ?? [18, 39]}
             style={{ width: "90%" }}
             min={18}
             max={100}
@@ -308,7 +244,7 @@ export default function SettingsPage() {
             Show me in stack
           </Typography>
           <Switch
-            checked={showActive}
+            checked={!!showActive}
             onChange={(e) => {
               setShowActive(+e.target.checked);
             }}
@@ -334,7 +270,7 @@ export default function SettingsPage() {
             Show Activity Status
           </Typography>
           <Switch
-            checked={showInStack}
+            checked={!!showInStack}
             onChange={(e) => {
               setShowInStack(+e.target.checked);
             }}
@@ -356,3 +292,60 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+// {
+//     id: 1,
+//     firstName: "Amy",
+//     gender: "female",
+//     phoneNumber: "0925419369",
+//     email: "amy@gmail.com",
+//     dob: "2001-09-09",
+//     aboutMe:
+//       "I am nice because I am veyr very nice and also extremely kind and nice.",
+//     instagram: "amylee",
+//     sporify: "samy",
+//     job: "",
+//     company: "",
+//     school: "Clerk County College",
+//     searchLocation: "",
+//     searchDistance: 45,
+//     searchAge: "18-40",
+//     searchGender: "mf",
+//     currentLocation: "",
+//     lastActive: "2020-09-0900:00:09",
+//     showActive: 1,
+//     showInStack: 1,
+
+//     //––––––––––––––––––––––––––FROM SEPERATE TABLE––––––––––––––––––––––––
+//     planName: "lite",
+//     planId: "1",
+//     sports: [
+//       { id: 1, sportName: "Basketball" },
+//       { id: 3, sportName: "Badminton" },
+//       { id: 6, sportName: "Tennis" },
+//       { id: 7, sportName: "Golf" },
+//       { id: 96, sportName: "Fencing" },
+//     ],
+//     images: [
+//       {
+//         image:
+//           "https://i.picsum.photos/id/1002/600/900.jpg?hmac=4BSgpJzasHKS9vEgQ_Kn3WUjgvc1sUZv-E10bf1bCyA",
+//       },
+//       {
+//         image:
+//           "https://i.picsum.photos/id/277/600/900.jpg?hmac=0SZDnUgJesoCsIFVR9u9uG9hUC3dQOxx0_pgop-aIoY",
+//       },
+//       {
+//         image:
+//           "https://i.picsum.photos/id/705/600/900.jpg?hmac=19EE_8IKXcp7maJfLind1IgeEHKHlpbeSbN6o5uydJY",
+//       },
+//       //GIVE IMAGES IN UPLOADED ORDER
+//     ],
+
+//     //––––––––––––––––––––––––––GENERATE–––––––––––––––––––––––––
+//     recentlyActive: 1,
+//     distance: "6km",
+//     age: 18,
+//     locationName: "Bangkok, Thailand",
+//     // age: DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
+//   }

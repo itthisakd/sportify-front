@@ -12,28 +12,30 @@ import { useData } from "../../contexts/DataContext";
 import AddPhoto from "../shared/AddPhoto";
 import Typography from "@material-ui/core/Typography";
 import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
+import axios from "../../config/axios";
 
 const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: "left",
     padding: "0.5rem",
     margin: "10px 0px 0px 10px",
-    fontWeight: "500",
+    fontWeight: "400",
   },
   input: {
     backgroundColor: "white",
     padding: "12px 12px 12px 22px",
-    borderTop: "0.5px solid lightgray",
-    borderBottom: "0.5px solid lightgray",
+    borderTop: "0.5px solid #eeeded",
+    borderBottom: "0.5px solid #eeeded",
     width: "100vw",
+    height: "40px",
   },
   inputWordBreak: {
     backgroundColor: "white",
     padding: "12px 12px 12px 22px",
-    borderTop: "0.5px solid lightgray",
-    borderBottom: "0.5px solid lightgray",
+    borderTop: "0.5px solid #eeeded",
+    borderBottom: "0.5px solid #eeeded",
     width: "100vw",
-    wordBreak: 'break-all'
+    wordBreak: "break-all",
   },
 }));
 const schema = yup.object().shape({
@@ -54,30 +56,57 @@ export default function EditInfoPage() {
   const [account, setAccount] = useState({});
   const { editMode, setEditMode } = useContext(EditModeContext);
   const { setValues, data } = useData();
+  const [addedPhoto, setAddedPhoto] = useState(0);
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
   } = useForm({
-    defaultValue: {},
+    defaultValues: {
+      aboutMe: "",
+      job: "",
+      instagram: "",
+      spotify: "",
+      school: "",
+    },
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
 
-  // useEffect(async () => {
-  //   const res = await axios.get("/account/myaccount");
-  //   setAccount(res.data);
-  // }, []);
+  React.useEffect(() => {
+    const getAccount = async () => {
+      const res = await axios.get("/account/myaccount");
+      setAccount(res.data);
+      setAddedPhoto(res.data.images.length);
+      console.log(res.data);
+      reset({
+        aboutMe: res.data.aboutMe,
+        job: res.data.job,
+        school: res.data.school,
+        instagram: res.data.instagram,
+        spotify: res.data.spotify,
+      });
+    };
+    getAccount();
+  }, [reset]);
 
   const handleEditSports = () => {
     setEditMode(true);
     history.push("/sports");
   };
 
-  const onSubmit = (edit) => {
-    setValues(edit);
-    // history.push("/profile")
+  const onSubmit = async (edit) => {
+    const body = Object.fromEntries(
+      Object.entries(edit).filter((item) => item[1])
+    );
+    console.log(body);
+    await axios.patch("/account/myaccount", body);
+    setEditMode(false);
+    history.push("/profile");
   };
+
+  console.log("editMode :>> ", editMode);
 
   return (
     <div
@@ -89,51 +118,66 @@ export default function EditInfoPage() {
       }}
     >
       <form
-        onSubmit={handleSubmit(onSubmit)}
         style={{
           backgroundColor: "ghostwhite",
         }}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <SectionHeader
           title="Edit Info"
-          type="submit"
           style={{
             width: "100vw",
             position: "sticky",
-            zIndex: "1000",
             top: "0px",
             left: "0px",
           }}
+          type="submit"
+          doneAction={() => {
+            console.log("HELLO");
+            handleSubmit(onSubmit);
+          }}
         />
-        <AddPhoto />
+        <AddPhoto addedPhoto={addedPhoto} setAddedPhoto={setAddedPhoto} />
+
         <div>
-          <h5 className={classes.title}>ABOUT ME</h5>
+          <Typography variant="body2" className={classes.title}>
+            ABOUT ME
+          </Typography>
           <Input
             {...register("aboutMe")}
-            defaultValue={account.aboutMe}
+            // defaultValue={account.aboutMe}
             multiline={true}
             disableUnderline={true}
             className={classes.inputWordBreak}
-          ></Input>
+            placeholder="About me"
+          />
         </div>
         <div onClick={handleEditSports}>
-          <h5 className={classes.title}>SPORT</h5>
+          <Typography variant="body2" className={classes.title}>
+            SPORT
+          </Typography>
           <div
             style={{
-              height: "43px",
-              backgroundColor: "white",
               position: "relative",
-              width: "100vw",
             }}
           >
-            <div className={classes.input} style={{ width: "100vw" }}>
-              {account.sports.map(item => item.sportName`, `)}
+            <div
+              style={{
+                backgroundColor: "white",
+                padding: "12px 12px 12px 22px",
+                borderTop: "0.5px solid #eeeded",
+                borderBottom: "0.5px solid #eeeded",
+                width: "100vw",
+                lineHeight: "1.5rem",
+              }}
+            >
+              {account.sports?.map((item) => item.sportName).join(",  ")}
             </div>
             <NavigateNextRoundedIcon
               style={{
                 color: "lightgray",
                 position: "absolute",
-                right: "-5px",
+                right: "5px",
                 top: "3px",
               }}
               fontSize="large"
@@ -141,51 +185,55 @@ export default function EditInfoPage() {
           </div>
         </div>
         <div>
-          <h5 className={classes.title}>JOB TITLE</h5>
+          <Typography variant="body2" className={classes.title}>
+            JOB TITLE
+          </Typography>
           <Input
             {...register("job")}
-            defaultValue={account.job}
-            multiline={true}
+            // defaultValue={account.job}
             disableUnderline={true}
             placeholder="Add Job Title"
             className={classes.input}
-          ></Input>
+          />
         </div>
         <div>
-          <h5 className={classes.title}>SCHOOL</h5>
+          <Typography variant="body2" className={classes.title}>
+            SCHOOL
+          </Typography>
           <Input
             {...register("school")}
-            defaultValue={account.school}
-            multiline={true}
+            // defaultValue={account.school}
             disableUnderline={true}
             placeholder="Add School"
             className={classes.input}
-          ></Input>
+          />
         </div>
         <div>
-          <h5 className={classes.title}>INSTAGRAM</h5>
+          <Typography variant="body2" className={classes.title}>
+            INSTAGRAM
+          </Typography>
           <Input
             {...register("instagram")}
-            defaultValue={account.instagram}
-            multiline={true}
+            // defaultValue={account.instagram}
             disableUnderline={true}
             placeholder="Add Instagram Username"
             className={classes.input}
-          ></Input>
+          />
         </div>
         <div>
-          <h5 className={classes.title}>SPOTIFY</h5>
+          <Typography variant="body2" className={classes.title}>
+            SPOTIFY
+          </Typography>
           <Input
             {...register("spotify")}
-            defaultValue={account.spotify}
-            multiline={true}
+            // defaultValue={account.spotify}
             disableUnderline={true}
             placeholder="Add Spotify Username"
             className={classes.input}
-          ></Input>
+          />
         </div>
       </form>
-      <div style={{height: '40px',backgroundColor: "ghostwhite", }}></div>
+      <div style={{ height: "40px", backgroundColor: "ghostwhite" }}></div>
     </div>
   );
 }

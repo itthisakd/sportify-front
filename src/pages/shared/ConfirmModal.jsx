@@ -62,8 +62,10 @@ export default function SpringModal({
   handleClose,
   message,
   confirmAction,
+  cancelAction
 }) {
   const classes = useStyles();
+
 
   return (
     <div>
@@ -87,31 +89,27 @@ export default function SpringModal({
         }}
       >
         <Fade in={open}>
-          <div
-            className={classes.paper}
-            onClick={() => {
-              confirmAction();
-              handleClose();
-            }}
-          >
-            <Typography
-              variant="h6"
-              component="h2"
-              color="secondary"
-              className={classes.text}
-            >
-              {message}
-            </Typography>
-          </div>
-          <div className={classes.paper} onClick={handleClose}>
-            <Typography
-              variant="h6"
-              component="h2"
-              style={{ color: "darkgray" }}
-              className={classes.text}
-            >
-              CANCEL
-            </Typography>
+          <div>
+            <div className={classes.paper} onClick={confirmAction}>
+              <Typography
+                variant="h6"
+                component="h2"
+                color="secondary"
+                className={classes.text}
+              >
+                {message}
+              </Typography>
+            </div>
+            <div className={classes.paper} onClick={cancelAction}>
+              <Typography
+                variant="h6"
+                component="h2"
+                style={{ color: "darkgray" }}
+                className={classes.text}
+              >
+                CANCEL
+              </Typography>
+            </div>
           </div>
         </Fade>
       </Modal>

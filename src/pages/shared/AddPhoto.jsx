@@ -17,12 +17,12 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     objectFit: "cover",
     objectPosition: "50% 50%",
+    boxShadow: theme.shadows[1],
   },
   icon: {
     position: "absolute",
     right: "0px",
     bottom: "0px",
-    zIndex: "10",
     background: "linear-gradient(45deg, #E8407D 10%, #EE7F5E 90%)",
     color: "white",
     width: "25px",
@@ -32,6 +32,22 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    boxShadow: theme.shadows[2],
+  },
+  Xicon: {
+    position: "absolute",
+    right: "0px",
+    bottom: "0px",
+    color: "linear-gradient(45deg, #E8407D 10%, #EE7F5E 90%)",
+    backgroundColor: "white",
+    width: "25px",
+    height: "25px",
+    borderRadius: "50%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    boxShadow: theme.shadows[2],
   },
   flexWrap: {
     display: "flex",
@@ -41,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "5vw",
   },
   empty: {
-    backgroundColor: "#E8E8E8",
+    backgroundColor: "#f1f0f0",
     border: "4px lightgray dashed",
     borderRadius: "10px",
     display: "inline-block",
@@ -57,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
     top: "0px",
     bottom: "0px",
     padding: "0px",
-    zIndex: "1000",
   },
 }));
 
@@ -67,6 +82,7 @@ export default function AddPhoto({ addedPhoto, setAddedPhoto }) {
   const [trigger, setTrigger] = React.useState(false);
   const { editMode, setEditMode } = useContext(EditModeContext);
   const [images, setImages] = useState([]);
+  const [imageId, setImageId] = useState("");
 
   const arr = [{}, {}, {}, {}, {}, {}];
   const imagesArr = arr.map((el, idx) => {
@@ -76,9 +92,6 @@ export default function AddPhoto({ addedPhoto, setAddedPhoto }) {
   const handleOpen = () => {
     setOpen(true);
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const getPhotos = async () => {
     const res = await axios.get("/media/");
@@ -86,15 +99,12 @@ export default function AddPhoto({ addedPhoto, setAddedPhoto }) {
     setAddedPhoto(res.data.images.length);
   };
 
-  if (editMode === false) {
-    useEffect(() => {
-      getPhotos();
-    }, [trigger]);
-  }
+  useEffect(() => {
+    getPhotos();
+  }, [trigger]);
 
-
-  const removePhoto = async (imageId) => {
-    await axios.delete("/media/" + imageId);
+  const removePhoto = async (id) => {
+    await axios.delete("/media/" + id);
     setTrigger(!trigger);
   };
 
@@ -109,50 +119,62 @@ export default function AddPhoto({ addedPhoto, setAddedPhoto }) {
     setTrigger(!trigger);
   };
 
-
-
   return (
     <div className={classes.flexWrap}>
       {imagesArr.map((image, idx) => {
         return image.image ? (
-          <div style={{ position: "relative" }} onClick={handleOpen} key={idx}>
+          <div
+            style={{ position: "relative" }}
+            onClick={
+              images.length > 1
+                ? () => {
+                    setOpen(true);
+                    setImageId(image.id);
+                  }
+                : null
+            }
+            key={idx}
+          >
             <img src={image.image} className={classes.paper} key={idx} />
-            <div className={classes.icon}>
-              <ClearRoundedIcon fontSize="small" />
+            <div className={classes.Xicon}>
+              <AddRoundedIcon
+                fontSize="default"
+                style={{ transform: "rotateZ(45deg)", color: "#E8407D" }}
+              />
             </div>
-            <ConfirmModal
-              message="DELETE"
-              handleClose={handleClose}
-              open={open}
-              setOpen={setOpen}
-              confirmAction={() => {
-                removePhoto(image.id);
-                handleClose();
-              }}
-            />
           </div>
         ) : (
-          <form
-            style={{ position: "relative" }}
-            key={idx}
-            enctype="multipart/form-data"
-          >
+          <div style={{ position: "relative" }} key={idx}>
             <input
               name="file"
               accept="image/*"
               className={classes.input}
               type="file"
-                onChange={(e) => {
-                addPhoto(e.target.files[0])
+              onChange={(e) => {
+                addPhoto(e.target.files[0]);
               }}
             />
             <div className={classes.empty} />
             <div className={classes.icon}>
               <AddRoundedIcon fontSize="default" />
             </div>
-          </form>
+          </div>
         );
       })}
+      <ConfirmModal
+        message="DELETE"
+        handleClose={() => {
+          setOpen(false);
+        }}
+        open={open}
+        confirmAction={() => {
+          removePhoto(imageId);
+          setOpen(false);
+        }}
+        cancelAction={() => {
+          setOpen(false);
+        }}
+      />
     </div>
   );
 }

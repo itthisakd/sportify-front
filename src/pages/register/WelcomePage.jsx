@@ -45,10 +45,15 @@ export default function WelcomePage() {
   const classes = useStyles();
   const history = useHistory();
   const { setValues, data } = useData();
+  const [next, setNext] = React.useState(false)
 
-  const registerUser = async () => {
-    await axios.post("/authen/register", {...data, currentLocation: getCurrentLocation(), searchLocation: getCurrentLocation()});
-  };
+  setTimeout(async () => {
+    setNext(true)
+    setValues({})
+    }, 5000);
+  
+
+  console.log(data)
 
   return (
     <div
@@ -108,9 +113,9 @@ export default function WelcomePage() {
         <LongButton
           name="I AGREE"
           onClick={() => {
-            registerUser();
             history.push("/tutorial");
           }}
+          variant={next? "contained" : "disabled"}
         />
       </div>
     </div>
