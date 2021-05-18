@@ -162,8 +162,11 @@ export default function HomePage() {
     if (current !== accounts.length - 1) {
       setCurrent(current === accounts.length - 1 ? 0 : current + 1);
       setViewId(0);
-    } else {
+    } else if (current === accounts.length - 1) {
+      console.log("LOADING MORE");
       setLoadMore(!loadMore);
+      setViewId(0);
+    } else {
       setViewId(0);
     }
   };
@@ -177,8 +180,10 @@ export default function HomePage() {
   const createLike = async () => {
     if (accounts[current].likedMe) {
       await axios.patch("/match/returnLike", {
-        matchId: accounts[current].likedMe,
-        toId: accounts[current].id,
+        matchId: accounts[current].likedMe.matchId,
+      });
+      await axios.patch("/account/updateoffset", {
+        accId: accounts[current].id,
       });
     } else {
       await axios.post("/match/", { toId: accounts[current].id, superlike: 0 });
@@ -193,8 +198,10 @@ export default function HomePage() {
   const createSuperlike = async () => {
     if (accounts[current].likedMe) {
       await axios.patch("/match/returnLike", {
-        matchId: accounts[current].likedMe,
-        toId: accounts[current].id,
+        matchId: accounts[current].likedMe.matchId,
+      });
+      await axios.patch("/account/updateoffset", {
+        accId: accounts[current].id,
       });
     } else {
       await axios.post("/match/", { toId: accounts[current].id, superlike: 1 });
@@ -327,95 +334,3 @@ export default function HomePage() {
     );
   }
 }
-
-// [
-//   {
-//     id: 1,
-//     planName: "lite",
-//     planId: "1",
-//     firstName: "Amy",
-//     gender: "female",
-//     email: "amy@gmail.com",
-//     dob: "2001-09-09",
-//     aboutMe:
-//       "I am nice because I am veyr very nice and also extremely kind and nice. I am nice because I am veyr very nice and also extremely kind and nice. I am nice because I am veyr very nice and also extremely kind and nice.",
-//     instagram: "amylee",
-//     spotify: "samy",
-//     job: "Student",
-//     school: "Clerk County College",
-//     sports: [
-//       { id: 1, sportName: "Basketball" },
-//       { id: 3, sportName: "Badminton" },
-//       { id: 6, sportName: "Tennis" },
-//       { id: 7, sportName: "Golf" },
-//       { id: 96, sportName: "Fencing" },
-//     ],
-//     searchLocation: "",
-//     currentLocation: "",
-//     lastActive: "2020-09-0900:00:09",
-//     showActive: 1,
-//     recentlyActive: 1,
-//     images: [
-//       {
-//         image:
-//           "https://i.picsum.photos/id/1002/600/900.jpg?hmac=4BSgpJzasHKS9vEgQ_Kn3WUjgvc1sUZv-E10bf1bCyA",
-//       },
-//       {
-//         image:
-//           "https://i.picsum.photos/id/277/600/900.jpg?hmac=0SZDnUgJesoCsIFVR9u9uG9hUC3dQOxx0_pgop-aIoY",
-//       },
-//       {
-//         image:
-//           "https://i.picsum.photos/id/705/600/900.jpg?hmac=19EE_8IKXcp7maJfLind1IgeEHKHlpbeSbN6o5uydJY",
-//       },
-//       //GIVE IMAGES IN UPLOADED ORDER
-//     ],
-//     age: 18,
-//     // age: DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
-
-//     //––––––––––––––––––––––––––GENERATE–––––––––––––––––––––––––
-//     locationName: "Bangkok, Thailand",
-//   },
-//   {
-//     id: 2,
-//     planName: "lite",
-//     planId: "1",
-//     firstName: "JITTY",
-//     gender: "female",
-//     email: "amy@gmail.com",
-//     dob: "2001-09-09",
-//     aboutMe: "I am nice.",
-//     instagram: "amylee",
-//     sporify: "samy",
-//     job: "",
-//     company: "",
-//     school: "Clerk County College",
-//     sports: [
-//       { id: 1, sportName: "Basketball" },
-//       { id: 3, sportName: "Badminton" },
-//       { id: 6, sportName: "Tennis" },
-//       { id: 7, sportName: "Golf" },
-//       { id: 96, sportName: "Fencing" },
-//     ],
-//     searchLocation: "",
-//     currentLocation: "",
-//     lastActive: "2020-09-0900:00:09",
-//     images: [
-//       {
-//         image:
-//           "https://i.picsum.photos/id/1002/600/900.jpg?hmac=4BSgpJzasHKS9vEgQ_Kn3WUjgvc1sUZv-E10bf1bCyA",
-//       },
-//       {
-//         image:
-//           "https://i.picsum.photos/id/277/600/900.jpg?hmac=0SZDnUgJesoCsIFVR9u9uG9hUC3dQOxx0_pgop-aIoY",
-//       },
-//       {
-//         image:
-//           "https://i.picsum.photos/id/705/600/900.jpg?hmac=19EE_8IKXcp7maJfLind1IgeEHKHlpbeSbN6o5uydJY",
-//       },
-//       //GIVE IMAGES IN UPLOADED ORDER
-//     ],
-//     age: 18,
-//     // age: DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
-//   },
-// ];

@@ -10,7 +10,9 @@ import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
 import SchoolOutlinedIcon from "@material-ui/icons/SchoolOutlined";
+import HouseOutlinedIcon from "@material-ui/icons/HouseOutlined";
 import titleCase from "../../utilities/titleCase";
+import locationName from "../../utilities/locationName";
 
 const useStyles = makeStyles((theme) => ({
   flexCol: {
@@ -39,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(0.5),
     },
+    margin: "10px 0px 0px 0px",
   },
   paper: {
     display: "flex",
@@ -53,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     right: "20px",
     top: "calc(110vw - 30px)",
-    zIndex: "10"
+    zIndex: "10",
   },
   name: {
     fontWeight: "600",
@@ -82,6 +85,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile({ account, setViewId }) {
   const classes = useStyles();
+  const [locationName, setLocationName] = React.useState("");
+
+  // React.useEffect(() => {
+  //   console.log(account.currentLocation);
+  //   const setLo = async () => {
+  //     console.log("inside");
+  //     //FIXME locationName2 error
+  //     const loName = await locationName(account.currentLocation)
+  //     setLocationName(loName)
+  //   };
+  //   setLo();
+  // }, []);
+
   return (
     <div style={{ position: "relative" }}>
       <ImageDisplay account={account} />
@@ -116,11 +132,22 @@ export default function Profile({ account, setViewId }) {
             {account.age}
           </Typography>
         </Typography>
-        {account.locationName && (
+
+        {account.currentLocation && (
+          //FIXME ERROR: LOCA NAME NOT DISPLAYING
+
+          <div className={classes.flexRow}>
+            <HouseOutlinedIcon className={classes.tag} />
+            <Typography variant="body2" className={classes.tag}>
+              {locationName}
+            </Typography>
+          </div>
+        )}
+        {account.distance && (
           <div className={classes.flexRow}>
             <LocationOnOutlinedIcon className={classes.tag} />
             <Typography variant="body2" className={classes.tag}>
-              {account.locationName}
+              {account.distance} km away
             </Typography>
           </div>
         )}
@@ -141,7 +168,7 @@ export default function Profile({ account, setViewId }) {
           </div>
         )}
         <div className={classes.root}>
-          {account.sports.map(({ sportName, id }) => {
+          {account.sports?.map(({ sportName, id }) => {
             //TODO match colors of tags if sport matches that of the user
             return (
               <Chip
@@ -149,6 +176,12 @@ export default function Profile({ account, setViewId }) {
                 variant="outlined"
                 className={classes.chip}
                 key={id}
+                variant={
+                  account.commonSports?.includes(id) ? "default" : "outlined"
+                }
+                color={
+                  account.commonSports?.includes(id) ? "secondary" : "default"
+                }
               />
             );
           })}

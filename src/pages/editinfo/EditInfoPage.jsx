@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import SectionHeader from "../shared/SectionHeader";
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import Textfield from "@material-ui/core/Textfield";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useData } from "../../contexts/DataContext";
@@ -42,10 +43,16 @@ const schema = yup.object().shape({
   job: yup.string(),
   instagram: yup
     .string()
-    .matches(/^[a-z_.0-9]+$/, "Username must be in correct format"),
+    .matches(
+      /^[a-z_.0-9]+$/,
+      "Username must not contain spaces, capital letters or special characters."
+    ),
   spotify: yup
     .string()
-    .matches(/^[a-z_.0-9]+$/, "Username must be in correct format"),
+    .matches(
+      /^[a-z_.0-9]+$/,
+      "Username must not contain spaces, capital letters or special characters."
+    ),
   school: yup.string(),
 });
 
@@ -54,10 +61,14 @@ export default function EditInfoPage() {
   const history = useHistory();
   const [account, setAccount] = useState({});
   const { editMode, setEditMode } = useContext(EditModeContext);
-  const { setValues, data } = useData();
   const [addedPhoto, setAddedPhoto] = useState(0);
 
-  const { handleSubmit, reset, control } = useForm({
+  const {
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       aboutMe: "",
       job: "",
@@ -92,17 +103,10 @@ export default function EditInfoPage() {
   };
 
   const onSubmit = async (edit) => {
-    const body = Object.fromEntries(
-      Object.entries(edit).filter((item) => item[1])
-    );
-    console.log("SUBMITTED");
-    console.log(body);
-    await axios.patch("/account/myaccount", body);
+    await axios.patch("/account/myaccount", edit);
     setEditMode(false);
     history.push("/profile");
   };
-
-  console.log("editMode :>> ", editMode);
 
   return (
     <div
@@ -232,9 +236,22 @@ export default function EditInfoPage() {
                 disableUnderline={true}
                 placeholder="Add Instagram Username"
                 {...field}
+                error={!!errors?.instagram}
+                helperText={errors?.instagram?.message}
               />
             )}
           />
+          {!!errors?.instagram ? (
+            <Typography
+              variant="caption"
+              component="p"
+              style={{ padding: "0px 20px", color: "red" }}
+            >
+              {errors?.instagram?.message}
+            </Typography>
+          ) : (
+            <Typography variant="caption" component="p"></Typography>
+          )}
         </div>
         <div>
           <Typography variant="body2" className={classes.title}>
@@ -253,6 +270,17 @@ export default function EditInfoPage() {
               />
             )}
           />
+          {!!errors?.spotify ? (
+            <Typography
+              variant="caption"
+              component="p"
+              style={{ padding: "0px 20px", color: "red" }}
+            >
+              {errors?.spotify?.message}
+            </Typography>
+          ) : (
+            <Typography variant="caption" component="p"></Typography>
+          )}
         </div>
       </form>
       <div style={{ height: "40px", backgroundColor: "ghostwhite" }}></div>
