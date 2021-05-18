@@ -57,7 +57,7 @@ export default function EditInfoPage() {
   const { setValues, data } = useData();
   const [addedPhoto, setAddedPhoto] = useState(0);
 
-  const { handleSubmit, reset, control, getValues } = useForm({
+  const { handleSubmit, reset, control } = useForm({
     defaultValues: {
       aboutMe: "",
       job: "",
@@ -76,11 +76,11 @@ export default function EditInfoPage() {
       setAddedPhoto(res.data.images.length);
       console.log(res.data);
       reset({
-        aboutMe: res.data.aboutMe ?? "",
-        job: res.data.job ?? "",
-        school: res.data.school ?? "",
-        instagram: res.data.instagram ?? "",
-        spotify: res.data.spotify ?? "",
+        aboutMe: res.data.aboutMe,
+        job: res.data.job,
+        school: res.data.school,
+        instagram: res.data.instagram,
+        spotify: res.data.spotify,
       });
     };
     getAccount();
@@ -97,9 +97,9 @@ export default function EditInfoPage() {
     );
     console.log("SUBMITTED");
     console.log(body);
-    // await axios.patch("/account/myaccount", body);
-    setEditMode(true);
-    // history.push("/profile");
+    await axios.patch("/account/myaccount", body);
+    setEditMode(false);
+    history.push("/profile");
   };
 
   console.log("editMode :>> ", editMode);
@@ -119,9 +119,6 @@ export default function EditInfoPage() {
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <button type="submit" onClick={console.log(getValues())}>
-          SUBMIT
-        </button>
         <SectionHeader
           title="Edit Info"
           style={{
@@ -130,7 +127,7 @@ export default function EditInfoPage() {
             top: "0px",
             left: "0px",
           }}
-          // type="submit"
+          type="submit"
         />
         <AddPhoto addedPhoto={addedPhoto} setAddedPhoto={setAddedPhoto} />
 
