@@ -10,6 +10,7 @@ import StarRoundedIcon from "@material-ui/icons/StarRounded";
 import ReplayRoundedIcon from "@material-ui/icons/ReplayRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import Typography from "@material-ui/core/Typography";
+import axios from "../../config/axios";
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -92,344 +93,38 @@ const useStyles = makeStyles(() => ({
 export default function LikedByPage() {
   const classes = useStyles();
   const [viewId, setViewId] = useState(0);
-  const [accounts, setAccounts] = useState([
-    {
-      id: 1,
-      firstName: "Amyhihihihi",
-      gender: "female",
-      phoneNumber: "0925419369",
-      email: "amy@gmail.com",
-      dob: "2001-09-09",
-      aboutMe:
-        "I am nice because I am veyr very nice and also extremely kind and nice.",
-      instagram: "amylee",
-      sporify: "samy",
-      job: "",
-      school: "Clerk County College",
+  const [accounts, setAccounts] = useState([]);
+  const [account, setAccount] = useState({});
 
-      //WHEN ORGANISING STACK, check that search fields are mutual
-      currentLocation: "13.741319-100.531151",
-      lastActive: "2020-09-0900:00:09",
-      showActive: 1,
-      showInStack: 1,
-      //––––––––––––––––––––––––––JOINED FROM SPORT BELONGS TO –––––––––––––––––––––––
-      sports: [
-        { id: 1, sportName: "Basketball" },
-        { id: 3, sportName: "Badminton" },
-        { id: 6, sportName: "Tennis" },
-        { id: 7, sportName: "Golf" },
-        { id: 96, sportName: "Fencing" },
-      ],
-      //––––––––––––––––––––––––––JOINED FROM MEDIA –––––––––––––––––––––––
-      images: [
-        {
-          image: "https://picsum.photos/600/900",
-        },
-        {
-          image:
-            "https://i.picsum.photos/id/277/600/900.jpg?hmac=0SZDnUgJesoCsIFVR9u9uG9hUC3dQOxx0_pgop-aIoY",
-        },
-        {
-          image:
-            "https://i.picsum.photos/id/705/600/900.jpg?hmac=19EE_8IKXcp7maJfLind1IgeEHKHlpbeSbN6o5uydJY",
-        },
-        //******GIVE IMAGES IN UPLOADED ORDER, order by timestamp
-      ],
-      viewed: 0,
-      //––––––––––––––––––––––––––GENERATED–––––––––––––––––––––––––
-      recentlyActive: 1, //show recentelyActive TRUE if lastActive is within 24 users
-      distance: "6km", //generated from currentLocation (OR searchLocation) using isNearby
-      //********ONLY SHOW IF MUTUAL */
-      age: 18, //DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
-      locationName: "Bangkok, Thailand", //Generated using API ****CONFIRM WITH AUM AGAIN LATER ****
-    },
-    {
-      id: 2,
-      firstName: "katie",
-      gender: "female",
-      phoneNumber: "0925419369",
-      email: "amy@gmail.com",
-      dob: "2001-09-09",
-      aboutMe:
-        "I am nice because I am veyr very nice and also extremely kind and nice.",
-      instagram: "amylee",
-      sporify: "samy",
-      job: "",
-      company: "",
-      school: "Clerk County College",
+  useEffect(() => {
+    const getAccounts = async () => {
+      const res = await axios.get("/match/likedby");
+      setAccounts(res.data);
+    };
+    getAccounts();
+  }, []);
 
-      //WHEN ORGANISING STACK, check that search fields are mutual
-      currentLocation: "13.741319-100.531151",
-      lastActive: "2020-09-0900:00:09",
-      showActive: 1,
-      showInStack: 1,
-      //––––––––––––––––––––––––––JOINED FROM SPORT BELONGS TO –––––––––––––––––––––––
-      sports: [
-        { id: 1, sportName: "Basketball" },
-        { id: 3, sportName: "Badminton" },
-        { id: 6, sportName: "Tennis" },
-        { id: 7, sportName: "Golf" },
-        { id: 96, sportName: "Fencing" },
-      ],
-      //––––––––––––––––––––––––––JOINED FROM MEDIA –––––––––––––––––––––––
-      images: [
-        {
-          image:
-            "https://i.picsum.photos/id/1002/600/900.jpg?hmac=4BSgpJzasHKS9vEgQ_Kn3WUjgvc1sUZv-E10bf1bCyA",
-        },
-        {
-          image:
-            "https://i.picsum.photos/id/277/600/900.jpg?hmac=0SZDnUgJesoCsIFVR9u9uG9hUC3dQOxx0_pgop-aIoY",
-        },
-        {
-          image:
-            "https://i.picsum.photos/id/705/600/900.jpg?hmac=19EE_8IKXcp7maJfLind1IgeEHKHlpbeSbN6o5uydJY",
-        },
-        //******GIVE IMAGES IN UPLOADED ORDER, order by timestamp
-      ],
-      viewed: 1,
-      //––––––––––––––––––––––––––GENERATED–––––––––––––––––––––––––
-      recentlyActive: 1, //show recentelyActive TRUE if lastActive is within 24 users
-      distance: "6km", //generated from currentLocation (OR searchLocation) using isNearby
-      //********ONLY SHOW IF MUTUAL */
-      age: 18, //DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
-      locationName: "Bangkok, Thailand", //Generated using API ****CONFIRM WITH AUM AGAIN LATER ****
-    },
-    {
-      id: 3,
-      firstName: "sern",
-      gender: "female",
-      phoneNumber: "0925419369",
-      email: "amy@gmail.com",
-      dob: "2001-09-09",
-      aboutMe:
-        "I am nice because I am veyr very nice and also extremely kind and nice.",
-      instagram: "amylee",
-      sporify: "samy",
-      job: "",
-      company: "",
-      school: "Clerk County College",
-
-      //WHEN ORGANISING STACK, check that search fields are mutual
-      currentLocation: "13.741319-100.531151",
-      lastActive: "2020-09-0900:00:09",
-      showActive: 1,
-      showInStack: 1,
-      //––––––––––––––––––––––––––JOINED FROM SPORT BELONGS TO –––––––––––––––––––––––
-      sports: [
-        { id: 1, sportName: "Basketball" },
-        { id: 3, sportName: "Badminton" },
-        { id: 6, sportName: "Tennis" },
-        { id: 7, sportName: "Golf" },
-        { id: 96, sportName: "Fencing" },
-      ],
-      //––––––––––––––––––––––––––JOINED FROM MEDIA –––––––––––––––––––––––
-      images: [
-        {
-          image:
-            "https://i.picsum.photos/id/1002/600/900.jpg?hmac=4BSgpJzasHKS9vEgQ_Kn3WUjgvc1sUZv-E10bf1bCyA",
-        },
-        {
-          image:
-            "https://i.picsum.photos/id/277/600/900.jpg?hmac=0SZDnUgJesoCsIFVR9u9uG9hUC3dQOxx0_pgop-aIoY",
-        },
-        {
-          image:
-            "https://i.picsum.photos/id/705/600/900.jpg?hmac=19EE_8IKXcp7maJfLind1IgeEHKHlpbeSbN6o5uydJY",
-        },
-        //******GIVE IMAGES IN UPLOADED ORDER, order by timestamp
-      ],
-      viewed: 1,
-      //––––––––––––––––––––––––––GENERATED–––––––––––––––––––––––––
-      recentlyActive: 1, //show recentelyActive TRUE if lastActive is within 24 users
-      distance: "6km", //generated from currentLocation (OR searchLocation) using isNearby
-      //********ONLY SHOW IF MUTUAL */
-      age: 18, //DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
-      locationName: "Bangkok, Thailand", //Generated using API ****CONFIRM WITH AUM AGAIN LATER ****
-    },
-    {
-      id: 1,
-      firstName: "Amy",
-      gender: "female",
-      phoneNumber: "0925419369",
-      email: "amy@gmail.com",
-      dob: "2001-09-09",
-      aboutMe:
-        "I am nice because I am veyr very nice and also extremely kind and nice.",
-      instagram: "amylee",
-      sporify: "samy",
-      job: "",
-      company: "",
-      school: "Clerk County College",
-
-      //WHEN ORGANISING STACK, check that search fields are mutual
-      currentLocation: "13.741319-100.531151",
-      lastActive: "2020-09-0900:00:09",
-      showActive: 1,
-      showInStack: 1,
-      //––––––––––––––––––––––––––JOINED FROM SPORT BELONGS TO –––––––––––––––––––––––
-      sports: [
-        { id: 1, sportName: "Basketball" },
-        { id: 3, sportName: "Badminton" },
-        { id: 6, sportName: "Tennis" },
-        { id: 7, sportName: "Golf" },
-        { id: 96, sportName: "Fencing" },
-      ],
-      //––––––––––––––––––––––––––JOINED FROM MEDIA –––––––––––––––––––––––
-      images: [
-        {
-          image:
-            "https://i.picsum.photos/id/1002/600/900.jpg?hmac=4BSgpJzasHKS9vEgQ_Kn3WUjgvc1sUZv-E10bf1bCyA",
-        },
-        {
-          image:
-            "https://i.picsum.photos/id/277/600/900.jpg?hmac=0SZDnUgJesoCsIFVR9u9uG9hUC3dQOxx0_pgop-aIoY",
-        },
-        {
-          image:
-            "https://i.picsum.photos/id/705/600/900.jpg?hmac=19EE_8IKXcp7maJfLind1IgeEHKHlpbeSbN6o5uydJY",
-        },
-        //******GIVE IMAGES IN UPLOADED ORDER, order by timestamp
-      ],
-      viewed: 1,
-      //––––––––––––––––––––––––––GENERATED–––––––––––––––––––––––––
-      recentlyActive: 1, //show recentelyActive TRUE if lastActive is within 24 users
-      distance: "6km", //generated from currentLocation (OR searchLocation) using isNearby
-      //********ONLY SHOW IF MUTUAL */
-      age: 18, //DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
-      locationName: "Bangkok, Thailand", //Generated using API ****CONFIRM WITH AUM AGAIN LATER ****
-    },
-    {
-      id: 1,
-      firstName: "Amy",
-      gender: "female",
-      phoneNumber: "0925419369",
-      email: "amy@gmail.com",
-      dob: "2001-09-09",
-      aboutMe:
-        "I am nice because I am veyr very nice and also extremely kind and nice.",
-      instagram: "amylee",
-      sporify: "samy",
-      job: "",
-      company: "",
-      school: "Clerk County College",
-
-      //WHEN ORGANISING STACK, check that search fields are mutual
-      currentLocation: "13.741319-100.531151",
-      lastActive: "2020-09-0900:00:09",
-      showActive: 1,
-      showInStack: 1,
-      //––––––––––––––––––––––––––JOINED FROM SPORT BELONGS TO –––––––––––––––––––––––
-      sports: [
-        { id: 1, sportName: "Basketball" },
-        { id: 3, sportName: "Badminton" },
-        { id: 6, sportName: "Tennis" },
-        { id: 7, sportName: "Golf" },
-        { id: 96, sportName: "Fencing" },
-      ],
-      //––––––––––––––––––––––––––JOINED FROM MEDIA –––––––––––––––––––––––
-      images: [
-        {
-          image:
-            "https://i.picsum.photos/id/1002/600/900.jpg?hmac=4BSgpJzasHKS9vEgQ_Kn3WUjgvc1sUZv-E10bf1bCyA",
-        },
-        {
-          image:
-            "https://i.picsum.photos/id/277/600/900.jpg?hmac=0SZDnUgJesoCsIFVR9u9uG9hUC3dQOxx0_pgop-aIoY",
-        },
-        {
-          image:
-            "https://i.picsum.photos/id/705/600/900.jpg?hmac=19EE_8IKXcp7maJfLind1IgeEHKHlpbeSbN6o5uydJY",
-        },
-        //******GIVE IMAGES IN UPLOADED ORDER, order by timestamp
-      ],
-      viewed: 1,
-      //––––––––––––––––––––––––––GENERATED–––––––––––––––––––––––––
-      recentlyActive: 1, //show recentelyActive TRUE if lastActive is within 24 users
-      distance: "6km", //generated from currentLocation (OR searchLocation) using isNearby
-      //********ONLY SHOW IF MUTUAL */
-      age: 18, //DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
-      locationName: "Bangkok, Thailand", //Generated using API ****CONFIRM WITH AUM AGAIN LATER ****
-    },
-    {
-      id: 1,
-      firstName: "Amy",
-      gender: "female",
-      phoneNumber: "0925419369",
-      email: "amy@gmail.com",
-      dob: "2001-09-09",
-      aboutMe:
-        "I am nice because I am veyr very nice and also extremely kind and nice.",
-      instagram: "amylee",
-      sporify: "samy",
-      job: "",
-      company: "",
-      school: "Clerk County College",
-
-      //WHEN ORGANISING STACK, check that search fields are mutual
-      currentLocation: "13.741319-100.531151",
-      lastActive: "2020-09-0900:00:09",
-      showActive: 1,
-      showInStack: 1,
-      //––––––––––––––––––––––––––JOINED FROM SPORT BELONGS TO –––––––––––––––––––––––
-      sports: [
-        { id: 1, sportName: "Basketball" },
-        { id: 3, sportName: "Badminton" },
-        { id: 6, sportName: "Tennis" },
-        { id: 7, sportName: "Golf" },
-        { id: 96, sportName: "Fencing" },
-      ],
-      //––––––––––––––––––––––––––JOINED FROM MEDIA –––––––––––––––––––––––
-      images: [
-        {
-          image:
-            "https://i.picsum.photos/id/1002/600/900.jpg?hmac=4BSgpJzasHKS9vEgQ_Kn3WUjgvc1sUZv-E10bf1bCyA",
-        },
-        {
-          image:
-            "https://i.picsum.photos/id/277/600/900.jpg?hmac=0SZDnUgJesoCsIFVR9u9uG9hUC3dQOxx0_pgop-aIoY",
-        },
-        {
-          image:
-            "https://i.picsum.photos/id/705/600/900.jpg?hmac=19EE_8IKXcp7maJfLind1IgeEHKHlpbeSbN6o5uydJY",
-        },
-        //******GIVE IMAGES IN UPLOADED ORDER, order by timestamp
-      ],
-      viewed: 1,
-      //––––––––––––––––––––––––––GENERATED–––––––––––––––––––––––––
-      recentlyActive: 1, //show recentelyActive TRUE if lastActive is within 24 users
-      distance: "6km", //generated from currentLocation (OR searchLocation) using isNearby
-      //********ONLY SHOW IF MUTUAL */
-      age: 18, //DateTime.now().diff(DateTime.fromISO(this.dob), "years"),
-      locationName: "Bangkok, Thailand", //Generated using API ****CONFIRM WITH AUM AGAIN LATER ****
-    },
-  ]);
-
-  const getAccounts = async () => {
-    //TODO
-    // const res = await axios.get("/accounts");
-    // setAccounts(res)
-  };
-
-  //TODO
-  // useEffect(() => {
-  //   getAccounts();
-  // }, []);
+  useEffect(() => {
+    if (viewId > 0) {
+      const getAccount = async () => {
+        const res = await axios.get("/account/" + viewId);
+        setAccount(res.data.account);
+      };
+      getAccount();
+    }
+  }, [viewId]);
 
   const createLike = async () => {
-    //TODO
-    // await axios.post("/match", { matchId: curAcc.id });
+    await axios.patch("/match/returnLike", {
+      matchId: account.matchId,
+    });
     setViewId(0);
   };
 
-  const createSuperlike = async () => {
-    //TODO
-    // await axios.post("/match", { matchId: curAcc.id, type: 1 });
+  const deleteMatch = async (temp) => {
+    console.log(account);
+    await axios.delete("/match/", { matchId: account.matchId });
     setViewId(0);
-  };
-
-  const deleteMatch = async () => {
-    // await axios.delete("/match", { matchId: id});
   };
 
   if (viewId === 0) {
@@ -437,14 +132,14 @@ export default function LikedByPage() {
       <div style={{ position: "relative" }}>
         <Menu />
         <Container className={classes.container}>
-          {accounts.map((account, idx) => {
+          {accounts?.map((account, idx) => {
             return (
               <div style={{ position: "relative" }}>
                 <img
-                  src={account.images[0].image}
+                  src={account.matchAcc.profilePhoto}
                   className={classes.paper}
                   onClick={() => {
-                    setViewId(idx + 1);
+                    setViewId(account.matchAcc.id);
                   }}
                 />
                 <div
@@ -458,7 +153,7 @@ export default function LikedByPage() {
                       display: "inline-block",
                     }}
                   >
-                    {account.firstName}
+                    {account.matchAcc.firstName}
                     <Typography
                       variant="h6"
                       style={{
@@ -468,22 +163,9 @@ export default function LikedByPage() {
                       }}
                     >
                       &nbsp;
-                      {account.age}
+                      {account.matchAcc.age}
                     </Typography>
                   </Typography>
-                  {/* {!!account.showActive && !!account.recentlyActive && (
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div className={classes.greenCircle}></div>
-                      <Typography variant="body2">Recently Active</Typography>
-                    </div>
-                  )} */}
                 </div>
               </div>
             );
@@ -494,7 +176,7 @@ export default function LikedByPage() {
   } else if (viewId > 0) {
     return (
       <div style={{ position: "relative" }}>
-        <Profile account={accounts[viewId - 1]} setViewId={setViewId} />
+        <Profile account={account} setViewId={setViewId} />
         <Container
           className={classes.buttonContainer}
           style={{ position: "sticky", bottom: "0px", padding: "15px 0px" }}
@@ -503,10 +185,6 @@ export default function LikedByPage() {
             color="primary"
             className={classes.button}
             style={{ opacity: "0" }}
-            onClick={() => {
-              //TODO––––––––––––––––––– limit rewind to once per day for lite users
-              prevSlide();
-            }}
           >
             <ReplayRoundedIcon />
           </Fab>
@@ -514,31 +192,14 @@ export default function LikedByPage() {
             color="primary"
             style={{ opacity: "0" }}
             className={classes.button}
-            onClick={() => {
-              createLike();
-            }}
           >
             <FavoriteRoundedIcon />
           </Fab>
-          <Fab
-            color="primary"
-            className={classes.button}
-            onClick={() => {
-              createLike();
-              setViewId(0);
-            }}
-          >
+          <Fab color="primary" className={classes.button} onClick={createLike}>
             <FavoriteRoundedIcon />
           </Fab>
 
-          <Fab
-            color="primary"
-            className={classes.button}
-            onClick={() => {
-              setViewId(0);
-              deleteMatch();
-            }}
-          >
+          <Fab color="primary" className={classes.button} onClick={deleteMatch}>
             <CloseRoundedIcon />
           </Fab>
         </Container>

@@ -95,7 +95,15 @@ export default function ImageSlider({ account, viewProfile }) {
         current={current}
         length={slides.length}
       />
-      <div style={{ width: "100vw", height: "110vw", overflow: "hidden", objectFit: "cover", objectPosition: "50% 50%" }}>
+      <div
+        style={{
+          width: "100vw",
+          height: "110vw",
+          overflow: "hidden",
+          objectFit: "cover",
+          objectPosition: "50% 50%",
+        }}
+      >
         {slides.map((slide, index) => {
           return (
             <div key={index}>
