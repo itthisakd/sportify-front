@@ -145,6 +145,8 @@ export default function HomePage() {
   const [viewId, setViewId] = useState(0);
   const [accounts, setAccounts] = useState([]);
   const [justLiked, setJustLiked] = useState(false);
+  const [justRewinded, setJustRewinded] = useState(false);
+
   const [loadMore, setLoadMore] = useState(false);
 
   useEffect(() => {
@@ -154,6 +156,7 @@ export default function HomePage() {
     };
     getAccounts();
   }, [loadMore]);
+  //FIXME CONFIG GO LOAD MORE ACCOUTNS WHEN DONE
 
   const nextSlide = () => {
     if (current !== accounts.length - 1) {
@@ -182,6 +185,8 @@ export default function HomePage() {
     }
     setViewId(0);
     setJustLiked(true);
+    setJustRewinded(false);
+
     nextSlide();
   };
 
@@ -196,6 +201,8 @@ export default function HomePage() {
     }
     setViewId(0);
     setJustLiked(true);
+    setJustRewinded(false);
+
     nextSlide();
   };
 
@@ -203,7 +210,14 @@ export default function HomePage() {
     await axios.patch("/account/updateoffset", { accId: accounts[current].id });
     setViewId(0);
     setJustLiked(false);
+    setJustRewinded(false);
+
     nextSlide();
+  };
+
+  const rewind = async () => {
+    prevSlide();
+    setJustRewinded(true);
   };
 
   if (viewId === 0) {
@@ -236,20 +250,15 @@ export default function HomePage() {
                 )}
               </Paper>
               <Container className={classes.buttonContainer}>
-                {justLiked ? (
-                  <Fab
-                    color="primary"
-                    className={classes.button}
-                    onClick={prevSlide}
-                    disabled
-                  >
+                {justLiked || justRewinded ? (
+                  <Fab color="primary" className={classes.button} disabled>
                     <ReplayRoundedIcon />
                   </Fab>
                 ) : (
                   <Fab
                     color="primary"
                     className={classes.button}
-                    onClick={prevSlide}
+                    onClick={rewind}
                   >
                     <ReplayRoundedIcon />
                   </Fab>

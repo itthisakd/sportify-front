@@ -38,15 +38,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const schema = yup.object().shape({
-  firstName: yup.string().matches(/^[A-za-z ]+$/, "Name must be alphabetical"),
   aboutMe: yup.string(),
-  job: yup.string().matches(/^[A-za-z ]+$/, "Job must be alphabetical"),
+  job: yup.string(),
   instagram: yup
     .string()
-    .matches(/^[a-zA-z_.0-9]+$/, "Username must be in correct format"),
+    .matches(/^[a-z_.0-9]+$/, "Username must be in correct format"),
   spotify: yup
     .string()
-    .matches(/^[a-zA-z_.0-9]+$/, "Username must be in correct format"),
+    .matches(/^[a-z_.0-9]+$/, "Username must be in correct format"),
   school: yup.string(),
 });
 
@@ -58,9 +57,8 @@ export default function EditInfoPage() {
   const { setValues, data } = useData();
   const [addedPhoto, setAddedPhoto] = useState(0);
 
-  const { handleSubmit, reset, control } = useForm({
+  const { handleSubmit, reset, control, getValues } = useForm({
     defaultValues: {
-      // firstName: "",
       aboutMe: "",
       job: "",
       instagram: "",
@@ -78,12 +76,11 @@ export default function EditInfoPage() {
       setAddedPhoto(res.data.images.length);
       console.log(res.data);
       reset({
-        // firstName: res.data.firstName,
-        aboutMe: res.data.aboutMe,
-        job: res.data.job,
-        school: res.data.school,
-        instagram: res.data.instagram,
-        spotify: res.data.spotify,
+        aboutMe: res.data.aboutMe ?? "",
+        job: res.data.job ?? "",
+        school: res.data.school ?? "",
+        instagram: res.data.instagram ?? "",
+        spotify: res.data.spotify ?? "",
       });
     };
     getAccount();
@@ -100,9 +97,9 @@ export default function EditInfoPage() {
     );
     console.log("SUBMITTED");
     console.log(body);
-    await axios.patch("/account/myaccount", body);
-    setEditMode(false);
-    history.push("/profile");
+    // await axios.patch("/account/myaccount", body);
+    setEditMode(true);
+    // history.push("/profile");
   };
 
   console.log("editMode :>> ", editMode);
@@ -122,6 +119,9 @@ export default function EditInfoPage() {
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
+        <button type="submit" onClick={console.log(getValues())}>
+          SUBMIT
+        </button>
         <SectionHeader
           title="Edit Info"
           style={{
@@ -130,27 +130,10 @@ export default function EditInfoPage() {
             top: "0px",
             left: "0px",
           }}
-          type="submit"
+          // type="submit"
         />
         <AddPhoto addedPhoto={addedPhoto} setAddedPhoto={setAddedPhoto} />
-        {/* <div>
-          <Typography variant="body2" className={classes.title}>
-            NAME
-          </Typography>
-          <Controller
-            defaultValue={account.firstName}
-            name="firstName"
-            control={control}
-            render={({ field }) => (
-              <Input
-                className={classes.input}
-                disableUnderline={true}
-                placeholder="Add name"
-                {...field}
-              />
-            )}
-          />
-        </div> */}
+
         <div>
           <Typography variant="body2" className={classes.title}>
             ABOUT ME
