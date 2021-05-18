@@ -123,8 +123,7 @@ export default function LikedByPage() {
       //––––––––––––––––––––––––––JOINED FROM MEDIA –––––––––––––––––––––––
       images: [
         {
-          image:
-            "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2662&q=80",
+          image: "https://picsum.photos/600/900",
         },
         {
           image:
