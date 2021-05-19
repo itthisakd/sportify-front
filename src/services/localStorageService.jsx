@@ -1,4 +1,4 @@
-const tokenName = "token";
+const tokenName = "authToken";
 const setToken = (token) => localStorage.setItem(tokenName, token);
 const getToken = () => localStorage.getItem(tokenName);
 const clearToken = () => localStorage.removeItem(tokenName);
