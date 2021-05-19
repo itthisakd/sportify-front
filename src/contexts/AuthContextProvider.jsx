@@ -5,11 +5,9 @@ import localStorageService from "../services/localStorageService";
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorageService.getToken()
-  );
+  const [authToken, setAuthToken] = useState(localStorageService.getToken());
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider value={{ authToken, setAuthToken }}>
       {children}
     </AuthContext.Provider>
   );
