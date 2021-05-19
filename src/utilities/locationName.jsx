@@ -1,6 +1,6 @@
 import Geocode from "react-geocode";
 
-export default function locationName(loca) {
+export default function getLocationName(loca) {
   Geocode.setApiKey("AIzaSyAHQuKM8CJILEMZStXdXMO1RtJebhhoIJ8");
   Geocode.setLanguage("en");
   Geocode.setLocationType("ROOFTOP");
