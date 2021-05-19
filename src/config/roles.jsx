@@ -15,8 +15,9 @@ import TutorialPage from "../pages/tutorial/TutorialPage";
 import SettingsPage from "../pages/settings/SettingsPage";
 import LikedByPage from "../pages/likedby/LikedByPage";
 import BirthDatePage from "../pages/register/BirthDatePage";
-import ChatPage from "../pages/matches/ChatContainer"
-import ViewProfilePage from "../pages/matches/ViewProfilePage"
+import ChatPage from "../pages/matches/ChatContainer";
+import ViewProfilePage from "../pages/matches/ViewProfilePage";
+import ShowGenderPage from "../pages/settings/ShowGenderPage";
 
 const pages = {
   home: { page: HomePage, path: "/home" },
@@ -37,8 +38,8 @@ const pages = {
   settings: { page: SettingsPage, path: "/settings" },
   likedby: { page: LikedByPage, path: "/likedby" },
   chat: { page: ChatPage, path: "/chat" },
-  viewprofile: {page: ViewProfilePage, path: "/viewprofile/:id"}
-  
+  viewprofile: { page: ViewProfilePage, path: "/viewprofile/:id" },
+  showGender: { page: ShowGenderPage, path: "/show-gender" },
 };
 
 const roles = {
@@ -65,7 +66,8 @@ const roles = {
     pages.likedby,
     pages.sports,
     pages.chat,
-    pages.viewprofile
+    pages.viewprofile,
+    pages.showGender,
   ],
   DEV: [
     pages.login,
@@ -87,8 +89,8 @@ const roles = {
     pages.settings,
     pages.likedby,
     pages.chat,
-    pages.viewprofile
-
+    pages.viewprofile,
+    pages.showGender,
   ],
 };
 

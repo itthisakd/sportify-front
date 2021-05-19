@@ -191,7 +191,7 @@ export default function SettingsPage() {
         <Container
           className={classes.row}
           onClick={() => {
-            //TODO bring to choose show me gender page
+            history.push("/show-gender")
           }}
         >
           <Typography variant="body1" className={classes.head}>
