@@ -16,6 +16,7 @@ import SettingsPage from "../pages/settings/SettingsPage";
 import LikedByPage from "../pages/likedby/LikedByPage";
 import BirthDatePage from "../pages/register/BirthDatePage";
 import ChatPage from "../pages/matches/ChatContainer"
+import ShowGenderPage from '../pages/settings/ShowGenderPage'
 
 const pages = {
   home: { page: HomePage, path: "/home" },
@@ -35,6 +36,7 @@ const pages = {
   tutorial: { page: TutorialPage, path: "/tutorial" },
   settings: { page: SettingsPage, path: "/settings" },
   likedby: { page: LikedByPage, path: "/likedby" },
+  showGender: { page: ShowGenderPage, path:"/show-gender"},
   chat: {page: ChatPage, path: "/chat"}
 };
 
@@ -61,6 +63,7 @@ const roles = {
     pages.settings,
     pages.likedby,
     pages.sports,
+    pages.showGender,
     pages.chat
   ],
   DEV: [
@@ -82,6 +85,7 @@ const roles = {
     pages.profile,
     pages.settings,
     pages.likedby,
+    pages.showGender,
     pages.chat
   ],
 };
