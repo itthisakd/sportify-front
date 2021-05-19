@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
 import axios from "../../config/axios";
+import ChatContainer from "./ChatContainer";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   matchesContainer: {
@@ -28,15 +30,28 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MatchesPage() {
   const classes = useStyles();
+  const history = useHistory();
   const [matches, setMatches] = useState([]);
+  const [trigger, setTrigger] = useState([]);
 
-useEffect(() => {
-  const getAccounts = async () => {
-    const res = await axios.get("/match/likedby");
-    setAccounts(res.data);
+  useEffect(() => {
+    const getMatches = async () => {
+      const res = await axios.get("/match/");
+      const rearranged = [
+        ...res.data.filter((item) => !item.seen),
+        ...res.data.filter((item) => item.seen),
+      ];
+      setMatches(rearranged);
+    };
+    getMatches();
+  }, [trigger]);
+
+  const handleOpen = async (match) => {
+    if (!match.seen) {
+      await axios.patch("/match/seen", { matchId: match.matchId });
+    }
+    history.push("/viewprofile/" + match.matchAcc?.id);
   };
-  getAccounts();
-}, [trigger]);
 
   return (
     <div>
@@ -58,50 +73,23 @@ useEffect(() => {
         </Typography>
         <div className={classes.matchesContainer}>
           {matches.map((match) => {
-            if (match.viewed === 0)
-              return (
-                <Badge
-                  className={classes.badge}
-                  color="secondary"
-                  overlap="circle"
-                  badgeContent=""
-                  style={{
-                    margin: "5px 10px",
-                  }}
-                >
-                  <div>
-                    <img
-                      src={match.images[0].image}
-                      style={{
-                        width: "20vw",
-                        height: "20vw",
-                        overflow: "hidden",
-                        objectFit: "cover",
-                        objectPosition: "50% 50%",
-                        borderRadius: "50%",
-                      }}
-                    />
-                    <Typography
-                      variant="h6"
-                      component="p"
-                      style={{
-                        textAlign: "center",
-                      }}
-                    >
-                      {match.firstName}
-                    </Typography>
-                  </div>
-                </Badge>
-              );
-            else
-              return (
-                <div
-                  style={{
-                    margin: "5px 10px",
-                  }}
-                >
+            return match.seen === 0 ? (
+              <Badge
+                className={classes.badge}
+                color="secondary"
+                overlap="circle"
+                badgeContent=""
+                variant="standard"
+                style={{
+                  margin: "5px 10px",
+                }}
+                onClick={() => {
+                  handleOpen(match);
+                }}
+              >
+                <div>
                   <img
-                    src={match.images[0].image}
+                    src={match.matchAcc.profilePhoto}
                     style={{
                       width: "20vw",
                       height: "20vw",
@@ -121,11 +109,43 @@ useEffect(() => {
                     {match.firstName}
                   </Typography>
                 </div>
-              );
+              </Badge>
+            ) : (
+              <div
+                style={{
+                  margin: "5px 10px",
+                }}
+                onClick={() => {
+                  handleOpen(match);
+                }}
+              >
+                <img
+                  src={match.matchAcc.profilePhoto}
+                  style={{
+                    width: "20vw",
+                    height: "20vw",
+                    overflow: "hidden",
+                    objectFit: "cover",
+                    objectPosition: "50% 50%",
+                    borderRadius: "50%",
+                  }}
+                />
+                <Typography
+                  variant="h6"
+                  component="p"
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  {match.firstName}
+                </Typography>
+              </div>
+            );
           })}
         </div>
       </Container>
       <Divider />
+      <ChatContainer />
     </div>
   );
 }

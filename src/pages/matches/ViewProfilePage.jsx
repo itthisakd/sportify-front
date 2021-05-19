@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
-import ImageDisplay from "./ImageDisplay";
+import ImageDisplay from "../home/ImageDisplay";
 import Typography from "@material-ui/core/Typography";
 import Chip from "@material-ui/core/Chip";
 import Container from "@material-ui/core/Container";
@@ -12,8 +12,32 @@ import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
 import SchoolOutlinedIcon from "@material-ui/icons/SchoolOutlined";
 import HouseOutlinedIcon from "@material-ui/icons/HouseOutlined";
 import titleCase from "../../utilities/titleCase";
-import locationName from "../../utilities/locationName";
+import { useParams } from "react-router-dom";
+import axios from "../../config/axios";
+import Geocode from "react-geocode";
+import { useHistory } from "react-router-dom";
 
+function getLocationName(loca) {
+  Geocode.setApiKey("AIzaSyAHQuKM8CJILEMZStXdXMO1RtJebhhoIJ8");
+  Geocode.setLanguage("en");
+  Geocode.setLocationType("ROOFTOP");
+  Geocode.enableDebug();
+
+  let name;
+
+  const lat = loca.split(",")[0];
+  const long = loca.split(",")[1];
+
+  Geocode.fromLatLng(lat, long).then(
+    (response) => {
+      name = response.plus_code.compound_code.split(" ").slice(1).join(" ");
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
+  return name;
+}
 const useStyles = makeStyles((theme) => ({
   flexCol: {
     display: "flex",
@@ -83,20 +107,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Profile({ account, setViewId }) {
+export default function Profile() {
   const classes = useStyles();
   const [locationName, setLocationName] = React.useState("");
+  const { id } = useParams();
+  const [account, setAccount] = React.useState({});
+  const history = useHistory();
 
   React.useEffect(() => {
-    console.log(account.currentLocation);
-    const setLo = async () => {
-      console.log("inside");
-      //FIXME locationName2 error
-      const loName = await locationName(account.currentLocation);
-      setLocationName(loName);
+    const getAccount = async () => {
+      const res = await axios.get("/account/matched/" + id);
+      setAccount(res.data.account);
     };
-    setLo();
+    getAccount();
   }, []);
+
+  // React.useEffect(() => {
+  //   console.log(account.currentLocation);
+  //   const setLo = async () => {
+  //     console.log("inside");
+  //     const loName = await getLocationName(account.currentLocation);
+  //     setLocationName(loName);
+  //   };
+  //   setLo();
+  // }, [locationName]);
 
   return (
     <div style={{ position: "relative" }}>
@@ -105,12 +139,13 @@ export default function Profile({ account, setViewId }) {
         color="primary"
         className={classes.button}
         onClick={() => {
-          setViewId(0);
+          console.log("GOBACK");
+          history.goBack();
         }}
       >
         <ExpandMoreRoundedIcon style={{ fontSize: "50px" }} />
       </Fab>
-      <div style={{ padding: "20px" }}>
+      <Container style={{ padding: "20px" }}>
         <Typography
           variant="h4"
           style={{
@@ -134,8 +169,6 @@ export default function Profile({ account, setViewId }) {
         </Typography>
 
         {account.currentLocation && (
-          //FIXME ERROR: LOCA NAME NOT DISPLAYING
-
           <div className={classes.flexRow}>
             <HouseOutlinedIcon className={classes.tag} />
             <Typography variant="body2" className={classes.tag}>
@@ -176,17 +209,17 @@ export default function Profile({ account, setViewId }) {
                 variant="outlined"
                 className={classes.chip}
                 key={id}
-                variant={
-                  account.commonSports?.includes(id) ? "default" : "outlined"
-                }
-                color={
-                  account.commonSports?.includes(id) ? "secondary" : "default"
-                }
+                // variant={
+                //   account.commonSports?.includes(id) ? "default" : "outlined"
+                // }
+                // color={
+                //   account.commonSports?.includes(id) ? "secondary" : "default"
+                // }
               />
             );
           })}
         </div>
-      </div>
+      </Container>
       <Divider style={{ backgroundColor: "gainsboro" }} />
       <Container style={{ padding: "20px" }}>
         {account.aboutMe && (

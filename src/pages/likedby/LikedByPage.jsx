@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
     borderRadius: "10px",
     boxShadow: "4px 5px 17px -5px rgba(0,0,0,0.30)",
     display: "inline-block",
-    margin: "1vw",
+    margin: "1.5vw",
     width: "46vw",
     height: "60vw",
     overflow: "hidden",
@@ -28,7 +28,6 @@ const useStyles = makeStyles(() => ({
     position: "relative",
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "space-evenly",
     margin: "0px",
     padding: "1vw",
   },
@@ -101,6 +100,7 @@ export default function LikedByPage() {
     const getAccounts = async () => {
       const res = await axios.get("/match/likedby");
       setAccounts(res.data);
+      console.log(res.data);
     };
     getAccounts();
   }, [trigger]);
