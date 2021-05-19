@@ -146,17 +146,17 @@ export default function HomePage() {
   const [accounts, setAccounts] = useState([]);
   const [justLiked, setJustLiked] = useState(false);
   const [justRewinded, setJustRewinded] = useState(false);
-
   const [loadMore, setLoadMore] = useState(false);
 
   useEffect(() => {
     const getAccounts = async () => {
       const res = await axios.get("/account/stack");
       setAccounts(res.data.stack);
+      setCurrent(0);
+      console.log(res.data.stack);
     };
     getAccounts();
   }, [loadMore]);
-  //FIXME CONFIG GO LOAD MORE ACCOUTNS WHEN DONE
 
   const nextSlide = () => {
     if (current !== accounts.length - 1) {
@@ -165,6 +165,7 @@ export default function HomePage() {
     } else if (current === accounts.length - 1) {
       console.log("LOADING MORE");
       setLoadMore(!loadMore);
+
       setViewId(0);
     } else {
       setViewId(0);

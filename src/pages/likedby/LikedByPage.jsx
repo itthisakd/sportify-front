@@ -95,6 +95,7 @@ export default function LikedByPage() {
   const [viewId, setViewId] = useState(0);
   const [accounts, setAccounts] = useState([]);
   const [account, setAccount] = useState({});
+  const [trigger, setTrigger] = useState(false);
 
   useEffect(() => {
     const getAccounts = async () => {
@@ -102,7 +103,7 @@ export default function LikedByPage() {
       setAccounts(res.data);
     };
     getAccounts();
-  }, []);
+  }, [trigger]);
 
   useEffect(() => {
     if (viewId > 0) {
@@ -114,17 +115,18 @@ export default function LikedByPage() {
     }
   }, [viewId]);
 
-  const createLike = async () => {
+  const returnLike = async () => {
     await axios.patch("/match/returnLike", {
-      matchId: account.matchId,
+      matchId: account.likedMe.matchId,
     });
     setViewId(0);
+    setTrigger(!trigger);
   };
 
-  const deleteMatch = async (temp) => {
-    console.log(account);
-    await axios.delete("/match/", { matchId: account.matchId });
+  const deleteMatch = async () => {
+    await axios.delete("/match/" + account.likedMe.matchId);
     setViewId(0);
+    setTrigger(!trigger);
   };
 
   if (viewId === 0) {
@@ -195,7 +197,7 @@ export default function LikedByPage() {
           >
             <FavoriteRoundedIcon />
           </Fab>
-          <Fab color="primary" className={classes.button} onClick={createLike}>
+          <Fab color="primary" className={classes.button} onClick={returnLike}>
             <FavoriteRoundedIcon />
           </Fab>
 
