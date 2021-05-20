@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import LongButton from "../shared/LongButton";
 import RegisHeader from "../shared/RegisHeader";
 import { useHistory } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
 
 export default function GenderPage() {
   const history = useHistory();
   const [showGender, setShowGender] = useState("");
-  const [values, setValues] = useState({})
+  const [values, setValues] = useState({});
 
   useEffect(() => {
     const getAccount = async () => {
       const res = await axios.get("/account/myaccount");
       setShowGender(res.data.searchGender);
-      setValues({searchGender: res.data.searchGender})
+      setValues({ searchGender: res.data.searchGender });
     };
     getAccount();
   }, []);
@@ -23,25 +23,31 @@ export default function GenderPage() {
       <RegisHeader text="Show Me" iconType="none" />
       <div style={{ marginTop: "10%", textAlign: "center" }}>
         <LongButton
-          name="MAN"
+          name="MEN"
           variant={
-            values.searchGender === "m" ? "outlined-active" : "outlined-inactive"
+            values.searchGender === "m"
+              ? "outlined-active"
+              : "outlined-inactive"
           }
           onClick={() => setValues({ searchGender: "m" })}
         />
         <LongButton
           style={{ marginTop: "5vh" }}
-          name="WOMAN"
+          name="WOMEN"
           variant={
-            values.searchGender === "f" ? "outlined-active" : "outlined-inactive"
+            values.searchGender === "f"
+              ? "outlined-active"
+              : "outlined-inactive"
           }
           onClick={() => setValues({ searchGender: "f" })}
         />
         <LongButton
           style={{ marginTop: "5vh" }}
-          name="EVERY ONE"
+          name="EVERYONE"
           variant={
-            values.searchGender === "mf" ? "outlined-active" : "outlined-inactive"
+            values.searchGender === "mf"
+              ? "outlined-active"
+              : "outlined-inactive"
           }
           onClick={() => setValues({ searchGender: "mf" })}
         />

@@ -210,7 +210,6 @@ export default function HomePage() {
     setViewId(0);
     setJustLiked(true);
     setJustRewinded(false);
-
     nextSlide();
   };
 
@@ -219,7 +218,6 @@ export default function HomePage() {
     setViewId(0);
     setJustLiked(false);
     setJustRewinded(false);
-
     nextSlide();
   };
 

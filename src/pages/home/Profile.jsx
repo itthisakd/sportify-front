@@ -223,7 +223,11 @@ export default function Profile({ account, setViewId }) {
       {!!account.instagram && (
         <>
           <Divider style={{ backgroundColor: "gainsboro" }} />
-          <Container className={classes.flexRow} style={{ padding: "20px" }}>
+          <a
+            className={classes.flexRow}
+            style={{ padding: "20px" }}
+            href={`https://www.instagram.com/${account.instagram}`}
+          >
             <img
               src="/src/images/logos/instagram_logo.png"
               style={{ width: "30px", height: "30px" }}
@@ -237,7 +241,7 @@ export default function Profile({ account, setViewId }) {
             >
               &nbsp; @{account.instagram}
             </Typography>
-          </Container>
+          </a>
         </>
       )}
     </div>

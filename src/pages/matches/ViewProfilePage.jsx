@@ -111,13 +111,13 @@ export default function Profile() {
   const classes = useStyles();
   const [locationName, setLocationName] = React.useState("");
   const { id } = useParams();
-  const [account, setAccount] = React.useState({});
+  const [account, setAccount] = React.useState({ images: "" });
   const history = useHistory();
 
   React.useEffect(() => {
     const getAccount = async () => {
       const res = await axios.get("/account/matched/" + id);
-      setAccount(res.data.account);
+      setAccount(res.data);
     };
     getAccount();
   }, []);
@@ -154,7 +154,7 @@ export default function Profile() {
             color: "#303030",
           }}
         >
-          {account.firstName}
+          {account?.firstName}
           <Typography
             variant="h5"
             style={{
@@ -164,11 +164,11 @@ export default function Profile() {
             }}
           >
             &nbsp;
-            {account.age}
+            {account?.age}
           </Typography>
         </Typography>
 
-        {account.currentLocation && (
+        {account?.currentLocation && (
           <div className={classes.flexRow}>
             <HouseOutlinedIcon className={classes.tag} />
             <Typography variant="body2" className={classes.tag}>
@@ -176,32 +176,32 @@ export default function Profile() {
             </Typography>
           </div>
         )}
-        {account.distance && (
+        {account?.distance && (
           <div className={classes.flexRow}>
             <LocationOnOutlinedIcon className={classes.tag} />
             <Typography variant="body2" className={classes.tag}>
-              {account.distance} km away
+              {account?.distance} km away
             </Typography>
           </div>
         )}
-        {account.school && (
+        {account?.school && (
           <div className={classes.flexRow}>
             <SchoolOutlinedIcon className={classes.tag} />
             <Typography variant="body2" className={classes.tag}>
-              {titleCase(account.school)}
+              {titleCase(account?.school)}
             </Typography>
           </div>
         )}
-        {account.job && (
+        {account?.job && (
           <div className={classes.flexRow}>
             <WorkOutlineOutlinedIcon className={classes.tag} />
             <Typography variant="body2" className={classes.tag}>
-              {titleCase(account.job)}
+              {titleCase(account?.job)}
             </Typography>
           </div>
         )}
         <div className={classes.root}>
-          {account.sports?.map(({ sportName, id }) => {
+          {account?.sports?.map(({ sportName, id }) => {
             //TODO match colors of tags if sport matches that of the user
             return (
               <Chip
@@ -222,18 +222,18 @@ export default function Profile() {
       </Container>
       <Divider style={{ backgroundColor: "gainsboro" }} />
       <Container style={{ padding: "20px" }}>
-        {account.aboutMe && (
+        {account?.aboutMe && (
           <Typography
             variant="body1"
             style={{
               color: "gray",
             }}
           >
-            {account.aboutMe}
+            {account?.aboutMe}
           </Typography>
         )}
       </Container>
-      {!!account.spotify && (
+      {!!account?.spotify && (
         <>
           <Divider style={{ backgroundColor: "gainsboro" }} />
           <Container className={classes.flexRow} style={{ padding: "20px" }}>
@@ -248,15 +248,19 @@ export default function Profile() {
               }}
               //TODO–––––––––––––SPOTIFY API
             >
-              &nbsp; @{account.spotify}
+              &nbsp; @{account?.spotify}
             </Typography>
           </Container>
         </>
       )}
-      {!!account.instagram && (
+      {!!account?.instagram && (
         <>
           <Divider style={{ backgroundColor: "gainsboro" }} />
-          <Container className={classes.flexRow} style={{ padding: "20px" }}>
+          <a
+            className={classes.flexRow}
+            style={{ padding: "20px" }}
+            href={`https://www.instagram.com/${account.instagram}`}
+          >
             <img
               src="/src/images/logos/instagram_logo.png"
               style={{ width: "30px", height: "30px" }}
@@ -270,7 +274,7 @@ export default function Profile() {
             >
               &nbsp; @{account.instagram}
             </Typography>
-          </Container>
+          </a>
         </>
       )}
     </div>

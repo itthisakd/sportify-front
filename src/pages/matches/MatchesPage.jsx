@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Menu from "../shared/Menu";
 import Container from "@material-ui/core/Container";
@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
 import axios from "../../config/axios";
-import ChatContainer from "./ChatContainer";
+import { SocketContext } from "../../contexts/SocketContextProvider";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     justifyContent: "start",
     alignItems: "center",
-    wdith: "100vw",
+    width: "100vw",
     overflow: "scroll",
   },
   flexCenter: {
@@ -26,12 +26,19 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
   },
   badge: {},
+  flexStart: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
 }));
 
 export default function MatchesPage() {
   const classes = useStyles();
   const history = useHistory();
   const [matches, setMatches] = useState([]);
+  const { newSocket } = useContext(SocketContext);
   const [trigger, setTrigger] = useState([]);
 
   useEffect(() => {
@@ -50,44 +57,80 @@ export default function MatchesPage() {
     if (!match.seen) {
       await axios.patch("/match/seen", { matchId: match.matchId });
     }
-    history.push("/viewprofile/" + match.matchAcc?.id);
+
+    const roomId = [match.toId, match.fromId].sort((a, b) => a - b).join("-");
+    newSocket.emit("joinRoom", roomId);
+
+    history.push("/chat/" + roomId);
   };
 
   return (
     <div>
       <Menu />
+      <Typography
+        variant="h6"
+        component="p"
+        style={{
+          margin: "5px 10px",
+        }}
+        color="secondary"
+      >
+        New Matches
+      </Typography>
       <Container
         style={{
           padding: "5px",
         }}
       >
-        <Typography
-          variant="h6"
-          component="p"
-          style={{
-            margin: "5px 10px",
-          }}
-          color="secondary"
-        >
-          New Matches
-        </Typography>
         <div className={classes.matchesContainer}>
           {matches.map((match) => {
-            return match.seen === 0 ? (
-              <Badge
-                className={classes.badge}
-                color="secondary"
-                overlap="circle"
-                badgeContent=""
-                variant="standard"
-                style={{
-                  margin: "5px 10px",
-                }}
-                onClick={() => {
-                  handleOpen(match);
-                }}
-              >
-                <div>
+            if (!match.latestMessage) {
+              return match.seen === 0 ? (
+                <Badge
+                  className={classes.badge}
+                  color="secondary"
+                  overlap="circle"
+                  badgeContent=""
+                  variant="standard"
+                  style={{
+                    margin: "5px 10px",
+                  }}
+                  onClick={() => {
+                    handleOpen(match);
+                  }}
+                >
+                  <div>
+                    <img
+                      src={match.matchAcc.profilePhoto}
+                      style={{
+                        width: "20vw",
+                        height: "20vw",
+                        overflow: "hidden",
+                        objectFit: "cover",
+                        objectPosition: "50% 50%",
+                        borderRadius: "50%",
+                      }}
+                    />
+                    <Typography
+                      variant="h6"
+                      component="p"
+                      style={{
+                        textAlign: "center",
+                      }}
+                    >
+                      {match.matchAcc.firstName}
+                    </Typography>
+                  </div>
+                </Badge>
+              ) : (
+                <div
+                  style={{
+                    margin: "5px 10px",
+                  }}
+                  onClick={() => {
+                    handleOpen(match);
+                  }}
+                >
                   <img
                     src={match.matchAcc.profilePhoto}
                     style={{
@@ -106,46 +149,67 @@ export default function MatchesPage() {
                       textAlign: "center",
                     }}
                   >
-                    {match.firstName}
+                    {match.matchAcc.firstName}
                   </Typography>
                 </div>
-              </Badge>
-            ) : (
-              <div
-                style={{
-                  margin: "5px 10px",
-                }}
-                onClick={() => {
-                  handleOpen(match);
-                }}
-              >
-                <img
-                  src={match.matchAcc.profilePhoto}
-                  style={{
-                    width: "20vw",
-                    height: "20vw",
-                    overflow: "hidden",
-                    objectFit: "cover",
-                    objectPosition: "50% 50%",
-                    borderRadius: "50%",
-                  }}
-                />
-                <Typography
-                  variant="h6"
-                  component="p"
-                  style={{
-                    textAlign: "center",
-                  }}
-                >
-                  {match.firstName}
-                </Typography>
-              </div>
-            );
+              );
+            }
           })}
         </div>
       </Container>
       <Divider />
-      <ChatContainer />
+      <Typography
+        variant="h6"
+        component="p"
+        style={{
+          margin: "5px 15px",
+        }}
+        color="secondary"
+      >
+        Conversations
+      </Typography>
+      <Container>
+        {matches.map((match, idx) => {
+          if (match.latestMessage) {
+            return (
+              <>
+                <div
+                  className={classes.flexStart}
+                  key={idx}
+                  onClick={() => {
+                    handleOpen(match);
+                  }}
+                >
+                  <img
+                    src={match.matchAcc.profilePhoto}
+                    style={{
+                      width: "20vw",
+                      height: "20vw",
+                      overflow: "hidden",
+                      objectFit: "cover",
+                      objectPosition: "50% 50%",
+                      borderRadius: "50%",
+                      padding: "10px 0px",
+                    }}
+                  />
+                  <div style={{ padding: "20px" }}>
+                    <Typography variant="h6" component="p">
+                      {match.matchAcc.firstName}
+                    </Typography>
+                    <Typography variant="body1" component="p">
+                      {match.latestMessage.fromId === match.matchAcc.id
+                        ? ""
+                        : "You: "}
+                      {match.latestMessage.text}
+                    </Typography>
+                  </div>
+                </div>
+                <Divider />
+              </>
+            );
+          }
+        })}
+      </Container>
     </div>
   );
 }
