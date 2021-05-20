@@ -23,3 +23,4 @@ export const refreshTokenSetup = (res) => {
   // Setup first refresh timer
   setTimeout(refreshToken, refreshTiming);
 };
+

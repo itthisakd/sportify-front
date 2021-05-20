@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Menu from "../shared/Menu";
 import Container from "@material-ui/core/Container";
@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
 import axios from "../../config/axios";
+import { SocketContext } from "../../contexts/SocketContextProvider";
 import ChatContainer from "./ChatContainer";
 import { useHistory } from "react-router-dom";
 
@@ -32,6 +33,7 @@ export default function MatchesPage() {
   const classes = useStyles();
   const history = useHistory();
   const [matches, setMatches] = useState([]);
+  const { newSocket } = useContext(SocketContext);
   const [trigger, setTrigger] = useState([]);
 
   useEffect(() => {
@@ -50,7 +52,11 @@ export default function MatchesPage() {
     if (!match.seen) {
       await axios.patch("/match/seen", { matchId: match.matchId });
     }
-    history.push("/viewprofile/" + match.matchAcc?.id);
+
+    const roomId = [match.toId, match.fromId].sort((a, b) => a - b).join("-");
+    newSocket.emit("joinRoom", roomId);
+
+    history.push("/chat/" + roomId);
   };
 
   return (
@@ -73,6 +79,7 @@ export default function MatchesPage() {
         </Typography>
         <div className={classes.matchesContainer}>
           {matches.map((match) => {
+            console.log(match);
             return match.seen === 0 ? (
               <Badge
                 className={classes.badge}

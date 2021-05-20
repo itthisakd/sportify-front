@@ -1,11 +1,20 @@
-import React from "react";
-import { io } from "socket.io-client";
+import React, { useState } from "react";
+import setUpSocket from "../../utilities/socket";
+import Textfield from "@material-ui/core/TextField";
 
-const socket = io();
+const socket = setUpSocket({ socket: null });
 
 export default function ChatContainer() {
+  const [msg, setMsg] = useState("");
+  
+
   return (
-    <div>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        console.log(msg);
+      }}
+    >
       <h3>Real time chat room</h3>
       <div>
         <input type="text" placeholder="Change your username" />
@@ -16,9 +25,38 @@ export default function ChatContainer() {
         <ul>Message list</ul>
       </div>
       <div>
-        <input type="text" placeholder="Send new message"/>
-        <button type="button">Send</button>
+        <Textfield
+          type="text"
+          placeholder="Send new message"
+          value={msg}
+          onChange={(e) => {
+            setMsg(e.target.value);
+          }}
+        />
+        <button type="submit">Send</button>
       </div>
-    </div>
+    </form>
   );
 }
+
+// import React, { useState } from "react";
+// import setUpSocket from "../../utilities/socket";
+// import Textfield from "@material-ui/core/TextField";
+// import Button from "@material-ui/core/Button";
+
+// const socket = setUpSocket({ socket: null });
+
+// export default function ChatContainer() {
+//   const [msg, setMsg] = useState("");
+
+//   socket.on("message", (message) => {
+//     console.log(message);
+//   });
+
+//   return (
+//     <form>
+//       <TextField variant="outlined" />
+//       <Button>SEND</Button>
+//     </form>
+//   );
+// }

@@ -15,7 +15,7 @@ import TutorialPage from "../pages/tutorial/TutorialPage";
 import SettingsPage from "../pages/settings/SettingsPage";
 import LikedByPage from "../pages/likedby/LikedByPage";
 import BirthDatePage from "../pages/register/BirthDatePage";
-import ChatPage from "../pages/matches/ChatContainer";
+import ChatPage from "../pages/matches/ChatPage";
 import ViewProfilePage from "../pages/matches/ViewProfilePage";
 import ShowGenderPage from "../pages/settings/ShowGenderPage";
 
@@ -37,7 +37,7 @@ const pages = {
   tutorial: { page: TutorialPage, path: "/tutorial" },
   settings: { page: SettingsPage, path: "/settings" },
   likedby: { page: LikedByPage, path: "/likedby" },
-  chat: { page: ChatPage, path: "/chat" },
+  chat: { page: ChatPage, path: "/chat/:id" },
   viewprofile: { page: ViewProfilePage, path: "/viewprofile/:id" },
   showGender: { page: ShowGenderPage, path: "/show-gender" },
 };

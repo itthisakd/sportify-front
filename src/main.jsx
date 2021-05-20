@@ -6,7 +6,7 @@ import MenuContextProvider from "./contexts/MenuContextProvider";
 import EditModeContext from "./contexts/EditModeContextProvider";
 import { DataProvider } from "./contexts/DataContext";
 import AuthContextProvider from "./contexts/AuthContextProvider";
-
+import SocketContextProvider from "./contexts/SocketContextProvider";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,7 +14,9 @@ ReactDOM.render(
       <DataProvider>
         <EditModeContext>
           <MenuContextProvider>
-            <App />
+            <SocketContextProvider>
+              <App />
+            </SocketContextProvider>
           </MenuContextProvider>
         </EditModeContext>
       </DataProvider>

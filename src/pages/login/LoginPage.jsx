@@ -9,8 +9,7 @@ import localStorageService from "../../services/localStorageService";
 // refresh token
 import { refreshTokenSetup } from "../../utilities/refreshToken";
 
-const clientId =
-  "580354342835-jmnv6h24isps601e9c4f0rentp9hboad.apps.googleusercontent.com";
+const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
 export default function LoginPage() {
   const history = useHistory();
@@ -20,10 +19,6 @@ export default function LoginPage() {
       tokenId: res.tokenId,
     });
 
-    console.log(res);
-    //TODO Use access token to refreshToken
-
-    console.log(result.data);
     localStorageService.setToken(res.tokenId);
     refreshTokenSetup(res);
 
@@ -42,7 +37,7 @@ export default function LoginPage() {
     onSuccess,
     onFailure,
     clientId,
-    isSignedIn: true,
+    isSignedIn: false,
     accessType: "offline",
     // responseType: 'code',
     // prompt: 'consent',
