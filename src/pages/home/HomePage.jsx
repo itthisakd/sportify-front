@@ -14,6 +14,9 @@ import ReplayRoundedIcon from "@material-ui/icons/ReplayRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import axios from "../../config/axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { DateTime } from "luxon";
+import getCurrentLocation from "../../utilities/getCurrentLocation";
+import getLocationName from "../../utilities/getLocationName";
 
 const useStyles = makeStyles(() => ({
   flexCol: {
@@ -151,6 +154,15 @@ export default function HomePage() {
   useEffect(() => {
     const getAccounts = async () => {
       const res = await axios.get("/account/stack");
+      const currentLocation = await getCurrentLocation();
+      console.log(currentLocation);
+      const currentLocationName = await getLocationName(currentLocation);
+      console.log(currentLocationName);
+
+      await axios.patch("/account/myaccount", {
+        lastActive: DateTime.now().toString(),
+        currentLocation,
+      });
       setAccounts(res.data.stack);
       setCurrent(0);
       console.log(res.data.stack);

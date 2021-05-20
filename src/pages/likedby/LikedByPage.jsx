@@ -64,6 +64,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    height: "90vh",
   },
 
   info: {
@@ -123,11 +124,31 @@ export default function LikedByPage() {
     setTrigger(!trigger);
   };
 
+  console.log(account);
+
   const deleteMatch = async () => {
-    await axios.delete("/match/" + account.likedMe.matchId);
+    await axios.delete("/match/" + account.id);
     setViewId(0);
     setTrigger(!trigger);
   };
+
+  if (accounts.length === 0) {
+    return (
+      <div style={{ position: "relative", heigh: "100vh" }}>
+        <Menu />
+        <Container className={classes.center}>
+          <Typography
+            variant="h2"
+            component="h3"
+            style={{ textAlign: "center" }}
+            color="secondary"
+          >
+            KEEP SWIPING!
+          </Typography>
+        </Container>
+      </div>
+    );
+  }
 
   if (viewId === 0) {
     return (

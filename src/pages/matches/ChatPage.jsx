@@ -75,12 +75,9 @@ export default function ChatPage() {
   const { newSocket } = useContext(SocketContext);
 
   newSocket.on("sendChatMessageBack", (message) => {
-    console.log(message);
     setMessages([...messages, message]);
     setNewMessages([...newMessages, message]);
   });
-
-  console.log(account);
 
   const history = useHistory();
 
@@ -111,10 +108,8 @@ export default function ChatPage() {
     setTextMessage("");
   };
 
-  console.log(account);
-
   const unmatch = async (account) => {
-    await axios.delete("/match/" + account.matchId);
+    await axios.delete("/match/" + account.id);
     setModalOpen(false);
     history.push("/matches");
   };
@@ -200,8 +195,9 @@ export default function ChatPage() {
                 setModalOpen(false);
               }}
               open={modalOpen}
+              setOpen={setModalOpen}
               confirmAction={() => {
-                unmatch();
+                unmatch(account);
                 leave();
               }}
               cancelAction={() => {
@@ -298,6 +294,7 @@ export default function ChatPage() {
           size="medium"
           color="secondary"
           type="submit"
+          disabled={textMessage === "" ? true : false}
         >
           Send
         </Button>
