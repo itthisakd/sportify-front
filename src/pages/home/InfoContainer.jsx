@@ -2,8 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Chip from "@material-ui/core/Chip";
-import HouseRoundedIcon from "@material-ui/icons/HouseRounded";
-import LocationOnRoundedIcon from "@material-ui/icons/LocationOnRounded";
+import HouseOutlinedIcon from "@material-ui/icons/HouseOutlined";
+import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
+import getLocationName from "../../utilities/getLocationName";
 
 const useStyles = makeStyles((theme) => ({
   name: {
@@ -13,10 +14,16 @@ const useStyles = makeStyles((theme) => ({
   flexRow: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "start",
+    justifyContent: "flex-start",
     alignItems: "center",
-    margin: "5px 0px",
+    margin: "10px 0px",
   },
+  tag: {
+    fontWeight: "400",
+    display: "inline-block",
+    height: "1rem",
+  },
+
   info: {
     textAlign: "left",
     color: "white",
@@ -62,6 +69,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function InfoContainer({ current, account }) {
   const classes = useStyles();
+  const [locaName, setLocaName] = React.useState("");
+
+  React.useEffect(() => {
+    const setLo = async () => {
+      console.log("inside");
+      const loName = await getLocationName(account.currentLocation);
+      setLocaName(loName);
+    };
+    setLo();
+  }, []);
+
   return (
     <div className={classes.info}>
       <Typography
@@ -72,16 +90,16 @@ export default function InfoContainer({ current, account }) {
         }}
       >
         {account.firstName}
-        <Typography
-          variant="h5"
-          style={{
-            fontWeight: "400",
-            display: "inline-block",
-          }}
-        >
-          &nbsp;
-          {account.age}
-        </Typography>
+      </Typography>
+      <Typography
+        variant="h5"
+        style={{
+          fontWeight: "400",
+          display: "inline-block",
+        }}
+      >
+        &nbsp;
+        {account.age}
       </Typography>
       {account.showActive && account.recentlyActive ? (
         <div
@@ -98,8 +116,8 @@ export default function InfoContainer({ current, account }) {
       ) : null}
       {current === 0 && (
         <div className={classes.flexRow}>
-          <LocationOnRoundedIcon className={classes.icon} />
-          <Typography variant="body1" className={classes.aboutMe}>
+          <LocationOnOutlinedIcon className={classes.tag} />
+          <Typography variant="body1" className={classes.tag}>
             {account.distance} km away
           </Typography>
         </div>
@@ -111,8 +129,16 @@ export default function InfoContainer({ current, account }) {
         </Typography>
       )}
       {current === 1 && (
+        <div className={classes.flexRow}>
+          <HouseOutlinedIcon className={classes.tag} />
+          <Typography variant="body2" className={classes.tag}>
+            {locaName}
+          </Typography>
+        </div>
+      )}
+      {current === 1 && (
         <div className={classes.root}>
-          {account.sports.map(({ sportName, id }) => {
+          {account.sports.map(({ sportName, id }, idx) => {
             return (
               <Chip
                 label={sportName}
@@ -120,7 +146,7 @@ export default function InfoContainer({ current, account }) {
                 color={
                   account.commonSports?.includes(id) ? "secondary" : "default"
                 }
-                key={id}
+                key={idx}
               />
             );
           })}

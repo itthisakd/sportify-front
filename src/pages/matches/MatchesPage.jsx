@@ -65,41 +65,83 @@ export default function MatchesPage() {
   };
 
   return (
-    <div>
-      <Menu />
-      <Typography
-        variant="h6"
-        component="p"
+    <div style={{ position: "relative" }}>
+      <div
         style={{
-          margin: "5px 10px",
-        }}
-        color="secondary"
-      >
-        New Matches
-      </Typography>
-      <Container
-        style={{
-          padding: "5px",
+          position: "sticky",
+          top: "0px",
+          backgroundColor: "white",
         }}
       >
-        <div className={classes.matchesContainer}>
-          {matches.map((match) => {
-            if (!match.latestMessage) {
-              return match.seen === 0 ? (
-                <Badge
-                  className={classes.badge}
-                  color="secondary"
-                  overlap="circle"
-                  badgeContent=""
-                  variant="standard"
-                  style={{
-                    margin: "5px 10px",
-                  }}
-                  onClick={() => {
-                    handleOpen(match);
-                  }}
-                >
-                  <div>
+        <Menu />
+
+        {matches.filter((match) => match.latestMessage === false).length >
+          0 && (
+          <Typography
+            variant="h6"
+            component="p"
+            style={{
+              margin: "5px 15px",
+            }}
+            color="secondary"
+          >
+            New Matches
+          </Typography>
+        )}
+        <Container
+          style={{
+            padding: "5px",
+          }}
+        >
+          <div className={classes.matchesContainer}>
+            {matches.map((match) => {
+              if (!match.latestMessage) {
+                return match.seen === 0 ? (
+                  <Badge
+                    className={classes.badge}
+                    color="secondary"
+                    overlap="circle"
+                    badgeContent=""
+                    variant="standard"
+                    style={{
+                      margin: "5px 10px",
+                    }}
+                    onClick={() => {
+                      handleOpen(match);
+                    }}
+                  >
+                    <div>
+                      <img
+                        src={match.matchAcc.profilePhoto}
+                        style={{
+                          width: "20vw",
+                          height: "20vw",
+                          overflow: "hidden",
+                          objectFit: "cover",
+                          objectPosition: "50% 50%",
+                          borderRadius: "50%",
+                        }}
+                      />
+                      <Typography
+                        variant="h6"
+                        component="p"
+                        style={{
+                          textAlign: "center",
+                        }}
+                      >
+                        {match.matchAcc.firstName}
+                      </Typography>
+                    </div>
+                  </Badge>
+                ) : (
+                  <div
+                    style={{
+                      margin: "5px 10px",
+                    }}
+                    onClick={() => {
+                      handleOpen(match);
+                    }}
+                  >
                     <img
                       src={match.matchAcc.profilePhoto}
                       style={{
@@ -121,53 +163,24 @@ export default function MatchesPage() {
                       {match.matchAcc.firstName}
                     </Typography>
                   </div>
-                </Badge>
-              ) : (
-                <div
-                  style={{
-                    margin: "5px 10px",
-                  }}
-                  onClick={() => {
-                    handleOpen(match);
-                  }}
-                >
-                  <img
-                    src={match.matchAcc.profilePhoto}
-                    style={{
-                      width: "20vw",
-                      height: "20vw",
-                      overflow: "hidden",
-                      objectFit: "cover",
-                      objectPosition: "50% 50%",
-                      borderRadius: "50%",
-                    }}
-                  />
-                  <Typography
-                    variant="h6"
-                    component="p"
-                    style={{
-                      textAlign: "center",
-                    }}
-                  >
-                    {match.matchAcc.firstName}
-                  </Typography>
-                </div>
-              );
-            }
-          })}
-        </div>
-      </Container>
-      <Divider />
-      <Typography
-        variant="h6"
-        component="p"
-        style={{
-          margin: "5px 15px",
-        }}
-        color="secondary"
-      >
-        Conversations
-      </Typography>
+                );
+              }
+            })}
+          </div>
+        </Container>
+        {matches.filter((match) => match.latestMessage === false).length >
+          0 && <Divider style={{}} />}
+        <Typography
+          variant="h6"
+          component="p"
+          style={{
+            margin: "5px 15px",
+          }}
+          color="secondary"
+        >
+          Conversations
+        </Typography>
+      </div>
       <Container>
         {matches.map((match, idx) => {
           if (match.latestMessage) {

@@ -16,28 +16,8 @@ import { useParams } from "react-router-dom";
 import axios from "../../config/axios";
 import Geocode from "react-geocode";
 import { useHistory } from "react-router-dom";
+import getLocationName from "../../utilities/getLocationName";
 
-function getLocationName(loca) {
-  Geocode.setApiKey("AIzaSyAHQuKM8CJILEMZStXdXMO1RtJebhhoIJ8");
-  Geocode.setLanguage("en");
-  Geocode.setLocationType("ROOFTOP");
-  Geocode.enableDebug();
-
-  let name;
-
-  const lat = loca.split(",")[0];
-  const long = loca.split(",")[1];
-
-  Geocode.fromLatLng(lat, long).then(
-    (response) => {
-      name = response.plus_code.compound_code.split(" ").slice(1).join(" ");
-    },
-    (error) => {
-      console.error(error);
-    }
-  );
-  return name;
-}
 const useStyles = makeStyles((theme) => ({
   flexCol: {
     display: "flex",
@@ -109,10 +89,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile() {
   const classes = useStyles();
-  const [locationName, setLocationName] = React.useState("");
   const { id } = useParams();
   const [account, setAccount] = React.useState({ images: "" });
   const history = useHistory();
+  const [locaName, setLocaName] = React.useState("");
 
   React.useEffect(() => {
     const getAccount = async () => {
@@ -122,15 +102,14 @@ export default function Profile() {
     getAccount();
   }, []);
 
-  // React.useEffect(() => {
-  //   console.log(account.currentLocation);
-  //   const setLo = async () => {
-  //     console.log("inside");
-  //     const loName = await getLocationName(account.currentLocation);
-  //     setLocationName(loName);
-  //   };
-  //   setLo();
-  // }, [locationName]);
+  React.useEffect(() => {
+    const setLo = async () => {
+      console.log("inside");
+      const loName = await getLocationName(account.currentLocation);
+      setLocaName(loName);
+    };
+    setLo();
+  }, []);
 
   return (
     <div style={{ position: "relative" }}>
@@ -155,24 +134,23 @@ export default function Profile() {
           }}
         >
           {account?.firstName}
-          <Typography
-            variant="h5"
-            style={{
-              fontWeight: "400",
-              display: "inline-block",
-              color: "#404040",
-            }}
-          >
-            &nbsp;
-            {account?.age}
-          </Typography>
         </Typography>
-
+        <Typography
+          variant="h5"
+          style={{
+            fontWeight: "400",
+            display: "inline-block",
+            color: "#404040",
+          }}
+        >
+          &nbsp;
+          {account?.age}
+        </Typography>
         {account?.currentLocation && (
           <div className={classes.flexRow}>
             <HouseOutlinedIcon className={classes.tag} />
             <Typography variant="body2" className={classes.tag}>
-              {locationName}
+              {locaName}
             </Typography>
           </div>
         )}

@@ -20,11 +20,3 @@ export default function getCurrentLocation() {
 
 // console.log("currentLocation :>> ", currentLocation);
 
- const submitLocation = async () => {
-   setTimeout(async () => {
-     axios.patch("/account/currentlocation", {
-       currentLocation,
-       addSearchLo: true,
-     });
-   }, 5000);
- };

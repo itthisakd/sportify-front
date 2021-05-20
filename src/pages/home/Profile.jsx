@@ -12,7 +12,7 @@ import WorkOutlineOutlinedIcon from "@material-ui/icons/WorkOutlineOutlined";
 import SchoolOutlinedIcon from "@material-ui/icons/SchoolOutlined";
 import HouseOutlinedIcon from "@material-ui/icons/HouseOutlined";
 import titleCase from "../../utilities/titleCase";
-import locationName from "../../utilities/locationName";
+import getLocationName from "../../utilities/getLocationName";
 
 const useStyles = makeStyles((theme) => ({
   flexCol: {
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     justifyContent: "start",
     alignItem: "center",
-    margin: "5px 0px",
+    margin: "10px 0px",
   },
   chip: {
     height: "25px",
@@ -85,18 +85,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile({ account, setViewId }) {
   const classes = useStyles();
-  const [locationName, setLocationName] = React.useState("");
+  const [locaName, setLocaName] = React.useState("");
 
   React.useEffect(() => {
-    console.log(account.currentLocation);
     const setLo = async () => {
       console.log("inside");
-      //FIXME locationName2 error
-      const loName = await locationName(account.currentLocation);
-      setLocationName(loName);
+      const loName = await getLocationName(account?.currentLocation);
+      setLocaName(loName);
     };
     setLo();
-  }, []);
+  }, [account]);
 
   return (
     <div style={{ position: "relative" }}>
@@ -120,26 +118,24 @@ export default function Profile({ account, setViewId }) {
           }}
         >
           {account.firstName}
-          <Typography
-            variant="h5"
-            style={{
-              fontWeight: "400",
-              display: "inline-block",
-              color: "#404040",
-            }}
-          >
-            &nbsp;
-            {account.age}
-          </Typography>
+        </Typography>
+        <Typography
+          variant="h5"
+          style={{
+            fontWeight: "400",
+            display: "inline-block",
+            color: "#404040",
+          }}
+        >
+          &nbsp;
+          {account.age}
         </Typography>
 
         {account.currentLocation && (
-          //FIXME ERROR: LOCA NAME NOT DISPLAYING
-
           <div className={classes.flexRow}>
             <HouseOutlinedIcon className={classes.tag} />
             <Typography variant="body2" className={classes.tag}>
-              {locationName}
+              {locaName}
             </Typography>
           </div>
         )}
@@ -225,7 +221,7 @@ export default function Profile({ account, setViewId }) {
           <Divider style={{ backgroundColor: "gainsboro" }} />
           <a
             className={classes.flexRow}
-            style={{ padding: "20px" }}
+            style={{ padding: "20px", textDecoration: "none" }}
             href={`https://www.instagram.com/${account.instagram}`}
           >
             <img
