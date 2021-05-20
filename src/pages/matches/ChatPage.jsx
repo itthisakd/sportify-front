@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import {
   Typography,
@@ -19,6 +19,7 @@ import HighlightOffRoundedIcon from "@material-ui/icons/HighlightOffRounded";
 import { DateTime } from "luxon";
 import axios from "../../config/axios";
 import ConfirmModal from "../shared/ConfirmModal";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -52,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     alignItems: "center",
     width: "100%",
+    margin: "5px 0px",
   },
   flexStart: {
     display: "flex",
@@ -72,22 +74,11 @@ export default function ChatPage() {
   const [textMessage, setTextMessage] = useState("");
   const { newSocket } = useContext(SocketContext);
 
-  const chatContainerEndRef = useRef(null);
-
-  const scrollToBottom = () => {
-    chatContainerEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   newSocket.on("sendChatMessageBack", (message) => {
     console.log(message);
     setMessages([...messages, message]);
     setNewMessages([...newMessages, message]);
   });
-
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [messages]);
-  //CHECK AGAIN
 
   console.log(account);
 
@@ -99,11 +90,11 @@ export default function ChatPage() {
       setAccount(res.data);
     };
     const getMessages = async () => {
-      const res = await axios.post("/message/" + roomId);
+      const res = await axios.get("/message/" + roomId);
       setMessages(res.data.messages);
     };
     getAccount();
-    // getMessages()
+    getMessages();
   }, []);
 
   const onSend = (e) => {
@@ -120,7 +111,7 @@ export default function ChatPage() {
     setTextMessage("");
   };
 
-  console.log(messages);
+  console.log(account);
 
   const unmatch = async (account) => {
     await axios.delete("/match/" + account.matchId);
@@ -171,9 +162,7 @@ export default function ChatPage() {
             onClick={() => {
               history.push(
                 "/viewprofile/" +
-                  [account.toId, account.fromId]
-                    .split("-")
-                    .filter((e) => +e !== +account.userId)[0]
+                  roomId.split("-").filter((e) => +e !== +account.userId)[0]
               );
             }}
           >
@@ -224,18 +213,17 @@ export default function ChatPage() {
         <Container
           style={{
             width: "100vw",
-            height: "calc(100vh - 35vw)",
+            height: "calc(100vh - 35vw - 10px)",
             padding: "15px",
             overflow: "scroll",
             overflowAnchor: "auto",
           }}
-          ref={chatContainerEndRef}
         >
           {messages.map((message, idx) => {
             return message.fromId === +account.userId ? (
               <div className={classes.flexEnd} key={idx}>
-                <div className={classes.chatFromMe}>
-                  <Typography variant="body1" component="p">
+                <div className={classes.chatFromMe} key={idx}>
+                  <Typography variant="body1" component="p" key={idx}>
                     {message.text}
                   </Typography>
                 </div>
@@ -251,10 +239,12 @@ export default function ChatPage() {
                     objectFit: "cover",
                     objectPosition: "50% 50%",
                     borderRadius: "50%",
+                    margin: "0px 5px 0px 0px",
                   }}
+                  key={idx}
                 />
-                <div className={classes.chatFromYou}>
-                  <Typography variant="body1" component="p">
+                <div className={classes.chatFromYou} key={idx}>
+                  <Typography variant="body1" component="p" key={idx}>
                     {message.text}
                   </Typography>
                 </div>

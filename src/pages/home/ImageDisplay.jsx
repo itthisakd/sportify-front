@@ -70,7 +70,7 @@ export default function ImageSlider({ account, viewProfile }) {
   const classes = useStyles();
   const [current, setCurrent] = useState(0);
 
-  const slides = account.images;
+  const slides = account?.images;
 
   const nextSlide = () => {
     if (current !== slides.length - 1)
