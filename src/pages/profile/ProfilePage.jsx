@@ -9,7 +9,9 @@ import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
 import { DateTime } from "luxon";
 import axios from "../../config/axios";
 import { EditModeContext } from "../../contexts/EditModeContextProvider";
-import logo from "../../../icon.png";
+import background from "../../images/background.png";
+import user from "../../images/anonymous_user.png"
+
 
 const useStyles = makeStyles(() => ({
   flexRow: {
@@ -51,6 +53,7 @@ const useStyles = makeStyles(() => ({
     margin: "10px 15px",
     width: "20vw",
     height: "20vw",
+    backgroundColor: "white",
   },
   imgCircle: {
     margin: "20px 0px 10px 0px",
@@ -67,7 +70,7 @@ const useStyles = makeStyles(() => ({
 export default function ProfilePage() {
   const history = useHistory();
   const classes = useStyles();
-  const [account, setAccount] = React.useState({images: [{image: logo}]});
+  const [account, setAccount] = React.useState({ images: [{ image: user }] });
   const { editMode, setEditMode } = useContext(EditModeContext);
 
   useEffect(() => {
@@ -81,14 +84,11 @@ export default function ProfilePage() {
   // console.log(account.images)
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <Menu />
 
       <Container className={classes.center}>
-          <img
-            src={account?.images[0]?.image}
-            className={classes.imgCircle}
-          />
+        <img src={account?.images[0]?.image} className={classes.imgCircle} />
         <Container style={{ padding: "20px" }} className={classes.center}>
           <Typography
             variant="h4"
@@ -122,6 +122,9 @@ export default function ProfilePage() {
             setEditMode(true);
             history.push("/settings");
           }}
+          style={{
+            backgroundColor: "#5d00b1",
+          }}
         >
           <SettingsRoundedIcon />
         </Fab>
@@ -130,6 +133,9 @@ export default function ProfilePage() {
           className={classes.button}
           onClick={() => {
             history.push("/preview");
+          }}
+          style={{
+            backgroundColor: "#5d00b1",
           }}
         >
           <VisibilityRoundedIcon />
@@ -142,12 +148,29 @@ export default function ProfilePage() {
             setEditMode(true);
             history.push("/edit-info");
           }}
+          style={{
+            backgroundColor: "#5d00b1",
+          }}
         >
           <EditRoundedIcon />
         </Fab>
       </Container>
 
-      <Container>ADS HERE</Container>
+      <img
+        alt="landing"
+        src={background}
+        style={{
+          margin: "auto",
+          overflow: "hidden",
+          objectFit: "cover",
+          objectPosition: "50% 50%",
+          position: "absolute",
+          top: "0px",
+          opacity: "0.80",
+          left: "0px",
+          zIndex: "-100",
+        }}
+      />
     </div>
   );
 }

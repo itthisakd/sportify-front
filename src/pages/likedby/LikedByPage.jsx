@@ -11,6 +11,7 @@ import ReplayRoundedIcon from "@material-ui/icons/ReplayRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import Typography from "@material-ui/core/Typography";
 import axios from "../../config/axios";
+import background from "../../images/likedby_bg.png"
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -136,16 +137,19 @@ export default function LikedByPage() {
     return (
       <div style={{ position: "relative", heigh: "100vh" }}>
         <Menu />
-        <Container className={classes.center}>
-          <Typography
-            variant="h2"
-            component="h3"
-            style={{ textAlign: "center" }}
-            color="secondary"
-          >
-            KEEP SWIPING!
-          </Typography>
-        </Container>
+        <img
+          alt="landing"
+          src={background}
+          style={{
+            margin: "auto",
+            overflow: "hidden",
+            objectFit: "cover",
+            objectPosition: "50% 50%",
+            position: "absolute",
+            top: "0px",
+            left: "0px",
+          }}
+        />
       </div>
     );
   }
