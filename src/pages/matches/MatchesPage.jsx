@@ -8,6 +8,7 @@ import Badge from "@material-ui/core/Badge";
 import axios from "../../config/axios";
 import { SocketContext } from "../../contexts/SocketContextProvider";
 import { useHistory } from "react-router-dom";
+import background from "../../images/matches_bg.png"
 
 const useStyles = makeStyles((theme) => ({
   matchesContainer: {
@@ -63,6 +64,27 @@ export default function MatchesPage() {
 
     history.push("/chat/" + roomId);
   };
+
+  if (matches.length === 0) {
+    return (
+      <div style={{ position: "relative", heigh: "100vh" }}>
+        <Menu />
+        <img
+          alt="landing"
+          src={background}
+          style={{
+            margin: "auto",
+            overflow: "hidden",
+            objectFit: "cover",
+            objectPosition: "50% 50%",
+            position: "absolute",
+            top: "0px",
+            left: "0px",
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div style={{ position: "relative" }}>

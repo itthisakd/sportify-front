@@ -38,21 +38,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const schema = yup.object().shape({
-  aboutMe: yup.string(),
-  job: yup.string(),
+  aboutMe: yup.string().nullable(),
+  job: yup.string().nullable(),
   instagram: yup
     .string()
     .matches(
       /^[a-z_.0-9]+$/,
       "Username must not contain spaces, capital letters or special characters."
-    ),
+    )
+    .nullable(),
   spotify: yup
     .string()
     .matches(
       /^[a-z_.0-9]+$/,
       "Username must not contain spaces, capital letters or special characters."
-    ),
-  school: yup.string(),
+    )
+    .nullable(),
+  school: yup.string().nullable(),
 });
 
 export default function EditInfoPage() {

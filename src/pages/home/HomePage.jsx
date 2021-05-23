@@ -17,6 +17,11 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { DateTime } from "luxon";
 import getCurrentLocation from "../../utilities/getCurrentLocation";
 import getLocationName from "../../utilities/getLocationName";
+import likeIcon from "../../images/icons/like_icon.png";
+import rejectIcon from "../../images/icons/reject_icon.png";
+import rewindIcon from "../../images/icons/rewind_icon.png";
+import rewindIconDisabled from "../../images/icons/rewind_icon_disabled.png";
+import background from "../../images/home_bg.png";
 
 const useStyles = makeStyles(() => ({
   flexCol: {
@@ -29,7 +34,7 @@ const useStyles = makeStyles(() => ({
   flexBetween: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     height: "100%",
     width: "100vw",
     margin: "10px 0 0 0",
@@ -66,6 +71,7 @@ const useStyles = makeStyles(() => ({
     width: "90vw",
     height: "135vw",
     borderRadius: "15px",
+    margin: "0px auto",
   },
   float: {
     display: "flex",
@@ -131,14 +137,27 @@ const useStyles = makeStyles(() => ({
     width: "100%",
     padding: "0px",
     margin: "10px 0px",
-    // background: "rgb(255,255,255)",
+    // position: "absolute",/
+    // bottom: "0px",
     background:
       "linear-gradient(0deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 100%)",
   },
+  buttonContainerHOME: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    width: "100%",
+    padding: "0px",
+    margin: "10px 0px",
+  },
   button: {
-    width: "17vw",
-    height: "17vw",
+    width: "20vw",
+    height: "20vw",
     margin: "5px 0px",
+
+    backgroundColor: "white",
+    color: "purple",
   },
 }));
 
@@ -155,9 +174,7 @@ export default function HomePage() {
     const getAccounts = async () => {
       const res = await axios.get("/account/stack");
       const currentLocation = await getCurrentLocation();
-      console.log(currentLocation);
-      const currentLocationName = await getLocationName(currentLocation);
-      console.log(currentLocationName);
+      // const currentLocationName = await getLocationName(currentLocation);
 
       await axios.patch("/account/myaccount", {
         lastActive: DateTime.now().toString(),
@@ -208,22 +225,22 @@ export default function HomePage() {
     nextSlide();
   };
 
-  const createSuperlike = async () => {
-    if (accounts[current].likedMe) {
-      await axios.patch("/match/returnLike", {
-        matchId: accounts[current].likedMe.matchId,
-      });
-      await axios.patch("/account/updateoffset", {
-        accId: accounts[current].id,
-      });
-    } else {
-      await axios.post("/match/", { toId: accounts[current].id, superlike: 1 });
-    }
-    setViewId(0);
-    setJustLiked(true);
-    setJustRewinded(false);
-    nextSlide();
-  };
+  // const createSuperlike = async () => {
+  //   if (accounts[current].likedMe) {
+  //     await axios.patch("/match/returnLike", {
+  //       matchId: accounts[current].likedMe.matchId,
+  //     });
+  //     await axios.patch("/account/updateoffset", {
+  //       accId: accounts[current].id,
+  //     });
+  //   } else {
+  //     await axios.post("/match/", { toId: accounts[current].id, superlike: 1 });
+  //   }
+  //   setViewId(0);
+  //   setJustLiked(true);
+  //   setJustRewinded(false);
+  //   nextSlide();
+  // };
 
   const reject = async () => {
     await axios.patch("/account/updateoffset", { accId: accounts[current].id });
@@ -240,72 +257,58 @@ export default function HomePage() {
 
   if (viewId === 0) {
     return (
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative", height: "90vh" }}>
         <Menu />
+
         <div className={classes.flexBetween}>
-          <Container className={classes.center}>
-            <div className={classes.container}>
-              <Paper elevation={3} className={classes.paper}>
-                {accounts.length > 0 ? (
-                  accounts?.map((account, index) => {
-                    return (
-                      <div key={index}>
-                        {index === current && (
-                          <ImageSlider
-                            className={classes.paper}
-                            account={account}
-                            key={index}
-                            viewProfile={() => {
-                              setViewId(index + 1);
-                            }}
-                          />
-                        )}
-                      </div>
-                    );
-                  })
-                ) : (
-                  <CircularProgress style={{ width: "15vw", height: "15vw" }} />
-                )}
-              </Paper>
-              <Container className={classes.buttonContainer}>
-                {justLiked || justRewinded ? (
-                  <Fab color="primary" className={classes.button} disabled>
-                    <ReplayRoundedIcon />
-                  </Fab>
-                ) : (
-                  <Fab
-                    color="primary"
-                    className={classes.button}
-                    onClick={rewind}
-                  >
-                    <ReplayRoundedIcon />
-                  </Fab>
-                )}
-                <Fab
-                  color="primary"
-                  className={classes.button}
-                  onClick={createLike}
-                >
-                  <FavoriteRoundedIcon />
-                </Fab>
-
-                <Fab
-                  color="primary"
-                  className={classes.button}
-                  onClick={createSuperlike}
-                >
-                  <StarRoundedIcon />
-                </Fab>
-
-                <Fab
-                  color="primary"
-                  className={classes.button}
-                  onClick={reject}
-                >
-                  <CloseRoundedIcon />
-                </Fab>
-              </Container>
-            </div>
+          <Paper elevation={3} className={classes.paper}>
+            {accounts.length > 0 ? (
+              accounts?.map((account, index) => {
+                return (
+                  <div key={index}>
+                    {index === current && (
+                      <ImageSlider
+                        className={classes.paper}
+                        account={account}
+                        key={index}
+                        viewProfile={() => {
+                          setViewId(index + 1);
+                        }}
+                      />
+                    )}
+                  </div>
+                );
+              })
+            ) : (
+              <CircularProgress style={{ width: "15vw", height: "15vw" }} />
+            )}
+          </Paper>
+          <Container className={classes.buttonContainerHOME}>
+            {justLiked || justRewinded ? (
+              <Fab color="primary" className={classes.button} disabled>
+                <img src={rewindIconDisabled} style={{ width: "40%" }} />
+              </Fab>
+            ) : (
+              <Fab
+                color="primary"
+                className={classes.button}
+                onClick={rewind}
+                style={{ color: "#f4ba41" }}
+              >
+                <img src={rewindIcon} style={{ width: "40%" }} />
+              </Fab>
+            )}
+            <Fab
+              color="primary"
+              className={classes.button}
+              onClick={createLike}
+              style={{ color: "#e95370" }}
+            >
+              <img src={likeIcon} style={{ width: "50%" }} />
+            </Fab>
+            <Fab color="primary" className={classes.button} onClick={reject}>
+              <img src={rejectIcon} style={{ width: "40%" }} />
+            </Fab>
           </Container>
         </div>
       </div>
@@ -318,24 +321,29 @@ export default function HomePage() {
           className={classes.buttonContainer}
           style={{ position: "sticky", bottom: "0px", padding: "15px 0px" }}
         >
-          <Fab
+          {/* <Fab
             color="primary"
             className={classes.button}
             style={{ opacity: "0" }}
           >
             <ReplayRoundedIcon />
-          </Fab>
-          <Fab color="primary" className={classes.button} onClick={createLike}>
+          </Fab> */}
+          <Fab
+            color="primary"
+            className={classes.button}
+            onClick={createLike}
+            style={{ color: "#e95370" }}
+          >
             <FavoriteRoundedIcon />
           </Fab>
 
-          <Fab
+          {/* <Fab
             color="primary"
             className={classes.button}
             onClick={createSuperlike}
           >
             <StarRoundedIcon />
-          </Fab>
+          </Fab> */}
 
           <Fab color="primary" className={classes.button} onClick={reject}>
             <CloseRoundedIcon />
