@@ -11,7 +11,18 @@ import ReplayRoundedIcon from "@material-ui/icons/ReplayRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import Typography from "@material-ui/core/Typography";
 import axios from "../../config/axios";
-import background from "../../images/likedby_bg.png"
+import background from "../../images/likedby_bg.png";
+import likeIcon from "../../images/icons/like_icon.png";
+import rejectIcon from "../../images/icons/reject_icon.png";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+const whiteTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#ffffff",
+    },
+  },
+});
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -85,9 +96,11 @@ const useStyles = makeStyles(() => ({
       "linear-gradient(0deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 100%)",
   },
   button: {
-    width: "17vw",
-    height: "17vw",
+    width: "20vw",
+    height: "20vw",
     margin: "5px 0px",
+    backgroundColor: "white",
+    background: "white",
   },
 }));
 
@@ -102,7 +115,6 @@ export default function LikedByPage() {
     const getAccounts = async () => {
       const res = await axios.get("/match/likedby");
       setAccounts(res.data);
-      console.log(res.data);
     };
     getAccounts();
   }, [trigger]);
@@ -125,7 +137,6 @@ export default function LikedByPage() {
     setTrigger(!trigger);
   };
 
-  console.log(account);
 
   const deleteMatch = async () => {
     await axios.delete("/match/" + account.id);
@@ -208,27 +219,31 @@ export default function LikedByPage() {
           className={classes.buttonContainer}
           style={{ position: "sticky", bottom: "0px", padding: "15px 0px" }}
         >
-          <Fab
-            color="primary"
-            className={classes.button}
-            style={{ opacity: "0" }}
-          >
-            <ReplayRoundedIcon />
-          </Fab>
-          <Fab
-            color="primary"
-            style={{ opacity: "0" }}
-            className={classes.button}
-          >
-            <FavoriteRoundedIcon />
-          </Fab>
-          <Fab color="primary" className={classes.button} onClick={returnLike}>
-            <FavoriteRoundedIcon />
-          </Fab>
-
-          <Fab color="primary" className={classes.button} onClick={deleteMatch}>
-            <CloseRoundedIcon />
-          </Fab>
+          <MuiThemeProvider theme={whiteTheme}>
+            <Fab
+              color="primary"
+              className={classes.button}
+              disabled
+              style={{ opacity: "0" }}
+            >
+              <img src={likeIcon} style={{ width: "50%" }} />
+            </Fab>
+            <Fab
+              color="primary"
+              className={classes.button}
+              onClick={returnLike}
+              style={{ color: "#e95370" }}
+            >
+              <img src={likeIcon} style={{ width: "50%" }} />
+            </Fab>
+            <Fab
+              color="primary"
+              className={classes.button}
+              onClick={deleteMatch}
+            >
+              <img src={rejectIcon} style={{ width: "40%" }} />
+            </Fab>
+          </MuiThemeProvider>
         </Container>
       </div>
     );

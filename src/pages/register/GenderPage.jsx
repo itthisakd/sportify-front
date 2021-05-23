@@ -7,8 +7,6 @@ import { useHistory } from "react-router-dom";
 export default function GenderPage() {
   const { setValues, data } = useData();
   const history = useHistory();
-
-  console.log(data);
   return (
     <div style={{ height: "100vh" }}>
       <RegisHeader

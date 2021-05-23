@@ -81,7 +81,6 @@ export default function ProfilePage() {
     getAccount();
   }, []);
 
-  // console.log(account.images)
 
   return (
     <div style={{ position: "relative" }}>

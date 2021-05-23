@@ -11,6 +11,18 @@ import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import Button from "@material-ui/core/Button";
 import Menu from "../shared/Menu";
 import LongButton from "../shared/LongButton";
+import likeIcon from "../../images/icons/like_icon.png";
+import rejectIcon from "../../images/icons/reject_icon.png";
+import rewindIcon from "../../images/icons/rewind_icon.png";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+const whiteTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#ffffff",
+    },
+  },
+});
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -49,6 +61,7 @@ const useStyles = makeStyles(() => ({
     width: "17vw",
     height: "17vw",
     margin: "5px 0px",
+    backgroundColor: "white",
   },
 }));
 
@@ -68,7 +81,10 @@ export default function TutorialPage() {
   return (
     <div className={classes.flexCol}>
       <Menu />
-      <div className={classes.flexCol} style={{ margin: "10px 0px 0px 0px" }}>
+      <div
+        className={classes.flexCol}
+        style={{ margin: "10px 0px 0px 0px", height: "90vh" }}
+      >
         <Paper
           elevation={3}
           className={classes.paper}
@@ -122,42 +138,31 @@ export default function TutorialPage() {
         </Paper>
 
         <Container className={classes.buttonContainer}>
-          <Fab
-            color="primary"
-            className={current === 5 ? classes.button : classes.hidden}
-          >
-            <ReplayRoundedIcon />
-          </Fab>
-          <Fab
-            color="primary"
-            onClick={
-              current === 5
-                ? null
-                : current === 3
-                ? next
-                : null
-            }
-            className={[5, 3].includes(current) ? classes.button : classes.hidden}
-          >
-            <FavoriteRoundedIcon />
-          </Fab>
-
-          <Fab
-            color="primary"
-            className={current === 5 ? classes.button : classes.hidden}
-          >
-            <StarRoundedIcon />
-          </Fab>
-
-          <Fab
-            color="primary"
-            onClick={current === 5 ? null : current === 2 ? next : null}
-            className={
-              [5, 2].includes(current) ? classes.button : classes.hidden
-            }
-          >
-            <CloseRoundedIcon />
-          </Fab>
+          <MuiThemeProvider theme={whiteTheme}>
+            <Fab
+              className={current === 5 ? classes.button : classes.hidden}
+              style={{ color: "#f4ba41" }}
+            >
+              <img src={rewindIcon} style={{ width: "40%" }} />
+            </Fab>
+            <Fab
+              onClick={current === 5 ? null : current === 3 ? next : null}
+              className={
+                [5, 3].includes(current) ? classes.button : classes.hidden
+              }
+              style={{ color: "#e95370" }}
+            >
+              <img src={likeIcon} style={{ width: "50%" }} />
+            </Fab>
+            <Fab
+              onClick={current === 5 ? null : current === 2 ? next : null}
+              className={
+                [5, 2].includes(current) ? classes.button : classes.hidden
+              }
+            >
+              <img src={rejectIcon} style={{ width: "40%" }} />
+            </Fab>
+          </MuiThemeProvider>
         </Container>
       </div>
     </div>

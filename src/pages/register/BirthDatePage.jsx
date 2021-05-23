@@ -47,7 +47,6 @@ export default function BirthDatePage() {
     setValues({dob: regis.dob.toISOString()});
     history.push("/gender")
   };
-  console.log(data);
   return (
     <div>
       <div style={{marginBottom: '50px'}}>

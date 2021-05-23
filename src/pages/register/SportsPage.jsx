@@ -5,11 +5,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Chip } from "@material-ui/core";
 import LongButton from "../shared/LongButton";
 import RegisHeader from "../shared/RegisHeader";
-import SectionHeader from "../shared/SectionHeader";
 import { useHistory } from "react-router-dom";
 import { useData } from "../../contexts/DataContext";
 import axios from "../../config/axios";
-import getCurrentLocation from "../../utilities/getCurrentLocation";
+import SelectSports from "./SelectSports";
+import SelectSkill from "./SelectSkill";
 
 const useStyle = makeStyles(() => ({
   header: {
@@ -25,7 +25,7 @@ const useStyle = makeStyles(() => ({
     margin: "5px",
   },
   button: {
-    padding: "30px 10px",
+    padding: "30px 0px",
     textAlign: "center",
     position: "sticky",
     bottom: "0px",
@@ -67,6 +67,8 @@ export default function SportsPage() {
   const [selectedChips, setSelectedChips] = useState([]);
   const [oldSelectedChips, setOldSelectedChips] = useState([]);
   const [sports, setSports] = useState([]);
+  const [selectMode, setSelectMode] = useState(true);
+  const [outputSports, setOutputSports] = useState([]);
   const history = useHistory();
   const classes = useStyle();
 
@@ -76,11 +78,11 @@ export default function SportsPage() {
   const removeSports = oldSelectedChips.filter(
     (value) => intersection.includes(value) === false
   );
-  const addSports = selectedChips.filter(
-    (value) => intersection.includes(value) === false
+  const addSports = outputSports.filter((sport) =>
+    selectedChips
+      .filter((value) => intersection.includes(value) === false)
+      .includes(sport.sportId)
   );
-
-  console.log(editMode);
 
   //ANCHOR get sports to display
   useEffect(() => {
@@ -97,9 +99,9 @@ export default function SportsPage() {
     useEffect(() => {
       const getUserSports = async () => {
         const res = await axios.get("/sport/user");
-        console.log("sports", res.data.sports);
-        setSelectedChips(res.data.sports);
-        setOldSelectedChips(res.data.sports);
+        setOutputSports(res.data.sports);
+        setSelectedChips(res.data.sports.map((sport) => sport.sportId));
+        setOldSelectedChips(res.data.sports.map((sport) => sport.sportId));
       };
       getUserSports();
     }, []);
@@ -116,11 +118,9 @@ export default function SportsPage() {
     }
   };
 
-  console.log("data", data);
 
   const handleSubmit = async () => {
     if (editMode == false) {
-      setValues({ addSports, removeSports });
       await axios.post("/auth/register", {
         ...data,
         addSports,
@@ -149,52 +149,109 @@ export default function SportsPage() {
         }}
       >
         <RegisHeader
-          iconType={editMode ? "none" : "back"}
+          iconType={editMode || selectMode ? "none" : "back"}
           onClick={editMode ? () => null : () => history.push("/gender")}
           text="Sports"
         >
-          <Typography
-            variant="body1"
-            style={{ zIndex: "1001", margin: "0px 0px 0px 40px" }}
-          >
-            You can select a maximum of 5 sports.
-          </Typography>
+          {selectMode ? (
+            <Typography
+              variant="body1"
+              style={{
+                zIndex: "1001",
+                margin: "0px 0px 0px 40px",
+                width: "80%",
+              }}
+            >
+              You can select a maximum of 5 sports.
+            </Typography>
+          ) : (
+            <div
+              style={{
+                backgroundColor: "white",
+                zIndex: "1001",
+              }}
+            >
+              <Typography
+                variant="body1"
+                style={{
+                  margin: "0px 0px 0px 40px",
+                  width: "80%",
+                }}
+              >
+                Indicate your skill level for each sport.
+              </Typography>
+
+              <Typography
+                variant="body1"
+                style={{
+                  margin: "0px 0px 0px 40px",
+                }}
+              >
+                🥉 – Beginner &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🥈 –
+                Intermediate
+              </Typography>
+              <Typography
+                variant="body1"
+                style={{
+                  margin: "0px 0px 0px 40px",
+                }}
+              >
+                🥇 – Advanced&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🏆
+                – Champ
+              </Typography>
+            </div>
+          )}
         </RegisHeader>
-        <div
-          style={{
-            textAlign: "left",
-            padding: "60px 10vw 100px 10vw",
-            overflow: "scroll",
-          }}
-        >
-          {sports.map((item) => (
-            <Chip
-              className={
-                selectedChips.includes(item.sportId)
-                  ? classes.active
-                  : classes.inactive
-              }
-              variant={
-                selectedChips.includes(item.sportId) ? "default" : "outlined"
-              }
-              size="small"
-              key={item.sportId}
-              label={item.sportName}
-              color={
-                selectedChips.includes(item.sportId) ? "secondary" : "default"
-              }
-              onClick={() => handleSelect(item.sportId)}
+        <div>
+          {selectMode ? (
+            <SelectSports
+              sports={sports}
+              selectedChips={selectedChips}
+              handleSelect={handleSelect}
+              classes={classes}
             />
-          ))}
+          ) : (
+            <SelectSkill
+              sports={sports}
+              outputSports={outputSports}
+              setOutputSports={setOutputSports}
+              selectedChips={selectedChips}
+              classes={classes}
+              editMode={editMode}
+            />
+          )}
         </div>
       </div>
-      <div className={classes.button}>
-        <LongButton
-          name={editMode ? "DONE" : "CONTINUE"}
-          onClick={handleSubmit}
-          variant={selectedChips.length > 0 ? "contained" : "disabled"}
-        />
-      </div>
+      {selectMode ? (
+        <div className={classes.button}>
+          <LongButton
+            name="NEXT"
+            onClick={() => {
+              setSelectMode(false);
+            }}
+            variant={selectedChips.length > 0 ? "contained" : "disabled"}
+          />
+        </div>
+      ) : (
+        <div className={classes.button}>
+          <LongButton
+            name={!editMode ? "DONE" : "CONTINUE"}
+            onClick={handleSubmit}
+            variant={
+              selectMode
+                ? selectedChips.length > 0
+                  ? "contained"
+                  : "disabled"
+                : selectedChips.filter((id) =>
+                    outputSports.map((sport) => sport.sportId).includes(id)
+                  ).length === selectedChips.length
+                ? "contained"
+                : "disabled"
+            }
+            //FIXME condition wrong
+          />
+        </div>
+      )}
     </div>
   );
 }

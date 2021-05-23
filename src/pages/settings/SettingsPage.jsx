@@ -146,7 +146,7 @@ export default function SettingsPage() {
         DISCOVERY
       </Typography>
       <Paper variant="outlined" className={classes.paper}>
-        <Container className={classes.row}>
+        {/* <Container className={classes.row}>
           <Typography
             variant="body1"
             className={classes.head}
@@ -161,7 +161,7 @@ export default function SettingsPage() {
             <NavigateNextRoundedIcon style={{ color: "lightgray" }} />
           </Typography>
         </Container>
-        <Divider />
+        <Divider /> */}
 
         <Container className={classes.row}>
           <Typography variant="body1" className={classes.head}>
