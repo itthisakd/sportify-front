@@ -30,9 +30,10 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     bottom: "0px",
     left: "0px",
-    padding: "15px 20px",
-    textShadow: "0px 0px 11px rgba(0, 0, 0, 0.5)",
-    width: "calc(90vw - 70px)",
+    padding: "15px 90px 15px 20px",
+    background: "linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)",
+    borderRadius: "15px",
+    width: "60vw",
   },
   aboutMe: {
     fontWeight: "400",
@@ -73,7 +74,6 @@ export default function InfoContainer({ current, account }) {
 
   React.useEffect(() => {
     const setLo = async () => {
-      console.log("inside");
       const loName = await getLocationName(account.currentLocation);
       setLocaName(loName);
     };
@@ -114,7 +114,7 @@ export default function InfoContainer({ current, account }) {
           <Typography variant="body2">Recently Active</Typography>
         </div>
       ) : null}
-      {current === 0 && (
+      {current === 1 && (
         <div className={classes.flexRow}>
           <LocationOnOutlinedIcon className={classes.tag} />
           <Typography variant="body1" className={classes.tag}>
@@ -138,13 +138,15 @@ export default function InfoContainer({ current, account }) {
       )}
       {current === 1 && (
         <div className={classes.root}>
-          {account.sports.map(({ sportName, id }, idx) => {
+          {account.sports.map(({ sportName, sportId, skill }, idx) => {
             return (
               <Chip
-                label={sportName}
+                label={sportName +" " + ["🥉", "🥈", "🥇", "🏆"][skill-1]}
                 className={classes.chip}
                 color={
-                  account.commonSports?.includes(id) ? "secondary" : "default"
+                  account.commonSports?.includes(sportId)
+                    ? "secondary"
+                    : "default"
                 }
                 key={idx}
               />

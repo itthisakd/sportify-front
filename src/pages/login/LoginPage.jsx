@@ -40,7 +40,6 @@ export default function LoginPage() {
   };
 
   const onFailure = (res) => {
-    console.log("Login failed: res:", res);
   };
 
   const { signIn } = useGoogleLogin({

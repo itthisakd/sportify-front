@@ -28,7 +28,6 @@ export default function LabelBottomNavigation() {
 
   const handleChange = (event, newValue) => {
     setCurrentMenu(newValue);
-    console.log("newValue :>> ", newValue);
   };
 
   return (

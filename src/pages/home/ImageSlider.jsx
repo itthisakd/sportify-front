@@ -114,6 +114,7 @@ export default function ImageSlider({ account, viewProfile }) {
           bottom: "20px",
           textShadow: "0px 0px 11px rgba(0, 0, 0, 0.5)",
           right: "20px",
+          zIndex: "1000"
         }}
       />
       <InfoContainer

@@ -6,17 +6,4 @@ export default function getCurrentLocation() {
   });
 }
 
-// import getCurrentLocation from "../../utilities/getCurrentLocation";
-
-// const [currentLocation, setCurrentLocation] = useState("");
-
-// useEffect(() => {
-//   async function getLocation() {
-//     const currentLo = await getCurrentLocation();
-//     setCurrentLocation(currentLo);
-//   }
-//   getLocation();
-// }, []);
-
-// console.log("currentLocation :>> ", currentLocation);
 

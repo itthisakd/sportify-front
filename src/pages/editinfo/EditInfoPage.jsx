@@ -86,7 +86,6 @@ export default function EditInfoPage() {
       const res = await axios.get("/account/myaccount");
       setAccount(res.data);
       setAddedPhoto(res.data.images.length);
-      console.log(res.data);
       reset({
         aboutMe: res.data.aboutMe,
         job: res.data.job,

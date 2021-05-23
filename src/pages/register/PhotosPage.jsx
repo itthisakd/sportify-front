@@ -32,8 +32,6 @@ export default function PhotosPage() {
     getLocation();
   }, []);
 
-  console.log("currentLocation :>> ", currentLocation);
-
   const submitLocation = async () => {
     setTimeout(async () => {
       axios.patch("/account/currentlocation", {
@@ -43,7 +41,6 @@ export default function PhotosPage() {
     }, 5000);
   };
 
-  console.log(data);
 
   return (
     <div style={{ position: "relative", height: "100vh" }}>

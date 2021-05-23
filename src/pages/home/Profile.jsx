@@ -89,7 +89,6 @@ export default function Profile({ account, setViewId }) {
 
   React.useEffect(() => {
     const setLo = async () => {
-      console.log("inside");
       const loName = await getLocationName(account?.currentLocation);
       setLocaName(loName);
     };
@@ -164,20 +163,21 @@ export default function Profile({ account, setViewId }) {
           </div>
         )}
         <div className={classes.root}>
-          {account.sports?.map(({ sportName, id }) => {
+          {account.sports?.map(({ sportName, sportId, skill }) => {
             //TODO match colors of tags if sport matches that of the user
             return (
               <Chip
-                label={sportName}
+                label={sportName +" " +["🥉", "🥈", "🥇", "🏆"][skill - 1]}
                 variant="outlined"
                 className={classes.chip}
-                key={id}
+                key={sportId}
                 variant={
-                  account.commonSports?.includes(id) ? "default" : "outlined"
+                  account.commonSports?.includes(sportId)
+                    ? "default"
+                    : "outlined"
                 }
-                color={
-                  account.commonSports?.includes(id) ? "secondary" : "default"
-                }
+                style={account.commonSports?.includes(sportId) ?{ backgroundColor: "#ffcdcd" } : null}
+                color="default"
               />
             );
           })}

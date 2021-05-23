@@ -53,7 +53,6 @@ export default function WelcomePage() {
     }, 5000);
   
 
-  console.log(data)
 
   return (
     <div

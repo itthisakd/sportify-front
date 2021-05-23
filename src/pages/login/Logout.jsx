@@ -10,13 +10,11 @@ const clientId =
 function LogoutHooks() {
   const history = useHistory();
   const onLogoutSuccess = (res) => {
-    console.log("Logout Success");
     history.push("/login");
     localStorageService.clearToken();
   };
 
   const onFailure = () => {
-    console.log("Logout failed");
   };
 
   const { signOut } = useGoogleLogout({
