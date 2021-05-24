@@ -4,6 +4,8 @@ const getToken = () => localStorage.getItem(tokenName);
 const clearToken = () => localStorage.removeItem(tokenName);
 const setRole = (role) => localStorage.setItem("role", role);
 const clearRole = () => localStorage.removeItem("role");
+const setMenu = (menu) => localStorage.setItem("menu", menu);
+const getMenu = () => localStorage.getItem("menu");
 
 export default {
   setToken,
@@ -11,4 +13,6 @@ export default {
   clearToken,
   setRole,
   clearRole,
+  getMenu,
+  setMenu,
 };

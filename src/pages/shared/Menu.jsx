@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   BottomNavigation,
@@ -10,8 +10,7 @@ import ExploreRoundedIcon from "@material-ui/icons/ExploreRounded";
 import QuestionAnswerRoundedIcon from "@material-ui/icons/QuestionAnswerRounded";
 import FavoriteRoundedIcon from "@material-ui/icons/FavoriteRounded";
 import { useHistory } from "react-router-dom";
-import { MenuContext } from "../../contexts/MenuContextProvider";
-import { refreshTokenSetup } from "../../utilities/refreshToken";
+import localStorageService from "../../services/localStorageService";
 
 const useStyles = makeStyles({
   root: {
@@ -24,10 +23,11 @@ const useStyles = makeStyles({
 export default function LabelBottomNavigation() {
   const history = useHistory();
   const classes = useStyles();
-  const { currentMenu, setCurrentMenu } = useContext(MenuContext);
+
+  const currentMenu = localStorageService.getMenu();
 
   const handleChange = (event, newValue) => {
-    setCurrentMenu(newValue);
+    localStorageService.setMenu(newValue);
   };
 
   return (
@@ -36,7 +36,7 @@ export default function LabelBottomNavigation() {
       style={{ position: "sticky", top: "0px", zIndex: "10" }}
     >
       <BottomNavigation
-        value={currentMenu}
+        value={localStorageService.getMenu()}
         onChange={handleChange}
         className={classes.root}
       >
