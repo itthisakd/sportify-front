@@ -17,6 +17,7 @@ import rejectIcon from "../../images/icons/reject_icon.png";
 import rewindIcon from "../../images/icons/rewind_icon.png";
 import rewindIconDisabled from "../../images/icons/rewind_icon_disabled.png";
 import background from "../../images/home_bg.png";
+import Typography from "@material-ui/core/Typography";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const whiteTheme = createMuiTheme({
@@ -177,8 +178,6 @@ export default function HomePage() {
     const getAccounts = async () => {
       const res = await axios.get("/account/stack");
       const currentLocation = await getCurrentLocation();
-      // const currentLocationName = await getLocationName(currentLocation);
-
       await axios.patch("/account/myaccount", {
         lastActive: DateTime.now().toString(),
         currentLocation,
@@ -195,7 +194,6 @@ export default function HomePage() {
       setViewId(0);
     } else if (current === accounts.length - 1) {
       setLoadMore(!loadMore);
-
       setViewId(0);
     } else {
       setViewId(0);
@@ -204,9 +202,6 @@ export default function HomePage() {
   const prevSlide = () => {
     setCurrent(current === 0 ? accounts.length - 1 : current - 1);
   };
-  if (!Array.isArray(accounts) || accounts.length <= 0) {
-    return null;
-  }
 
   const createLike = async () => {
     if (accounts[current].likedMe) {
@@ -256,11 +251,30 @@ export default function HomePage() {
     setJustRewinded(true);
   };
 
+  if (accounts.length === 0) {
+    return (
+      <div style={{ position: "relative", height: "100vh" }}>
+        <Menu />
+
+        <div className={classes.center}>
+          <Paper elevation={3} className={classes.paper}>
+            <Typography
+              variant="h6"
+              component="h2"
+              style={{ textAlign: "center" }}
+            >
+              {"No players found, please adjust your discovery settings. :-("}
+            </Typography>
+          </Paper>
+        </div>
+      </div>
+    );
+  }
+
   if (viewId === 0) {
     return (
       <div style={{ position: "relative", height: "90vh" }}>
         <Menu />
-
         <div className={classes.flexBetween}>
           <Paper elevation={3} className={classes.paper}>
             {accounts.length > 0 ? (
